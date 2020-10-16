@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>fyh.jpg</file>
+        <file>zyc.jpg</file>
+    </qresource>
+    <qresource prefix="/QSS"/>
+</RCC>
