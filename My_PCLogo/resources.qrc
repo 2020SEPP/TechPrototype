@@ -2,6 +2,8 @@
     <qresource prefix="/images">
         <file>fyh.jpg</file>
         <file>zyc.jpg</file>
+        <file>bk.png</file>
+        <file>turtle.png</file>
+        <file>button.png</file>
     </qresource>
-    <qresource prefix="/QSS"/>
 </RCC>

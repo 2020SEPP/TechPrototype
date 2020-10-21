@@ -17,7 +17,8 @@ public:
 private slots:
     void avatarClicked();
     void soloClicked();
-    void pkClicked();
+    void pkPressed();
+    void pkReleased();
 
 private:
     userinfo *userinfoWidget;
