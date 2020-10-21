@@ -5,7 +5,7 @@
 #include <window.h>
 #include <qpushbutton.h>
 #include <userinfo.h>
-
+#include <loginwidget.h>
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -22,6 +22,7 @@ private slots:
 
 private:
     userinfo *userinfoWidget;
+    LoginDialog *logindialog;
     Window window;
     QPushButton *solo;
     QPushButton *pk;

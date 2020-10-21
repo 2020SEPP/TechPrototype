@@ -19,6 +19,7 @@ SOURCES += \
     loginwidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    region.cpp \
     signupwidget.cpp \
     userinfo.cpp \
     window.cpp
@@ -26,6 +27,7 @@ SOURCES += \
 HEADERS += \
     loginwidget.h \
     mainwindow.h \
+    region.h \
     signupwidget.h \
     userinfo.h \
     window.h

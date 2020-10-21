@@ -24,10 +24,11 @@ MainWindow::MainWindow(QWidget *parent)
     userinfoWidget->setStyleSheet("QWidget{border :1px;                                                    \
                                                                   background:red;                 \
                                                         }");
-//        userinfoWidget->setWindowOpacity(0.1);
 
-    userinfoWidget->show();
 
+
+    logindialog = new LoginDialog(this->window.winWidth/2,this->window.winHeight*2/3,this);
+    logindialog->setGeometry(this->window.winWidth/4,this->window.winHeight/6,this->window.winWidth/2,this->window.winHeight*2/3);
 
     solo  =   new QPushButton(this);
     pk     =   new QPushButton(this);
@@ -64,13 +65,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     pk->stackUnder(userinfoWidget);
     solo->stackUnder(userinfoWidget);
+
     connect(avatar,SIGNAL(clicked()),this,SLOT(avatarClicked()));
     connect(solo,SIGNAL(clicked()),this,SLOT(soloClicked()));
-    connect(pk,SIGNAL(hovered()),this,SLOT(pkPresssed()));
+    connect(pk,SIGNAL(clicked()),this,SLOT(pkPressed()));
 
     pk    ->  show();
     solo ->  show();
     avatar->show();
+    userinfoWidget->show();
 
 
 
@@ -91,12 +94,12 @@ void MainWindow::avatarClicked(){
 }
 
 void MainWindow::soloClicked(){
+    logindialog->show();
     return;
 }
 
 void MainWindow::pkPressed(){
-pk    ->  setGeometry(3*window.winWidth/10,6*window.winHeight/10,4*window.winWidth/10+30,window.winHeight/10+30);
-return;
+    return;
 }
 
 void MainWindow::pkReleased(){

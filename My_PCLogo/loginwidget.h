@@ -2,17 +2,20 @@
 #define LOGINWIDGET_H
 
 #include <QObject>
-#include <QWidget>
+#include <QDialog>
+#include <window.h>
+#include <region.h>
 
-class LoginWidget :public QWidget
+class LoginDialog :public QDialog
 {
 private:
     int width;
     int height;
-
+    Window window;
+    Region *re;
 public:
-    LoginWidget();
-    LoginWidget(int widght,int height,QWidget *p);
+    LoginDialog();
+    LoginDialog(int widght,int height,QWidget *p);
 };
 
 #endif // LOGINWIDGET_H
