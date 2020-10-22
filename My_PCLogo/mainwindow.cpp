@@ -14,15 +14,15 @@ MainWindow::MainWindow(QWidget *parent)
         QPalette palette(this->palette());
         palette.setBrush(QPalette::Background, QBrush(pixmap));
         this->setPalette(palette);
-    this->setWindowFlags(Qt::WindowCloseButtonHint);
-    this->showFullScreen(); //全屏
+        this->setWindowState(Qt::WindowFullScreen);
+        this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
     this->setFocus();
 
 
     userinfoWidget = new userinfo(this);
     userinfoWidget->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     userinfoWidget->setStyleSheet("QWidget{border :1px;                                                    \
-                                                                  background:red;                 \
+                                                                  border-image:url(:images/sidenav.png);                 \
                                                         }");
 
 
@@ -38,15 +38,14 @@ MainWindow::MainWindow(QWidget *parent)
     avatar-> setGeometry(1*window.winWidth/10,1*window.winHeight/10,window.winWidth/10,window.winWidth/10);
     pk    ->   setText("PK");
     solo ->   setText("SOLO");
-    avatar-> setText("登    陆");
 
     avatar    ->  setStyleSheet("QPushButton{background-color: white;                                     \
                             border-style: solid;                                                                                             \
-                            border-width:1px;    font-size:30px;                                                                                          \
+                            border-width:1px;                                                                                           \
                             border-radius:"+QString::number(window.winWidth/20)+
                             ";                                                                                                                      \
-                            border-color: red;      border-image: url(:/images/fyh.jpg);           }            \
-                            QPushButton:hover{border-image: url(:/images/zyc.jpg); font-size:40px \
+                            border-color: red;      border-image: url(:/images/log-green.png);           }            \
+                            QPushButton:hover{border-image: url(:/images/log-yellow.png);  \
                                                                       }                     \
                                                      ");
     pk ->  setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:30px;}");

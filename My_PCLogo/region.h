@@ -7,11 +7,14 @@
  * */
 class Region:public QRegion
 {
+private:
+    QPainterPath path;
+    QRectF *rect;
+    QPolygon po;
 public:
-    Region(int width,int height,int radius,QWidget *p);
-    void mask(QWidget *p,QPolygon po);
-    void mask(QDialog *p,QPolygon po);
-    void mask(QPushButton *p,QPolygon po);
+    Region(int width,int height,int radius);
+    void mask(QWidget *p);
+
 };
 
 #endif // REGION_H

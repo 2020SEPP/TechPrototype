@@ -5,6 +5,8 @@
 #include <QDialog>
 #include <window.h>
 #include <region.h>
+#include <QLabel>
+#include <QLineEdit>
 
 class LoginDialog :public QDialog
 {
@@ -12,7 +14,13 @@ private:
     int width;
     int height;
     Window window;
-    Region *re;
+
+    QLabel *usrlabel;
+    QLabel *psdlabel;
+    QLineEdit *usrinput;
+    QLineEdit *psdinput;
+//    QPushButton *login;
+//    QPushButton *quit;
 public:
     LoginDialog();
     LoginDialog(int widght,int height,QWidget *p);

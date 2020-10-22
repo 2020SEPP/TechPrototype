@@ -5,5 +5,15 @@
         <file>bk.png</file>
         <file>turtle.png</file>
         <file>button.png</file>
+        <file>sidenav.png</file>
+        <file>log-yellow.png</file>
+        <file>log-green.png</file>
+        <file>soundless.png</file>
+        <file>setting.png</file>
+        <file>input.png</file>
+        <file>sound.png</file>
+    </qresource>
+    <qresource prefix="/Font">
+        <file>newfont.ttf</file>
     </qresource>
 </RCC>
