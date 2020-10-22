@@ -2,6 +2,7 @@
 #include <QBrush>
 #include <QPalette>
 #include <qpalette.h>
+#include <QtCore>
 LoginDialog::LoginDialog()
 {
 
@@ -12,7 +13,7 @@ LoginDialog::LoginDialog(int width,int height,QWidget *p){
     this->width=width;
     this->height=height;
     this->setWindowModality(Qt::ApplicationModal);
-    this->setStyleSheet("border-image:url(:images/fyh.jpg)");
+    this->setStyleSheet("QDialog{border-image:url(:images/bk.png)}");
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
 
     Region *Re= new Region(width,height,width/25);
@@ -28,22 +29,32 @@ LoginDialog::LoginDialog(int width,int height,QWidget *p){
     usrlabel->setFont(font);
     psdlabel->setFont(font);
     usrlabel->setAttribute(Qt::WA_TranslucentBackground, true);//透明
-    usrlabel->setAlignment(Qt::AlignRight|Qt::AlignCenter);
+    usrlabel->setAlignment(Qt::AlignCenter|Qt::AlignCenter);
     psdlabel->setAttribute(Qt::WA_TranslucentBackground,true);
-    psdlabel->setAlignment(Qt::AlignRight|Qt::AlignCenter);
-    usrlabel->setGeometry(1*width/20,height/5,width/5,height/10);
-    psdlabel->setGeometry(1*width/20,2*height/5,width/5,height/10);
+    psdlabel->setAlignment(Qt::AlignCenter|Qt::AlignCenter);
+    usrlabel->setGeometry(1*width/15,height/5,width/5,height/10);
+    psdlabel->setGeometry(1*width/15,2*height/5,width/5,height/10);
     usrlabel->setText("用户名:");
     psdlabel->setText("密码:");
 
 
     usrinput = new QLineEdit(this);
     psdinput =new QLineEdit(this);
-    usrinput->setStyleSheet("QLineEdit{background:transparent;border-width:0;border-style:outset;}"
-//                            "border-image:url(:/images/input.png)}"
+    usrinput->setStyleSheet(
+                            "QLineEdit{border-image:url(:/images/input.png);background:rgb(0,255,255);padding-left:30px}"
                             );
-    usrinput->setAttribute(Qt::WA_TranslucentBackground, true);
-    usrinput->setGeometry(width/4,height/5,width*2/5,height/10);
+    usrinput->setGeometry(width/4+50,height*13/60,width/2,height/15);
+    usrinput->setAttribute(Qt::WA_MacShowFocusRect, 0);
+    usrinput->setFont(font);
+    usrinput->setMaxLength(16);
+
+    psdinput->setStyleSheet(
+                            "QLineEdit{border-image:url(:/images/input.png);background:rgb(0,255,255);padding-left:30px;}"
+                            );
+    psdinput->setAttribute(Qt::WA_MacShowFocusRect, 0);
+    psdinput->setGeometry(width/4+50,height*25/60,width/2,height/15);
+    psdinput->setFont(font);
+    psdinput->setMaxLength(16);
 
 
 }
