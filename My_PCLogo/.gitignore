@@ -1,0 +1,7 @@
+/build/
+
+.DS_Store
+
+# user profile
+My_PCLogo.pro.user
+My_PCLogo.pro.user.*
