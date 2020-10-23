@@ -1,5 +1,13 @@
-# TechPrototype
+# My PC LOGO Iteration 2 - Tech Prototype
 
-### 这是技术原型迭代的内容
+## Cast
 
-### My_PCLogo文件夹包含本次迭代的界面原型文件
+- [Yuhan Fu](https://github.com/Tarosweet)
+
+- [Jiawei Dow](https://github.com/1047666945)
+
+- [Junhan Xu](https://github.com/TheJunhan)
+
+- [Polat Moldir](https://github.com/molya-polat)
+
+- [Yuchen Ao](https://github.com/Laffery)
