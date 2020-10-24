@@ -7,6 +7,7 @@
 #include <region.h>
 #include <QLabel>
 #include <QLineEdit>
+#include <lineedit_my.h>
 
 class LoginDialog :public QDialog
 {
@@ -17,7 +18,7 @@ private:
 
     QLabel *usrlabel;
     QLabel *psdlabel;
-    QLineEdit *usrinput;
+    LineEdit  *usrinput;
     QLineEdit *psdinput;
 //    QPushButton *login;
 //    QPushButton *quit;
