@@ -3,7 +3,7 @@
 #include <QRegion>
 #include <QPushButton>
 /**
- *   次Region继承QRegion  用于setmask
+ *   此Region继承QRegion  用于setmask
  * */
 class Region:public QRegion
 {

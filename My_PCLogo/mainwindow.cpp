@@ -3,20 +3,23 @@
 #include <qdebug.h>
 #include <qpropertyanimation.h>
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
 
 {
 //        QRect screenRect = QApplication::desktop()->screenGeometry();
+    this->setParent(parent);
     this->setWindowTitle("My PCLogo");
 
     this->setFixedSize(window.winWidth,window.winHeight);
-    QPixmap pixmap = QPixmap(":/images/bk.png").scaled(this->size());
-        QPalette palette(this->palette());
-        palette.setBrush(QPalette::Background, QBrush(pixmap));
-        this->setPalette(palette);
-        this->setWindowState(Qt::WindowFullScreen);
-        this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
+    this->setWindowState(Qt::WindowFullScreen);
+    this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
     this->setFocus();
+    this->setGeometry(0,0,window.winWidth,window.winHeight);
+    QPixmap pixmap = QPixmap(":/images/bk.png").scaled(this->size());
+    QPalette palette(this->palette());
+    palette.setBrush(QPalette::Background, QBrush(pixmap));
+    this->setPalette(palette);
+
+
 
 
     userinfoWidget = new userinfo(this);
@@ -87,17 +90,24 @@ MainWindow::~MainWindow()
 
 void MainWindow::avatarClicked(){
   userinfoWidget->annimation();
+  logindialog->show();
+  return;
 //    delete  animation;
 
 
 }
 
 void MainWindow::soloClicked(){
-    logindialog->show();
-    return;
+    this->single=new SingleWidget(this);
+    this->single->show();
+    this->single->InAnnimation();
+    return ;
 }
 
 void MainWindow::pkPressed(){
+
+
+
     return;
 }
 

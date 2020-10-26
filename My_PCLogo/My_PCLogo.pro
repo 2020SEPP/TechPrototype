@@ -16,19 +16,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    canvas.cpp \
+    console.cpp \
     lineedit_my.cpp \
     loginwidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    painter.cpp \
     region.cpp \
     signupwidget.cpp \
     userinfo.cpp \
     window.cpp
 
 HEADERS += \
+    Instruction.h \
+    canvas.h \
+    console.h \
     lineedit_my.h \
     loginwidget.h \
     mainwindow.h \
+    painter.h \
     region.h \
     signupwidget.h \
     userinfo.h \

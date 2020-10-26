@@ -6,7 +6,8 @@
 #include <qpushbutton.h>
 #include <userinfo.h>
 #include <loginwidget.h>
-class MainWindow : public QMainWindow
+#include <painter.h>
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
@@ -27,5 +28,6 @@ private:
     QPushButton *solo;
     QPushButton *pk;
     QPushButton *avatar;
+    SingleWidget *single;
 };
 #endif // MAINWINDOW_H
