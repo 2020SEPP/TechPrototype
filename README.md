@@ -4,7 +4,7 @@
 
 - [Yuhan Fu](https://github.com/Tarosweet)
 
-- [Jiawei Dow](https://github.com/1047666945)
+- [Jiawei Dow](https://github.com/DDDDDDDOU)
 
 - [Junhan Xu](https://github.com/TheJunhan)
 
