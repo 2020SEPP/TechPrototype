@@ -2,10 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <window.h>
-#include <qpushbutton.h>
-#include <userinfo.h>
-#include <loginwidget.h>
+#include <QPushButton>
+#include "window.h"
+#include "userinfo.h"
+#include "signinwidget.h"
+#include "HttpRequest.h"
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -21,6 +24,7 @@ private slots:
     void pkReleased();
 
 private:
+    HttpRequest http;
     userinfo *userinfoWidget;
     LoginDialog *logindialog;
     Window window;

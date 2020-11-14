@@ -13,7 +13,6 @@ public:
     Window();
     int winWidth;
     int winHeight;
-
 };
 
 #endif // a

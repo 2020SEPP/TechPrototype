@@ -1,17 +1,17 @@
-#include "loginwidget.h"
+#include "signinwidget.h"
 #include <QBrush>
 #include <QPalette>
-#include <qpalette.h>
 #include <QtCore>
+
 LoginDialog::LoginDialog()
 {
 
 }
 
-LoginDialog::LoginDialog(int width,int height,QWidget *p){
+LoginDialog::LoginDialog(int width, int height, QWidget *){
 
-    this->width=width;
-    this->height=height;
+    this->width = width;
+    this->height = height;
     this->setWindowModality(Qt::ApplicationModal);
     this->setStyleSheet("QDialog{border-image:url(:images/bk.png)}");
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
@@ -25,7 +25,7 @@ LoginDialog::LoginDialog(int width,int height,QWidget *p){
     font.setPixelSize(30);
 
     usrlabel = new QLabel(this);
-    psdlabel= new QLabel(this);
+    psdlabel = new QLabel(this);
     usrlabel->setFont(font);
     psdlabel->setFont(font);
     usrlabel->setAttribute(Qt::WA_TranslucentBackground, true);//透明
@@ -39,7 +39,7 @@ LoginDialog::LoginDialog(int width,int height,QWidget *p){
 
 
     usrinput = new QLineEdit(this);
-    psdinput =new QLineEdit(this);
+    psdinput = new QLineEdit(this);
     usrinput->setStyleSheet(
                             "QLineEdit{border-image:url(:/images/input.png);background:rgb(0,255,255);padding-left:30px}"
                             );
