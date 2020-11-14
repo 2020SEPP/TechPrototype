@@ -2,7 +2,8 @@
 #include <QRect>
 #include <QApplication>
 #include <QDesktopWidget>
-#include <qpropertyanimation.h>
+#include <QPropertyAnimation>
+
 Window::Window()
 {
     QRect screenRect = QApplication::desktop()->screenGeometry();

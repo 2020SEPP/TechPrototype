@@ -1,14 +1,15 @@
-#ifndef LOGINWIDGET_H
-#define LOGINWIDGET_H
+#ifndef SIGNINWIDGET_H
+#define SIGNINWIDGET_H
 
 #include <QObject>
 #include <QDialog>
-#include <window.h>
-#include <region.h>
 #include <QLabel>
 #include <QLineEdit>
 
-class LoginDialog :public QDialog
+#include "window.h"
+#include "region.h"
+
+class LoginDialog : public QDialog
 {
 private:
     int width;
@@ -26,4 +27,4 @@ public:
     LoginDialog(int widght,int height,QWidget *p);
 };
 
-#endif // LOGINWIDGET_H
+#endif // SIGNINWIDGET_H

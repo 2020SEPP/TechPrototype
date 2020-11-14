@@ -1,6 +1,7 @@
 #ifndef REGION_H
 #define REGION_H
 #include <QRegion>
+#include <QPainterPath>
 #include <QPushButton>
 /**
  *   次Region继承QRegion  用于setmask
