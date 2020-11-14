@@ -1,13 +1,16 @@
-#include "window.h"
-#include <QRect>
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QPropertyAnimation>
+//#include "window.h"
+//#include <QRect>
+//#include <QScreen>
+//#include <QGuiApplication>
+//#include <QDesktopWidget>
+//#include <QDebug>
 
-Window::Window()
-{
-    QRect screenRect = QApplication::desktop()->screenGeometry();
-    this->winWidth=screenRect.width();
-    this->winHeight=screenRect.height();
-}
+//Window::Window()
+//{
+//    QScreen *screen = QGuiApplication::primaryScreen();
+//    QRect mm = screen->availableGeometry() ;
+//    this->winWidth = mm.width();
+//    this->winHeight = mm.height();
+//    qDebug() << this->winWidth << this->winHeight;
+//}
 

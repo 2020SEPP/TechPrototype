@@ -17,24 +17,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    CodEditor.cpp \
     HttpRequest.cpp \
     main.cpp \
     mainwindow.cpp \
     region.cpp \
     signinwidget.cpp \
     signupwidget.cpp \
-    userinfo.cpp \
-    window.cpp
+    userinfo.cpp
 
 HEADERS += \
+    CodEditor.h \
     HttpRequest.h \
     Network.h \
     mainwindow.h \
     region.h \
     signinwidget.h \
     signupwidget.h \
-    userinfo.h \
-    window.h
+    userinfo.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -43,3 +43,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+# Add Code Texter QScintilla
+
+INCLUDEPATH += ..\QScintilla-2.11.5\Qt4Qt5
+LIBS += -L..\QScintilla-2.11.5\build-qscintilla-Desktop_Qt_5_15_0_MinGW_64_bit-Debug\debug -lqscintilla2_qt5d

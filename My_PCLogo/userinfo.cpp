@@ -2,10 +2,13 @@
 #include <QPropertyAnimation>
 #include <QDebug>
 
-userinfo::userinfo(QWidget *parent)
+userinfo::userinfo(QWidget *parent, int w, int h)
 {
-    this->setFixedSize(window.winWidth/3,window.winHeight);
-    this->setGeometry(-window.winWidth/3,0,window.winWidth/3,window.winHeight);
+    WIN_W = w;
+    WIN_H = h;
+
+    this->setFixedSize(WIN_W/3, WIN_H);
+    this->setGeometry(-WIN_W/3, 0, WIN_W/3, WIN_H);
     this->setParent(parent);
     visible = false;
 }
@@ -18,14 +21,14 @@ void userinfo::annimation(){
    animation->setDuration(100);
    if (this->visible)
    {
-       animation->setStartValue(QRect(0,0,window.winWidth/3,window.winHeight));
-       animation->setEndValue(QRect(-window.winWidth/3,0,window.winWidth/3,window.winHeight));
+       animation->setStartValue(QRect(0,0,WIN_W/3,WIN_H));
+       animation->setEndValue(QRect(-WIN_W/3,0,WIN_W/3,WIN_H));
        animation->start();
    }
    else
    {
-       animation->setStartValue(QRect(-window.winWidth/3,0,window.winWidth/3,window.winHeight));
-       animation->setEndValue(QRect(0,0,window.winWidth/3,window.winHeight));
+       animation->setStartValue(QRect(-WIN_W/3,0,WIN_W/3,WIN_H));
+       animation->setEndValue(QRect(0,0,WIN_W/3,WIN_H));
        //选择特效
        //        animation->setEasingCurve(QEasingCurve::OutBounce);
        //开始播放特效

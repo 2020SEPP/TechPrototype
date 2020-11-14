@@ -7,12 +7,11 @@
 class userinfo:public QWidget
 {
 private:
-    Window window;
-    int height;
-    int width;
+    int WIN_W;
+    int WIN_H;
     bool visible;
 public:
-    userinfo(QWidget *Parent);
+    userinfo(QWidget *Parent, int, int);
 public slots:
     void annimation();
 };

@@ -14,7 +14,7 @@ class LoginDialog : public QDialog
 private:
     int width;
     int height;
-    Window window;
+//    Window window;
 
     QLabel *usrlabel;
     QLabel *psdlabel;
