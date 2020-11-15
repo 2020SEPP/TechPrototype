@@ -2,16 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
 #include <QRect>
 #include <QScreen>
 #include <QGuiApplication>
 #include <QDebug>
 
-#include "window.h"
-#include "userinfo.h"
-#include "signinwidget.h"
-#include "HttpRequest.h"
+#include "homepage.h"
 #include "CodEditor.h"
 
 class MainWindow : public QMainWindow
@@ -36,19 +32,10 @@ private:
     }
 
 private:
-    HttpRequest http;
-    userinfo *userinfoWidget;
-    LoginDialog *logindialog;
-//    Window window;
     CodEditor *editor;
-    QPushButton *solo;
-    QPushButton *pk;
-    QPushButton *avatar;
+    HomePage *home;
 
 private slots:
-    void avatarClicked();
-    void soloClicked();
-    void pkPressed();
-    void pkReleased();
+    void CodeEditor();
 };
 #endif // MAINWINDOW_H

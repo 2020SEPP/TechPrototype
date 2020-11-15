@@ -3,11 +3,61 @@
 #include <QPropertyAnimation>
 #include <QDebug>
 
+#include <QMenu>
+#include <QMenuBar>
+#include <QToolBar>
+#include <QStatusBar>
+#include <QAction>
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     Window_Pixels_Init();
     this->setWindowTitle("My PC Logo");
-    this->setFixedSize(WIN_W, WIN_H);
+//    this->setFixedSize(WIN_W, WIN_H);
+    this->resize(WIN_W, WIN_H);
+    this->setMinimumSize(800, 600);
+
+    QMenuBar *menu_bar = new QMenuBar(this);             //创建一个菜单栏
+    this->setMenuBar(menu_bar);                                          //添加工具栏到MainWindow
+    QStatusBar *status_bar = new QStatusBar(this);            //创建一个状态栏
+    this->setStatusBar(status_bar);                                        //设置为MainWindow的状态栏
+
+    //创建菜单
+    QMenu *file_menu = new QMenu("文件(&F)",menu_bar);
+    QMenu *edit_menu = new QMenu("编辑(&E)",menu_bar);
+    QMenu *help_menu = new QMenu("帮助(&H)",menu_bar);
+
+    //创建动作
+    QAction *new_action = new QAction("新建(&N)");
+    QAction *open_action = new QAction("打开(&O)");
+    QAction *save_action = new QAction("保存(&S)");
+
+    //添加状态栏提示
+    new_action->setStatusTip("新建一个文件或项目");
+    open_action->setStatusTip("打开一个文件或项目");
+    save_action->setStatusTip("保存");
+
+    //添加动作到新建菜单，QAction就会自动变成子菜单
+    file_menu->addAction(new_action);
+    file_menu->addAction(open_action);
+    file_menu->addSeparator();                      //添加菜单分隔符
+    file_menu->addAction(save_action);
+
+    //给编辑菜单添加子菜单
+    edit_menu->addAction("剪切(&T)");
+    //给帮助菜单添加子菜单
+    help_menu->addAction("关于(&A)");
+
+    //把菜单添加到菜单栏
+    menu_bar->addMenu(file_menu);
+    menu_bar->addMenu(edit_menu);
+    menu_bar->addMenu(help_menu);
+
+    home = new HomePage(this, WIN_W, WIN_H);
+    home->setGeometry(0, 0, WIN_W, WIN_H);
+    this->setCentralWidget(home);
+    home->show();
+
     QPixmap pixmap = QPixmap(":/images/bk.png").scaled(this->size());
 
     QPalette palette(this->palette());
@@ -16,103 +66,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->setPalette(palette);
 //    this->setWindowState(Qt::WindowFullScreen);
 //    this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
-    this->setFocus();
+//    this->setFocus();
 
-
-    userinfoWidget = new userinfo(this, WIN_W, WIN_H);
-    userinfoWidget->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-    userinfoWidget->setStyleSheet("QWidget{ border :1px; border-image:url(:images/sidenav.png); }");
-
-    logindialog = new LoginDialog(WIN_W/2, WIN_H*2/3, this);
-    logindialog->setGeometry(WIN_W/4, WIN_H/6, WIN_W/2, WIN_H*2/3);
-
-    solo   = new QPushButton(this);
-    pk     = new QPushButton(this);
-    avatar = new QPushButton(this);
-
-    solo->setGeometry(3*WIN_W/10,2*WIN_H/5,2*WIN_W/5,WIN_H/10);
-    pk->setGeometry(3*WIN_W/10,6*WIN_H/10,4*WIN_W/10,WIN_H/10);
-    avatar->setGeometry(1*WIN_W/10,1*WIN_H/10,WIN_W/10,WIN_W/10);
-
-    pk->setText("PK");
-    solo->setText("SOLO");
-
-    avatar->setStyleSheet("QPushButton {\
-                            background-color: white;\
-                            border-style: solid;\
-                            border-width:1px;\
-                            border-radius:" + QString::number(WIN_W/20) + ";\
-                            border-color: red;\
-                            border-image: url(:/images/log-green.png);\
-                            }\
-                            QPushButton:hover {\
-                             border-image: url(:/images/log-yellow.png);\
-                            }");
-    pk->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:30px;}");
-    solo->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:30px;}");
-
-    avatar->setMask(QRegion(0,0,WIN_W/10,WIN_W/10,QRegion::Ellipse));
-    pk->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-    solo->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-    avatar->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-
-    pk->setFlat(false);
-    solo->setFlat(1);
-
-    pk->stackUnder(userinfoWidget);
-    solo->stackUnder(userinfoWidget);
-
-    connect(avatar,SIGNAL(clicked()),this,SLOT(avatarClicked()));
-    connect(solo,SIGNAL(clicked()),this,SLOT(soloClicked()));
-    connect(pk,SIGNAL(clicked()),this,SLOT(pkPressed()));
-
-    pk->show();
-    solo->show();
-    avatar->show();
-    userinfoWidget->show();
+    connect(home, SIGNAL(CodeEditor(void)), this, SLOT(CodeEditor()));
 }
 
 MainWindow::~MainWindow()
 {
 }
 
-
-void MainWindow::avatarClicked(){
-  userinfoWidget->annimation();
-//    delete  animation;
-}
-
-void MainWindow::soloClicked(){
-    logindialog->show();
-    return;
-}
-
-void MainWindow::pkPressed(){
-    /* qDebug() << http.get(ADDR);
-
-    qDebug() << http.post(ADDR + "/param?name=djw&pwd=250", "");
-
-    QString json = "{\"name\": \"fyh\", \"pwd\": \"123\"}";
-
-    qDebug() << qPrintable(json);
-
-    qDebug() << http.post(ADDR + "/body", json);*/
-
-//    pk->hide();
-//    solo->hide();
-//    avatar->hide();
-//    userinfoWidget->hide();
-
-    this->hide();
-
+// SLOTS
+void MainWindow::CodeEditor(){
     editor = new CodEditor(this, WIN_W, WIN_H);
-//    editor->setGeometry(0, 0, WIN_W, WIN_H);
-//    setCentralWidget(editor);
+    setCentralWidget(editor);
     editor->show();
-
-    return;
 }
 
-void MainWindow::pkReleased(){
-
-}

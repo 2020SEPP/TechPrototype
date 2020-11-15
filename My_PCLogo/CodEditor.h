@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QMainWindow>
 
-class CodEditor : public QMainWindow
+class CodEditor : public QWidget
 {
     Q_OBJECT
 public:

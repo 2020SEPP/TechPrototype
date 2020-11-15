@@ -5,10 +5,10 @@
 #include "Qsci/qsciapis.h"
 #include "Qsci/qscilexercss.h"
 
-
-CodEditor::CodEditor(QWidget *parent, int w, int h) : QMainWindow(parent), WIN_W(w), WIN_H(h)
+CodEditor::CodEditor(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w), WIN_H(h)
 {
     this->resize(w, h);
+    this->setMinimumSize(800,600);                                    //设置窗口最小尺寸。
 
     QsciScintilla *editor = new QsciScintilla(this);
 
@@ -89,7 +89,7 @@ CodEditor::CodEditor(QWidget *parent, int w, int h) : QMainWindow(parent), WIN_W
     editor->setAutoCompletionSource(QsciScintilla::AcsAll);//自动补全。对于所有Ascii字符
     //editor->setAutoCompletionCaseSensitivity(false);//大小写敏感度，设置lexer可能会更改，不过貌似没啥效果
     editor->setAutoCompletionThreshold(1);//设置每输入一个字符就会出现自动补全的提示
-    //editor->setAutoCompletionReplaceWord(false);//是否用补全的字符串替代光标右边的字符串
+    editor->setAutoCompletionReplaceWord(false);//是否用补全的字符串替代光标右边的字符串
 
 //    setCentralWidget(editor);
 

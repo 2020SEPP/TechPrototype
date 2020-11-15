@@ -19,6 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     CodEditor.cpp \
     HttpRequest.cpp \
+    homepage.cpp \
     main.cpp \
     mainwindow.cpp \
     region.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     CodEditor.h \
     HttpRequest.h \
     Network.h \
+    homepage.h \
     mainwindow.h \
     region.h \
     signinwidget.h \
