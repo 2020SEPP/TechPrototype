@@ -9,7 +9,9 @@ CodEditor::CodEditor(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w),
 {
     this->resize(w, h);
     this->setMinimumSize(800,600);                                    //设置窗口最小尺寸。
-
+    QFont font;
+    font .setFamily("songti");
+    this->setFont(font);
     QsciScintilla *editor = new QsciScintilla(this);
 
     editor->resize(w, h);
@@ -69,9 +71,11 @@ CodEditor::CodEditor(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w),
     //editor->setEdgeColor(QColor("green"));
 
     QFont margin_font;
-    margin_font.setFamily("SimSun");
+    margin_font.setFamily("Songti");
     margin_font.setPointSize(11);//边栏字体设置px我这里显示不出行号，不知道是怎么回事
     editor->setMarginsFont(margin_font);//设置页边字体
+   QFont textfont("Courier", 20, QFont::Normal);
+    editor->setFont(textfont);
     editor->setMarginType(0,QsciScintilla::NumberMargin);//设置标号为0的页边显示行号
     //editor->setMarginMarkerMask(0,QsciScintilla::Background);//页边掩码
     //editor->setMarginSensitivity(0,true);//注册通知事件，当用户点击边栏时，scintilla会通知我们

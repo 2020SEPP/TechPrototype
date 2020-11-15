@@ -26,7 +26,7 @@ public:
     int WIN_H;
 
 private:
-    HttpRequest http;
+//    HttpRequest http;
     userinfo *userinfoWidget;
     LoginDialog *logindialog;
     QPushButton *line;
@@ -34,6 +34,7 @@ private:
     QPushButton *solo;
     QPushButton *pk;
     QPushButton *avatar;
+    SingleWidget *single;
 
 private slots:
     void avatarClicked();
