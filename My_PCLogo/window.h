@@ -1,11 +1,19 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-class window
+#include <QMainWindow>
+#include <QObject>
+#include <QWidget>
+
+class Window
 {
+private:
+    bool visible;
 public:
-    int WIN_W;
-    int WIN_H;
+    Window();
+    int winWidth;
+    int winHeight;
+
 };
 
-#endif // WINDOW_H
+#endif // a

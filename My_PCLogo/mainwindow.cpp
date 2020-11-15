@@ -80,5 +80,6 @@ void MainWindow::CodeEditor(){
     editor = new CodEditor(this, WIN_W, WIN_H);
     setCentralWidget(editor);
     editor->show();
+    return ;
 }
 

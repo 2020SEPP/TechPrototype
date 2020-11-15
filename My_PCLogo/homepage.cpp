@@ -1,5 +1,7 @@
 #include "homepage.h"
-
+#include <QtGlobal>
+#include <qdebug.h>
+//#include <qpropertyanimation.h>
 HomePage::HomePage(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w), WIN_H(h)
 {
     this->resize(WIN_W, WIN_H);
@@ -87,7 +89,10 @@ void HomePage::avatarClicked(){
 }
 
 void HomePage::soloClicked(){
-    logindialog->show();
+    this->single=new SingleWidget(this);
+    this->single->show();
+    this->single->InAnnimation();
+    return ;
 }
 
 void HomePage::pkPressed(){

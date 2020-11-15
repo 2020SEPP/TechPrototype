@@ -25,7 +25,12 @@ SOURCES += \
     region.cpp \
     signinwidget.cpp \
     signupwidget.cpp \
-    userinfo.cpp
+    userinfo.cpp \
+    canvas.cpp \
+    console.cpp \
+    painter.cpp \
+    lineedit_my.cpp \
+    window.cpp
 
 HEADERS += \
     CodEditor.h \
@@ -37,7 +42,12 @@ HEADERS += \
     signinwidget.h \
     signupwidget.h \
     user.h \
-    userinfo.h
+    userinfo.h \
+    canvas.h \
+    console.h \
+    painter.h \
+    lineedit_my.h \
+    window.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -49,5 +59,12 @@ RESOURCES += \
 
 # Add Code Texter QScintilla
 
-INCLUDEPATH += ..\QScintilla-2.11.5\Qt4Qt5
-LIBS += -L..\QScintilla-2.11.5\build-qscintilla-Desktop_Qt_5_15_0_MinGW_64_bit-Debug\debug -lqscintilla2_qt5d
+#INCLUDEPATH += ..\QScintilla-2.11.5\Qt4Qt5
+#LIBS += -L..\QScintilla-2.11.5\build-qscintilla-Desktop_Qt_5_15_0_MinGW_64_bit-Debug\debug -lqscintilla2_qt5d
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-qscintilla-Desktop_Qt_5_14_1_clang_64bit-Debug/release/ -lqscintilla2_qt5_debug.15.0.0
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-qscintilla-Desktop_Qt_5_14_1_clang_64bit-Debug/debug/ -lqscintilla2_qt5_debug.15.0.0
+else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-qscintilla-Desktop_Qt_5_14_1_clang_64bit-Debug/ -lqscintilla2_qt5_debug.15.0.0
+
+INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
+DEPENDPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
