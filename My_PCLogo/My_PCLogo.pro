@@ -36,6 +36,7 @@ HEADERS += \
     region.h \
     signinwidget.h \
     signupwidget.h \
+    user.h \
     userinfo.h
 
 # Default rules for deployment.

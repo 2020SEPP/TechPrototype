@@ -5,26 +5,29 @@
 #include <QDialog>
 #include <QLabel>
 #include <QLineEdit>
-
-#include "window.h"
-#include "region.h"
+#include <QPushButton>
 
 class LoginDialog : public QDialog
 {
 private:
     int width;
     int height;
-//    Window window;
 
     QLabel *usrlabel;
     QLabel *psdlabel;
     QLineEdit *usrinput;
     QLineEdit *psdinput;
-//    QPushButton *login;
-//    QPushButton *quit;
+    QPushButton *login;
+    QPushButton *quit;
+
 public:
     LoginDialog();
     LoginDialog(int widght,int height,QWidget *p);
+    ~LoginDialog() {}
+
+private slots:
+    void loginClicked();
+    void quitClicked();
 };
 
 #endif // SIGNINWIDGET_H

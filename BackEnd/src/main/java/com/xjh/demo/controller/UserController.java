@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
     @Autowired
     UserService userService;
-    
+
     @RequestMapping("/login")
-    public UserUtil login(@RequestParam("phone") String phone, @RequestParam("password") String password)
+    public String login(@RequestParam("phone") String phone, @RequestParam("password") String password)
     {
-        return userService.login(phone, password);
+//        return userService.login(phone, password);
+        return phone + ' ' + password;
     }
     @RequestMapping("/register")
     public Boolean register(@RequestParam("phone") String phone, @RequestParam("password") String password)
