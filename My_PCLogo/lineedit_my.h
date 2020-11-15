@@ -5,6 +5,7 @@
 
 class LineEdit:public QLineEdit
 {
+    Q_OBJECT
 public:
     LineEdit(QWidget* parent);
     void keyPressEvent(QKeyEvent* e);

@@ -11,6 +11,8 @@
 
 class LoginDialog :public QDialog
 {
+    Q_OBJECT
+
 private:
     int width;
     int height;
@@ -20,11 +22,16 @@ private:
     QLabel *psdlabel;
     LineEdit  *usrinput;
     QLineEdit *psdinput;
-//    QPushButton *login;
-//    QPushButton *quit;
+    QPushButton *login;
+    QPushButton *quit;
+
+private slots:
+    void loginClicked();
+    void quitClicked();
 public:
     LoginDialog();
     LoginDialog(int widght,int height,QWidget *p);
+    ~LoginDialog();
 };
 
 #endif // LOGINWIDGET_H

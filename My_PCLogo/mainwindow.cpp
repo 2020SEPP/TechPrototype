@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
                             border-radius:"+QString::number(window.winWidth/20)+
                             ";                                                                                                                      \
                             border-color: red;      border-image: url(:/images/log-green.png);           }            \
-                            QPushButton:hover{border-image: url(:/images/log-yellow.png);  \
+                            QPushButton:hover{border-image: url(:/images/turtle.png);  \
                                                                       }                     \
                                                      ");
     pk ->  setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:30px;}");
