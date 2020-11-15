@@ -9,6 +9,8 @@
 
 #include "homepage.h"
 #include "CodEditor.h"
+#include "singlewidget.h"
+#include "pvpwidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -33,9 +35,13 @@ private:
 
 private:
     CodEditor *editor;
+    SingleWidget *single;
+    PvpWidget *pvp;
     HomePage *home;
 
 private slots:
     void CodeEditor();
+    void CommandLine();
+    void PVP();
 };
 #endif // MAINWINDOW_H

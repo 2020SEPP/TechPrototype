@@ -26,26 +26,27 @@ public:
     int WIN_H;
 
 private:
-//    HttpRequest http;
+    bool logined = false;
     userinfo *userinfoWidget;
     LoginDialog *logindialog;
     QPushButton *line;
     QPushButton *text;
-    QPushButton *solo;
-    QPushButton *pk;
+    QPushButton *pvp;
     QPushButton *avatar;
     SingleWidget *single;
 
 private slots:
     void avatarClicked();
-    void soloClicked();
-    void pkPressed();
+    void pvpPressed();
+    void dialogResponse(bool);
     void lineClicked();
     void textClicked();
 
 signals:
     void CodeEditor();
     void CommandLine();
+    void SingleMode();
+    void PVPMode();
 };
 
 #endif // HOMEPAGE_H
