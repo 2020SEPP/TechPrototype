@@ -67,13 +67,12 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent)
     connect(text, SIGNAL(clicked()), this, SLOT(textClicked()));
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
     connect(logindialog, SIGNAL(LoginResponse(bool)), this, SLOT(dialogResponse(bool)));
+
     pvp->show();
     line->show();
     text->show();
     avatar->show();
     usrinfo->show();
-
-
 }
 
 void HomePage::avatarClicked()
@@ -113,5 +112,5 @@ void HomePage::lineClicked()
 
 void HomePage::textClicked()
 {
-    emit CodeEditor();
+    emit CommandFile();
 }

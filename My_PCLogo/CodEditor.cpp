@@ -3,10 +3,6 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-#include "Qsci/qsciscintilla.h"
-#include "Qsci/qsciapis.h"
-#include "Qsci/qscilexercss.h"
-
 CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
 {
     WIN_W = window.getW();
@@ -15,23 +11,23 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
     this->resize(WIN_W, WIN_H);
     this->setMinimumSize(800,600);
 
-    QFont font;
-    font .setFamily("songti");
-    this->setFont(font);
-    QsciScintilla *editor = new QsciScintilla(this);
+    editor = new QsciScintilla(this);
 
     editor->resize(WIN_W, WIN_H);
 
     //设置语法
-    QsciLexerCSS *textLexer = new QsciLexerCSS;//创建一个词法分析器
-    editor->setLexer(textLexer); //给QsciScintilla设置词法分析器
-    textLexer->setPaper(QColor(200,250,200));//文本区域背景色
-    textLexer->setColor(QColor(0,170,0),QsciLexerCSS::Comment); //设置自带的注释行为灰色
-    textLexer->setColor(QColor(Qt::yellow),QsciLexerCSS::Tag);//标签
-    textLexer->setColor(QColor(Qt::yellow),QsciLexerCSS::IDSelector);//id选择器
+    LogoLexer *lexer = new LogoLexer;
+//    QsciLexerPython *textLexer = new QsciLexerPython;//创建一个词法分析器
+//    editor->setLexer(textLexer);
+    editor->setLexer(lexer);
+    lexer->setPaper(QColor(200, 250, 200));
+    lexer->setColor(QColor(0, 170, 0));
+//    textLexer->setPaper(QColor(200,250,200));//文本区域背景色
+//    textLexer->setColor(QColor(0,170,0),QsciLexerPython::Comment); //设置自带的注释行为灰色
 
     //代码提示
-    QsciAPIs *apis=new QsciAPIs(textLexer);
+    QsciAPIs *apis = new QsciAPIs(lexer);
+//    QsciAPIs *apis = new QsciAPIs(textLexer);
     apis->add(QString("gongjianbo1"));
     apis->add(QString("Gong"));
     apis->prepare();
@@ -39,14 +35,13 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
     //行号提示
     editor->SendScintilla(QsciScintilla::SCI_SETCODEPAGE,QsciScintilla::SC_CP_UTF8);//设置编码为UTF-8
     QFont line_font;
-    line_font.setFamily("SimSun");
+    line_font.setFamily("Microsoft YaHei");
     line_font.setPointSize(11);
     editor->setFont(line_font);//设置文本字体
     editor->setWrapMode(QsciScintilla::WrapWord); //文本自动换行模式
     //editor->setWrapVisualFlags(QsciScintilla::WrapFlagByText);
 
     editor->setEolMode(QsciScintilla::EolWindows); //微软风格换行符
-    //editor->setEolVisibility(true);//显示换行符
 
     editor->setWhitespaceVisibility(QsciScintilla::WsVisible);//此时空格为点，\t为箭头
     editor->setWhitespaceSize(2);//空格点大小
@@ -68,19 +63,20 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
     editor->setCaretLineBackgroundColor(QColor(100,250,100));//光标所在行背景颜色
 
     //selection color
-    editor->setSelectionBackgroundColor(Qt::black);//选中文本背景色
+    editor->setSelectionBackgroundColor(Qt::gray);//选中文本背景色
     editor->setSelectionForegroundColor(Qt::white);//选中文本前景色
 
     //edge
-    //editor->setEdgeColumn(50); //edge宽度，没发现有啥用
-    //editor->setEdgeMode(QsciScintilla::EdgeLine);
-    //editor->setEdgeColor(QColor("green"));
+//    editor->setEdgeColumn(50); //edge宽度，没发现有啥用
+//    editor->setEdgeMode(QsciScintilla::EdgeLine);
+//    editor->setEdgeColor(QColor("green"));
 
     QFont margin_font;
-    margin_font.setFamily("Songti");
+    margin_font.setFamily("SimSun");
     margin_font.setPointSize(11);//边栏字体设置px我这里显示不出行号，不知道是怎么回事
     editor->setMarginsFont(margin_font);//设置页边字体
-   QFont textfont("Courier", 20, QFont::Normal);
+
+    QFont textfont("Courier", 20, QFont::Normal);
     editor->setFont(textfont);
     editor->setMarginType(0,QsciScintilla::NumberMargin);//设置标号为0的页边显示行号
     //editor->setMarginMarkerMask(0,QsciScintilla::Background);//页边掩码
@@ -102,11 +98,13 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
     editor->setAutoCompletionReplaceWord(false);//是否用补全的字符串替代光标右边的字符串
 }
 
-void CodEditor::keyPressEvent(QKeyEvent *ev)
+
+QString CodEditor::getAllContent()
 {
-    qDebug() << "esc";
-    if (ev->key() == Qt::Key_Escape)
-    {
-        emit CloseEditor(2);
-    }
+    return editor->text();
+}
+
+void CodEditor::setContent(QString content)
+{
+    editor->setText(content);
 }

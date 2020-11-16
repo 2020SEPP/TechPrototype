@@ -8,11 +8,12 @@
 #include <QDebug>
 
 #include "homepage.h"
-#include "CodEditor.h"
 #include "singlewidget.h"
 #include "pvpwidget.h"
 #include "window.h"
 #include "userinfo.h"
+#include "CmdFileWidget.h"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,14 +27,14 @@ public:
 
 private:
     Window window;
-    CodEditor *editor;
+    CmdFileWidget *cmdfile;
     SingleWidget *single;
     PvpWidget *pvp;
     HomePage *home;
     UserInfo *usrinfo;
 
 private slots:
-    void CodeEditor();
+    void CommandFile();
     void CommandLine();
     void PVP();
 
