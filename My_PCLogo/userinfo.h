@@ -2,16 +2,24 @@
 #define USERINFO_H
 
 #include <QObject>
+#include <QDebug>
 #include <QWidget>
-#include <window.h>
-class userinfo:public QWidget
+#include <QPropertyAnimation>
+#include "window.h"
+
+class UserInfo : public QWidget
 {
+    Q_OBJECT
 private:
+    Window window;
     int WIN_W;
     int WIN_H;
     bool visible;
+
 public:
-    userinfo(QWidget *Parent, int, int);
+    explicit UserInfo(QWidget *parent = nullptr);
+    UserInfo(QWidget *, int, int);
+    ~UserInfo() {}
 public slots:
     void annimation();
 };

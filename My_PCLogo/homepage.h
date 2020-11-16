@@ -18,34 +18,36 @@ class HomePage : public QWidget
     Q_OBJECT
 
 public:
-    HomePage(QWidget *, int, int);
-    ~HomePage();
+    HomePage(QWidget *);
+    ~HomePage() {}
 
 public:
     int WIN_W;
     int WIN_H;
 
 private:
-//    HttpRequest http;
-    userinfo *userinfoWidget;
+    Window window;
+    bool logined = false;
+    UserInfo *usrinfo;
     LoginDialog *logindialog;
     QPushButton *line;
     QPushButton *text;
-    QPushButton *solo;
-    QPushButton *pk;
+    QPushButton *pvp;
     QPushButton *avatar;
     SingleWidget *single;
 
 private slots:
     void avatarClicked();
-    void soloClicked();
-    void pkPressed();
+    void pvpPressed();
+    void dialogResponse(bool);
     void lineClicked();
     void textClicked();
 
 signals:
     void CodeEditor();
     void CommandLine();
+    void SingleMode();
+    void PVPMode();
 };
 
 #endif // HOMEPAGE_H

@@ -11,49 +11,15 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    Window_Pixels_Init();
+    WIN_W = window.getW();
+    WIN_H = window.getH();
+
     this->setWindowTitle("My PC Logo");
-//    this->setFixedSize(WIN_W, WIN_H);
+//    this->setFixedSize(width, height);
     this->resize(WIN_W, WIN_H);
     this->setMinimumSize(800, 600);
 
-    QMenuBar *menu_bar = new QMenuBar(this);             //创建一个菜单栏
-    this->setMenuBar(menu_bar);                                          //添加工具栏到MainWindow
-    QStatusBar *status_bar = new QStatusBar(this);            //创建一个状态栏
-    this->setStatusBar(status_bar);                                        //设置为MainWindow的状态栏
-
-    //创建菜单
-    QMenu *file_menu = new QMenu("文件(&F)",menu_bar);
-    QMenu *edit_menu = new QMenu("编辑(&E)",menu_bar);
-    QMenu *help_menu = new QMenu("帮助(&H)",menu_bar);
-
-    //创建动作
-    QAction *new_action = new QAction("新建(&N)");
-    QAction *open_action = new QAction("打开(&O)");
-    QAction *save_action = new QAction("保存(&S)");
-
-    //添加状态栏提示
-    new_action->setStatusTip("新建一个文件或项目");
-    open_action->setStatusTip("打开一个文件或项目");
-    save_action->setStatusTip("保存");
-
-    //添加动作到新建菜单，QAction就会自动变成子菜单
-    file_menu->addAction(new_action);
-    file_menu->addAction(open_action);
-    file_menu->addSeparator();                      //添加菜单分隔符
-    file_menu->addAction(save_action);
-
-    //给编辑菜单添加子菜单
-    edit_menu->addAction("剪切(&T)");
-    //给帮助菜单添加子菜单
-    help_menu->addAction("关于(&A)");
-
-    //把菜单添加到菜单栏
-    menu_bar->addMenu(file_menu);
-    menu_bar->addMenu(edit_menu);
-    menu_bar->addMenu(help_menu);
-
-    home = new HomePage(this, WIN_W, WIN_H);
+    home = new HomePage(this);
     home->setGeometry(0, 0, WIN_W, WIN_H);
     this->setCentralWidget(home);
     home->show();
@@ -68,18 +34,60 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 //    this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
 //    this->setFocus();
 
-    connect(home, SIGNAL(CodeEditor(void)), this, SLOT(CodeEditor()));
-}
+    editor = new CodEditor(this);
+    editor->hide();
+    single = new SingleWidget(this);
+    single->hide();
+    pvp = new PvpWidget(this);
+    pvp->hide();
 
-MainWindow::~MainWindow()
-{
+    connect(home, SIGNAL(CodeEditor(void)), this, SLOT(CodeEditor()));
+    connect(home, SIGNAL(CommandLine(void)), this, SLOT(CommandLine()));
+    connect(home, SIGNAL(PVPMode(void)), this, SLOT(PVP()));
+
+    connect(editor, SIGNAL(CloseEditor(int)), this, SLOT(SwitchWidget(int)));
+    connect(single, SIGNAL(CloseSingle(int)), this, SLOT(SwitchWidget(int)));
+    connect(pvp, SIGNAL(ClosePvP(int)), this, SLOT(SwitchWidget(int)));
 }
 
 // SLOTS
 void MainWindow::CodeEditor(){
-    editor = new CodEditor(this, WIN_W, WIN_H);
+    editor = new CodEditor(this);
     setCentralWidget(editor);
     editor->show();
     return ;
 }
 
+void MainWindow::CommandLine()
+{
+    single = new SingleWidget(this);
+    single->show();
+    single->InAnnimation();
+}
+
+void MainWindow::PVP()
+{
+    pvp = new PvpWidget(this);
+    pvp->show();
+    pvp->InAnnimation();
+}
+
+void MainWindow::SwitchWidget(int xXCode)
+{
+    qDebug() << xXCode;
+    switch (xXCode) {
+    case 1:
+        single->hide();
+        break;
+    case 2:
+        editor->hide();
+        break;
+    case 3:
+        pvp->hide();
+        break;
+    default:
+        break;
+    }
+
+    home->show();
+}

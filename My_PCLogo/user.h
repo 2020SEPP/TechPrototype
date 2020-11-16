@@ -11,8 +11,9 @@ private:
     QString phone;
     QString password;
 
-private:
+public:
     User(){}
+    User(QString ph, QString pw) : phone(ph), password(pw){}
     User(int i, QString n, QString ph, QString pw) : id(i), name(n), phone(ph), password(pw){}
     ~User(){}
 
@@ -27,6 +28,16 @@ public:
     void setPhone(QString ph) { phone = ph; }
     void setPassword(QString pw) { password = pw; }
 
+    QString toJsonObeject(bool withId) {
+        QString Json = "{";
+        if (withId) {
+            Json += "\"id\": " + QString::number(id) + ", ";
+        }
+
+        Json += "\"phone\": \"" + phone + "\", \
+                 \"password\": \"" + password + "\"}";
+        return Json;
+    }
 
 };
 

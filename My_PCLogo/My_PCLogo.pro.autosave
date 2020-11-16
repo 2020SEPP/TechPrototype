@@ -59,17 +59,9 @@ RESOURCES += \
     resources.qrc
 
 # Add Code Texter QScintilla
-
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-qscintilla-Desktop_Qt_5_14_1_clang_64bit-Debug/release/ -lqscintilla2_qt5_debug.15.0.0
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-qscintilla-Desktop_Qt_5_14_1_clang_64bit-Debug/debug/ -lqscintilla2_qt5_debug.15.0.0
-#else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-qscintilla-Desktop_Qt_5_14_1_clang_64bit-Debug/ -lqscintilla2_qt5_debug.15.0.0
-
-#INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
-#DEPENDPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
-
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5d
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5d
 else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5d
 
 INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
-DEPENDPATH +=$$PWD/QScintilla-2.11.5/Qt4Qt5
+DEPENDPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5

@@ -1,40 +1,43 @@
 #include "userinfo.h"
-#include <QPropertyAnimation>
-#include <QDebug>
 
-userinfo::userinfo(QWidget *parent, int w, int h)
+UserInfo::UserInfo(QWidget *parent) : QWidget(parent)
 {
-    WIN_W = w;
-    WIN_H = h;
-
-    this->setFixedSize(WIN_W/3, WIN_H);
-    this->setGeometry(-WIN_W/3, 0, WIN_W/3, WIN_H);
-    this->setParent(parent);
+    WIN_W = window.getW();
+    WIN_H = window.getH();
     visible = false;
+
+    this->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    this->setGeometry(-WIN_W/3, 0, WIN_W/3, WIN_H);
 }
 
-void userinfo::annimation(){
-   qDebug()<<"1";
-   QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+UserInfo::UserInfo(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w), WIN_H(h)
+{
+    visible = false;
 
-   //设置窗口进入的起始位置
-   animation->setDuration(100);
-   if (this->visible)
-   {
-       animation->setStartValue(QRect(0,0,WIN_W/3,WIN_H));
-       animation->setEndValue(QRect(-WIN_W/3,0,WIN_W/3,WIN_H));
-       animation->start();
-   }
-   else
-   {
-       animation->setStartValue(QRect(-WIN_W/3,0,WIN_W/3,WIN_H));
-       animation->setEndValue(QRect(0,0,WIN_W/3,WIN_H));
-       //选择特效
-       //        animation->setEasingCurve(QEasingCurve::OutBounce);
-       //开始播放特效
-       animation->start();
-   }
+    this->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    this->setGeometry(-WIN_W/3, 0, WIN_W/3, WIN_H);
+}
 
-   this->visible = !(this->visible);
-   this->setWindowModality(Qt::ApplicationModal);
+void UserInfo::annimation()
+{
+    qDebug() << 1;
+    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+
+    animation->setDuration(100); //设置窗口进入的起始位置
+    if (visible)
+    {
+        animation->setStartValue(QRect(0,0,WIN_W/3,WIN_H));
+        animation->setEndValue(QRect(-WIN_W/3,0,WIN_W/3,WIN_H));
+        animation->start();
+    }
+    else
+    {
+        animation->setStartValue(QRect(-WIN_W/3,0,WIN_W/3,WIN_H));
+        animation->setEndValue(QRect(0,0,WIN_W/3,WIN_H));
+//        animation->setEasingCurve(QEasingCurve::OutBounce);
+        animation->start();
+    }
+
+    this->visible = !(this->visible);
+    this->setWindowModality(Qt::ApplicationModal);
 }

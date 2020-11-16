@@ -1,11 +1,10 @@
 #ifndef REGION_H
 #define REGION_H
+
 #include <QRegion>
 #include <QPainterPath>
-#include <QPushButton>
-/**
- *   次Region继承QRegion  用于setmask
- * */
+#include <QWidget>
+
 class Region:public QRegion
 {
 private:
@@ -14,8 +13,8 @@ private:
     QPolygon po;
 public:
     Region(int width,int height,int radius);
+    ~Region() {}
     void mask(QWidget *p);
-
 };
 
 #endif // REGION_H

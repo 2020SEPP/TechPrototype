@@ -1,16 +1,20 @@
 #ifndef LOGINWIDGET_H
 #define LOGINWIDGET_H
 
+#include "window.h"
+#include "region.h"
+#include "singlewidget.h"
+#include "LineEdit.h"
+#include "HttpRequest.h"
+#include "user.h"
+
 #include <QObject>
 #include <QDialog>
-#include <window.h>
-#include <region.h>
 #include <QLabel>
+#include <QPushButton>
 #include <QLineEdit>
-#include <lineedit_my.h>
-#include <painter.h>
 
-class LoginDialog :public QDialog
+class LoginDialog : public QDialog
 {
     Q_OBJECT
 
@@ -20,19 +24,26 @@ private:
     Window window;
 
     QLabel *usrlabel;
-    QLabel *psdlabel;
+    QLabel *pwdlabel;
     LineEdit  *usrinput;
-    QLineEdit *psdinput;
+    QLineEdit *pwdinput;
     QPushButton *login;
     QPushButton *quit;
     SingleWidget *single;
+
+    HttpRequest http;
+
 private slots:
     void loginClicked();
     void quitClicked();
+
 public:
     LoginDialog();
     LoginDialog(int widght,int height,QWidget *p);
     ~LoginDialog();
+
+signals:
+    void LoginResponse(bool);
 };
 
 #endif // LOGINWIDGET_H

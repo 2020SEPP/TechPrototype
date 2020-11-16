@@ -7,7 +7,6 @@ Canvas::Canvas(QWidget *parent) : QWidget(parent)
 {
     CANVAS_WIDTH = (parent->width() * 3) / 4;
     CANVAS_HEIGHT = (parent->height() * 3) / 4;
-//    CURR_POS = new QPointF(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     CURR_POS = new QPointF(parent->width() / 2, CANVAS_HEIGHT / 2);
     CURR_ANGLE = 90;
     PEN_IS_DOWN = true;
@@ -52,12 +51,12 @@ Canvas::paintEvent(QPaintEvent *)
 
 QString get_qreal_str(QString str)
 {
-//    qDebug() << "get qreal string: " << str << endl;
+//    qDebug() << "get qreal string: " << str;
     int index = 0;
     while (index < str.length())
     {
         QChar ch = str.at(index);
-//        qDebug() << index << " : " << ch << endl;
+//        qDebug() << index << " : " << ch;
         if ((ch >= '0' && ch <= '9') || ch == '.')
         {
             index++;
@@ -85,7 +84,7 @@ Canvas::parse_line(QString line)
     if (line == "")
         return;
 
-//    qDebug() << "parse line: " << line << endl;
+//    qDebug() << "parse line: " << line;
 
     int line_index = 0;
     QString inst;
@@ -94,7 +93,7 @@ Canvas::parse_line(QString line)
         line_index++;
 
     inst = line.left(line_index);
-//    qDebug() << "inst: " << inst << endl;
+//    qDebug() << "inst: " << inst;
 
     if (INSTRUCTIONS.indexOf(inst) != -1)
     {
@@ -234,7 +233,7 @@ argument_type_err:
         }
     }
 
-    qDebug() << "ERROR! unknown command " << line << endl;
+    qDebug() << "ERROR! unknown command " << line;
     return;
 }
 
@@ -242,9 +241,9 @@ void
 Canvas::drawLine(qreal rlen, bool flag)
 {
     if (flag)
-        qDebug() << "fd: " << rlen << endl;
+        qDebug() << "fd: " << rlen;
     else
-        qDebug() << "bk: " << rlen << endl;
+        qDebug() << "bk: " << rlen;
 
     const QPointF aP1(CURR_POS->rx(), CURR_POS->ry());
 
@@ -284,7 +283,7 @@ Canvas::turnDirection(qreal delta, bool flag)
 void
 Canvas::reset()
 {
-    qDebug() << "reset" << endl;
+    qDebug() << "reset";
 
     LINES.clear();
     CIRCLES.clear();
@@ -299,14 +298,14 @@ Canvas::reset()
 void
 Canvas::penDown()
 {
-    qDebug() << "pen down" << endl;
+    qDebug() << "pen down";
     PEN_IS_DOWN = true;
 }
 
 void
 Canvas::penUp()
 {
-    qDebug() << "pen up" << endl;
+    qDebug() << "pen up";
 
     PEN_IS_DOWN = false;
 }
@@ -314,7 +313,7 @@ Canvas::penUp()
 void
 Canvas::setXT(qreal rx, qreal ry)
 {
-    qDebug() << "setxy: " << rx << ' ' << ry << endl;
+    qDebug() << "setxy: " << rx << ' ' << ry;
 
     CURR_POS->setX(rx);
     CURR_POS->setY(ry);
@@ -323,7 +322,7 @@ Canvas::setXT(qreal rx, qreal ry)
 void
 Canvas::setPC(uint color)
 {
-    qDebug() << "setpencolor: " << color << endl;
+    qDebug() << "setpencolor: " << color;
 
     pen.setColor(color);
     update();
@@ -333,7 +332,7 @@ Canvas::setPC(uint color)
 void
 Canvas::stampoval(qreal rx, qreal ry)
 {
-    qDebug() << "stampoval: " << rx << ' ' << ry << endl;
+    qDebug() << "stampoval: " << rx << ' ' << ry;
     const QPointF center(CURR_POS->rx(), CURR_POS->ry());
     circle_t cl;
     cl.center = center;
