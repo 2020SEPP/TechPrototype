@@ -35,6 +35,7 @@ private:
     QPushButton *pvp;
     QPushButton *avatar;
     SingleWidget *single;
+    QWidget *w;
 
 private slots:
     void avatarClicked();

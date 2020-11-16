@@ -10,11 +10,9 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent)
     this->resize(WIN_W, WIN_H);
     this->setFocus();
 
-    usrinfo = new UserInfo(this);
-    usrinfo = new UserInfo(this, WIN_W, WIN_H);
-//    usrinfo->setGeometry(-WIN_W/3, 0, WIN_W/3, WIN_H);
-    usrinfo->setStyleSheet("QWidget{ border :1px; border-image:url(:images/sidenav.png); }");
 
+
+    usrinfo = new UserInfo(this,WIN_W,WIN_H);
     logindialog = new LoginDialog(WIN_W/2, WIN_H*2/3, this);
     logindialog->setGeometry(WIN_W/4, WIN_H/6, WIN_W/2, WIN_H*2/3);
 
@@ -69,17 +67,22 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent)
     connect(text, SIGNAL(clicked()), this, SLOT(textClicked()));
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
     connect(logindialog, SIGNAL(LoginResponse(bool)), this, SLOT(dialogResponse(bool)));
-
     pvp->show();
     line->show();
     text->show();
     avatar->show();
     usrinfo->show();
+
+
 }
 
 void HomePage::avatarClicked()
 {
+    if(logined)
     usrinfo->annimation();
+    else logindialog->show();
+    this->logined=!this->logined;
+    return ;
 }
 
 

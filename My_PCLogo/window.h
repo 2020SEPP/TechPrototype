@@ -19,13 +19,13 @@ private:
 
 public:
     Window() {
-        QScreen *screen = QGuiApplication::primaryScreen();
-        QRect mm = screen->availableGeometry() ;
-        winWidth = mm.width();
-        winHeight = mm.height();
-//        QRect screenRect = QApplication::desktop()->screenGeometry();
-//        winWidth = screenRect.width();
-//        winHeight = screenRect.height();
+//        QScreen *screen = QGuiApplication::primaryScreen();
+//        QRect mm = screen->availableGeometry() ;
+//        winWidth = mm.width();
+//        winHeight = mm.height();
+        QRect screenRect = QApplication::desktop()->screenGeometry();
+        winWidth = screenRect.width();
+        winHeight = screenRect.height();
     }
     ~Window() {}
 

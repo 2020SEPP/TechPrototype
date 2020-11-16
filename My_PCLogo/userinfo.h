@@ -5,7 +5,10 @@
 #include <QDebug>
 #include <QWidget>
 #include <QPropertyAnimation>
+#include <QDialog>
+#include <QLabel>
 #include "window.h"
+#include "user.h"
 
 class UserInfo : public QWidget
 {
@@ -15,9 +18,19 @@ private:
     int WIN_W;
     int WIN_H;
     bool visible;
+    User user;
+    QWidget *w;  //没有w会出大问题！！！！！！！！！！！！！！！！！
+    QLabel  *id;
+    QLabel *Vid;
+    QLabel  *username;
+    QLabel *Vusername;
+    QLabel *phone;
+    QLabel *Vphone;
+    QLabel *exp;
+    QLabel *Vexp;
 
 public:
-    explicit UserInfo(QWidget *parent = nullptr);
+    void setUser(User U);
     UserInfo(QWidget *, int, int);
     ~UserInfo() {}
 public slots:

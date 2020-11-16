@@ -10,11 +10,12 @@ private:
     QString name;
     QString phone;
     QString password;
+    QString avatar;
 
 public:
     User(){}
     User(QString ph, QString pw) : phone(ph), password(pw){}
-    User(int i, QString n, QString ph, QString pw) : id(i), name(n), phone(ph), password(pw){}
+    User(int i, QString n, QString ph, QString pw,QString ava) : id(i), name(n), phone(ph), password(pw),avatar(ava){}
     ~User(){}
 
 public:

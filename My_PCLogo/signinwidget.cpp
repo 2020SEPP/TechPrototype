@@ -2,7 +2,6 @@
 
 #include <QBrush>
 #include <QPalette>
-#include <QPalette>
 #include <QtCore>
 
 LoginDialog::LoginDialog()
@@ -11,7 +10,9 @@ LoginDialog::LoginDialog()
 
 LoginDialog::LoginDialog(int width, int height, QWidget *p)
 {
-    p->setVisible(1);
+    p->setVisible(0);
+    this->setParent(p);
+    this->setFocus();
     this->width=width;
     this->height=height;
     this->setWindowModality(Qt::ApplicationModal);
