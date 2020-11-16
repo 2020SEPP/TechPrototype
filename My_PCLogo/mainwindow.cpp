@@ -15,14 +15,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     WIN_H = window.getH();
 
     this->setWindowTitle("My PC Logo");
-//    this->setFixedSize(width, height);
+    this->setFixedSize(WIN_W, WIN_H);
     this->resize(WIN_W, WIN_H);
-    this->setMinimumSize(800, 600);
-
     home = new HomePage(this);
     home->setGeometry(0, 0, WIN_W, WIN_H);
-    this->setCentralWidget(home);
+//    this->setCentralWidget(home);
     home->show();
+
 
     QPixmap pixmap = QPixmap(":/images/bk.png").scaled(this->size());
 
@@ -30,9 +29,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     palette.setBrush(QPalette::Background, QBrush(pixmap));
 
     this->setPalette(palette);
-//    this->setWindowState(Qt::WindowFullScreen);
-//    this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
-//    this->setFocus();
+    this->setWindowState(Qt::WindowFullScreen);
+    this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
+    this->setFocus();
 
     editor = new CodEditor(this);
     editor->hide();

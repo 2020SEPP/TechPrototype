@@ -2,6 +2,7 @@
 #include <QFont>
 #include <QApplication>
 #include <QFontDatabase>
+#include <QLabel>
 
 int main(int argc, char *argv[])
 {

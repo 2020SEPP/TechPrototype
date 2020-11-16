@@ -12,7 +12,7 @@
 #include "singlewidget.h"
 #include "pvpwidget.h"
 #include "window.h"
-
+#include "userinfo.h"
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -30,6 +30,7 @@ private:
     SingleWidget *single;
     PvpWidget *pvp;
     HomePage *home;
+    UserInfo *usrinfo;
 
 private slots:
     void CodeEditor();
