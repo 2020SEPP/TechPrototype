@@ -11,9 +11,10 @@
 #include <QObject>
 #include <QDialog>
 #include <QLabel>
+#include <QPushButton>
 #include <QLineEdit>
 
-class LoginDialog :public QDialog
+class LoginDialog : public QDialog
 {
     Q_OBJECT
 

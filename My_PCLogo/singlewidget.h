@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QKeyEvent>
+
 #include "canvas.h"
 #include "console.h"
 #include "window.h"
@@ -14,7 +16,7 @@ class SingleWidget : public QWidget
     Q_OBJECT
 public:
     explicit SingleWidget(QWidget *parent);
-    ~SingleWidget() {}
+    ~SingleWidget() override {}
 private:
     Canvas *canvas;
     Console *console;
@@ -23,8 +25,11 @@ private:
     int width;
     bool visible;
 
+protected:
+    void keyPressEvent(QKeyEvent *) override;
 
 signals:
+    void CloseSingle(int);
 
 public slots:
     void setCanvasBG(QString);

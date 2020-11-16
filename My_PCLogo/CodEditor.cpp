@@ -1,23 +1,29 @@
 #include "CodEditor.h"
 
-#include <QMainWindow>
+#include <QKeyEvent>
+#include <QDebug>
+
 #include "Qsci/qsciscintilla.h"
 #include "Qsci/qsciapis.h"
 #include "Qsci/qscilexercss.h"
 
-CodEditor::CodEditor(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w), WIN_H(h)
+CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
 {
-    this->resize(w, h);
-    this->setMinimumSize(800,600);                                    //设置窗口最小尺寸。
+    WIN_W = window.getW();
+    WIN_H = window.getH();
+
+    this->resize(WIN_W, WIN_H);
+    this->setMinimumSize(800,600);
+
     QFont font;
     font .setFamily("songti");
     this->setFont(font);
     QsciScintilla *editor = new QsciScintilla(this);
 
-    editor->resize(w, h);
+    editor->resize(WIN_W, WIN_H);
 
     //设置语法
-    QsciLexerCSS *textLexer=new QsciLexerCSS;//创建一个词法分析器
+    QsciLexerCSS *textLexer = new QsciLexerCSS;//创建一个词法分析器
     editor->setLexer(textLexer); //给QsciScintilla设置词法分析器
     textLexer->setPaper(QColor(200,250,200));//文本区域背景色
     textLexer->setColor(QColor(0,170,0),QsciLexerCSS::Comment); //设置自带的注释行为灰色
@@ -94,7 +100,13 @@ CodEditor::CodEditor(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w),
     //editor->setAutoCompletionCaseSensitivity(false);//大小写敏感度，设置lexer可能会更改，不过貌似没啥效果
     editor->setAutoCompletionThreshold(1);//设置每输入一个字符就会出现自动补全的提示
     editor->setAutoCompletionReplaceWord(false);//是否用补全的字符串替代光标右边的字符串
+}
 
-//    setCentralWidget(editor);
-
+void CodEditor::keyPressEvent(QKeyEvent *ev)
+{
+    qDebug() << "esc";
+    if (ev->key() == Qt::Key_Escape)
+    {
+        emit CloseEditor(2);
+    }
 }

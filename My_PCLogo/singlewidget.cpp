@@ -5,8 +5,8 @@
 
 SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent)
 {
-    this->height = window.winHeight;
-    this->width = window.winWidth;
+    height = window.getH();
+    width = window.getW();
 
     this->setFixedSize(width,height);
     this->setWindowTitle("My PC Logo");
@@ -71,4 +71,14 @@ SingleWidget::InAnnimation()
    }
    this->visible = !this->visible;
    this->setWindowModality(Qt::ApplicationModal);
+}
+
+
+void
+SingleWidget::keyPressEvent(QKeyEvent *ev)
+{
+    if (ev->key() == Qt::Key_Escape)
+    {
+        emit CloseSingle(1);
+    }
 }

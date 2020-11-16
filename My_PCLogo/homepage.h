@@ -18,16 +18,17 @@ class HomePage : public QWidget
     Q_OBJECT
 
 public:
-    HomePage(QWidget *, int, int);
-    ~HomePage();
+    HomePage(QWidget *);
+    ~HomePage() {}
 
 public:
     int WIN_W;
     int WIN_H;
 
 private:
+    Window window;
     bool logined = false;
-    userinfo *userinfoWidget;
+    UserInfo *usrinfo;
     LoginDialog *logindialog;
     QPushButton *line;
     QPushButton *text;

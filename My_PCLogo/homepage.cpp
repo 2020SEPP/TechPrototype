@@ -1,22 +1,26 @@
 #include "homepage.h"
 #include <QtGlobal>
 #include <qdebug.h>
-//#include <qpropertyanimation.h>
-HomePage::HomePage(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w), WIN_H(h)
+
+HomePage::HomePage(QWidget *parent) : QWidget(parent)
 {
+    WIN_W = window.getW();
+    WIN_H = window.getH();
+
     this->resize(WIN_W, WIN_H);
     this->setFocus();
 
-    userinfoWidget = new userinfo(this, WIN_W, WIN_H);
-    userinfoWidget->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-    userinfoWidget->setStyleSheet("QWidget{ border :1px; border-image:url(:images/sidenav.png); }");
+    usrinfo = new UserInfo(this);
+    usrinfo = new UserInfo(this, WIN_W, WIN_H);
+//    usrinfo->setGeometry(-WIN_W/3, 0, WIN_W/3, WIN_H);
+    usrinfo->setStyleSheet("QWidget{ border :1px; border-image:url(:images/sidenav.png); }");
 
     logindialog = new LoginDialog(WIN_W/2, WIN_H*2/3, this);
     logindialog->setGeometry(WIN_W/4, WIN_H/6, WIN_W/2, WIN_H*2/3);
 
     line   = new QPushButton(this);
     text   = new QPushButton(this);
-    pvp     = new QPushButton(this);
+    pvp    = new QPushButton(this);
     avatar = new QPushButton(this);
 
     line->setGeometry(2*WIN_W/5, 3*WIN_H/10, WIN_W/5, WIN_H/10);
@@ -56,9 +60,9 @@ HomePage::HomePage(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w), W
     text->setFlat(false);
     pvp->setFlat(false);
 
-    line->stackUnder(userinfoWidget);
-    text->stackUnder(userinfoWidget);
-    pvp->stackUnder(userinfoWidget);
+    line->stackUnder(usrinfo);
+    text->stackUnder(usrinfo);
+    pvp->stackUnder(usrinfo);
 
     connect(avatar,SIGNAL(clicked()),this,SLOT(avatarClicked()));
     connect(line, SIGNAL(clicked()), this, SLOT(lineClicked()));
@@ -70,16 +74,12 @@ HomePage::HomePage(QWidget *parent, int w, int h) : QWidget(parent), WIN_W(w), W
     line->show();
     text->show();
     avatar->show();
-    userinfoWidget->show();
-}
-
-HomePage::~HomePage()
-{
+    usrinfo->show();
 }
 
 void HomePage::avatarClicked()
 {
-    userinfoWidget->annimation();
+    usrinfo->annimation();
 }
 
 
