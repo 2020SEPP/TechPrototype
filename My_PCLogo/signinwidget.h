@@ -21,14 +21,18 @@ class LoginDialog : public QDialog
 private:
     int width;
     int height;
+    bool SignUpMode=false;
     Window window;
 
     QLabel *usrlabel;
     QLabel *pwdlabel;
+    QLabel *pholabel;
     LineEdit  *usrinput;
-    QLineEdit *pwdinput;
+    LineEdit *pwdinput;
+    LineEdit *phoneinput;
     QPushButton *login;
     QPushButton *quit;
+    QPushButton *signup;
     SingleWidget *single;
 
     HttpRequest http;
@@ -36,6 +40,7 @@ private:
 private slots:
     void loginClicked();
     void quitClicked();
+    void signupClicked();
 
 public:
     LoginDialog();

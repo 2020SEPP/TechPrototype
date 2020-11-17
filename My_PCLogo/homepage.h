@@ -24,10 +24,11 @@ public:
 public:
     int WIN_W;
     int WIN_H;
-
+    User *USER;
 private:
     Window window;
     bool logined = false;
+
     UserInfo *usrinfo;
     LoginDialog *logindialog;
     QPushButton *line;
@@ -36,6 +37,7 @@ private:
     QPushButton *avatar;
     SingleWidget *single;
     QWidget *w;
+    QLabel *ava_border;
 
 private slots:
     void avatarClicked();

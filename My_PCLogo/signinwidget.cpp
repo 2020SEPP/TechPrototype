@@ -28,31 +28,42 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p)
 
     usrlabel = new QLabel(this);
     pwdlabel = new QLabel(this);
+    pholabel = new QLabel(this);
     login    = new QPushButton(this);
     quit     = new QPushButton(this);
+    signup= new QPushButton(this);
 
     usrlabel->setFont(font);
     pwdlabel->setFont(font);
-    login->setGeometry(width/4,6*height/10,width/5,height/10);
-    quit->setGeometry(11*width/20,6*height/10,width/5,height/10);
+    pholabel->setFont(font);
+    login->setGeometry(width/10,6*height/10,width/5,height/10);
+    quit->setGeometry(4*width/10,6*height/10,width/5,height/10);
+    signup->setGeometry(7*width/10,6*height/10,width/5,height/10);
     usrlabel->setAttribute(Qt::WA_TranslucentBackground, true);//透明
     usrlabel->setAlignment(Qt::AlignCenter|Qt::AlignCenter);
     pwdlabel->setAttribute(Qt::WA_TranslucentBackground,true);
     pwdlabel->setAlignment(Qt::AlignCenter|Qt::AlignCenter);
+    pholabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    pholabel->setAlignment(Qt::AlignCenter|Qt::AlignCenter);
     usrlabel->setGeometry(1*width/15,height/5,width/5,height/10);
     pwdlabel->setGeometry(1*width/15,2*height/5,width/5,height/10);
+    pholabel->setGeometry(1*width/15,3*height/5,width/5,height/10);
     usrlabel->setText("用户名:");
     pwdlabel->setText("密  码:");
+    pholabel->setText("电话号码");
     login->setText("登陆");
     quit->setText("返回");
+    signup->setText("注册");
 
 
     login->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:20px;}");
     quit->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:20px;}");
+    signup->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:20px;}");
 
 
     usrinput = new LineEdit(this);
     pwdinput = new LineEdit(this);
+    phoneinput=new LineEdit(this);
 
 
     usrinput->setGeometry(width/4+50,height*13/60,width/2,height/15);
@@ -65,14 +76,23 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p)
     pwdinput->setMaxLength(16);
     pwdinput->setEchoMode(QLineEdit::Password);
 
+    phoneinput->setGeometry(width/4+50,height*37/60,width/2,height/15);
+    phoneinput->setFont(font);
+    phoneinput->setMaxLength(16);
 
     login->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     quit->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    signup->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     login->setFont(font);
     quit->setFont(font);
+    signup->setFont(font);
 
     connect(login,SIGNAL(clicked()),this,SLOT(loginClicked()));
     connect(quit,SIGNAL(clicked()),this,SLOT(quitClicked()));
+    connect(signup,SIGNAL(clicked()),this,SLOT(signupClicked()));
+
+    pholabel->hide();
+    phoneinput->hide();
 }
 
 
@@ -81,11 +101,26 @@ void LoginDialog::loginClicked()
 {
     QString usr = usrinput->text();
     QString pwd = pwdinput->text();
+    QString pho = phoneinput->text();
+    QString res;
     User user(usr, pwd);
+    QString req=ADDR+"/user/";
 
-    QString res = http.post(ADDR + "/login", user.toJsonObeject(false));
-
-    qDebug() << res;
+    if(SignUpMode){
+        req+="register?phone="+pho+"&password="+pwd+"&name="+usr;
+        res = http.get(req);//, user.toJsonObeject(false));
+        qDebug()<<req;
+        if(res=="1"){
+            this->hide();
+            emit LoginResponse(true);
+        }
+    }
+    else{
+        req+="loginByName?name="+usr+"&password="+pwd;
+        qDebug()<<req;
+        res = http.get(req);//, user.toJsonObeject(false));
+    }
+    qDebug() << res<<"res";
     emit LoginResponse(true);
 }
 
@@ -95,4 +130,25 @@ void LoginDialog::quitClicked(){
 
 LoginDialog::~LoginDialog(){
 
+}
+
+void LoginDialog::signupClicked(){
+    this->SignUpMode=!this->SignUpMode;
+    if(this->SignUpMode){
+        login->setGeometry(width/10,8*height/10,width/5,height/10);
+        quit->setGeometry(4*width/10,8*height/10,width/5,height/10);
+        signup->setGeometry(7*width/10,8*height/10,width/5,height/10);
+        signup->setText("取消");
+        pholabel->show();
+        phoneinput->show();
+
+    }
+    else{
+        pholabel->hide();
+        phoneinput->hide();
+        signup->setText("注册");
+        login->setGeometry(width/10,6*height/10,width/5,height/10);
+        quit->setGeometry(4*width/10,6*height/10,width/5,height/10);
+        signup->setGeometry(7*width/10,6*height/10,width/5,height/10);
+    }
 }
