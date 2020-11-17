@@ -15,7 +15,6 @@ private:
     QString name;
     QString phone;
     QString password;
-//    QString token;
     QString avatar;
     QPixmap *image;
     QList<int> friends;

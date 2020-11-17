@@ -57,6 +57,28 @@ QJsonObject HttpRequest::get_json(QString url)
     return object;
 }
 
+QJsonArray HttpRequest::get_array(QString url)
+{
+    QNetworkRequest request;
+    QNetworkAccessManager *naManager = new QNetworkAccessManager();
+    QUrl strUrl = url;
+    request.setUrl(strUrl);
+    request.setRawHeader("Content-Type", "charset='utf-8'");
+    request.setRawHeader("Content-Type", "application/json");
+
+    QNetworkReply* reply = naManager->get(request);
+
+    QEventLoop eventLoop;
+    connect(naManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
+    eventLoop.exec();
+
+    QJsonArray array = QJsonDocument::fromJson(reply->readAll()).array();
+
+    reply->deleteLater();
+    delete naManager;
+    return array;
+}
+
 QString HttpRequest::getRequest(QString url)
 {
     QTimer timer;

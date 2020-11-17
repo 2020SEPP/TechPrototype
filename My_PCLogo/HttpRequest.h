@@ -18,6 +18,7 @@ public:
 
     QString get(QString url);
     QJsonObject get_json(QString url);
+    QJsonArray get_array(QString url);
     QString getRequest(QString url);
     QString post_str(QString url,  QString jsondata);
     QJsonObject post_json(QString url, QString jsondata);

@@ -8,7 +8,7 @@
 
 #include "Qsci/qsciscintilla.h"
 #include "Qsci/qsciapis.h"
-#include "LogoLexer.h"
+#include "qscilexerLogo.h"
 #include "Qsci/qscilexerpython.h"
 
 class CodEditor : public QWidget

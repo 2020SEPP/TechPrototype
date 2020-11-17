@@ -16,7 +16,7 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
     editor->resize(WIN_W, WIN_H);
 
     //设置语法
-    LogoLexer *lexer = new LogoLexer;
+    QsciLexerLogo *lexer = new QsciLexerLogo;
 //    QsciLexerPython *textLexer = new QsciLexerPython;//创建一个词法分析器
 //    editor->setLexer(textLexer);
     editor->setLexer(lexer);

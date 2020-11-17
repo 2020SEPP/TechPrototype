@@ -21,11 +21,11 @@ SOURCES += \
     CodEditor.cpp \
     HttpRequest.cpp \
     LineEdit.cpp \
-    LogoLexer.cpp \
     homepage.cpp \
     main.cpp \
     mainwindow.cpp \
     pvpwidget.cpp \
+    qscilexerLogo.cpp \
     region.cpp \
     signinwidget.cpp \
     signupwidget.cpp \
@@ -39,11 +39,11 @@ HEADERS += \
     CodEditor.h \
     HttpRequest.h \
     LineEdit.h \
-    LogoLexer.h \
     Network.h \
     homepage.h \
     mainwindow.h \
     pvpwidget.h \
+    qscilexerLogo.h \
     region.h \
     signinwidget.h \
     signupwidget.h \

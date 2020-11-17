@@ -4,6 +4,24 @@
 #include <QPalette>
 #include <QtCore>
 
+QList<User *> getFriend(int uid)
+{
+    HttpRequest http;
+    QString url = ADDR + "/user/getFriend?uid=" + QString::number(uid);
+    QJsonArray res = http.get_array(url);
+
+    QList<User *> users;
+
+    for (int i = 0; i < res.size(); ++i)
+    {
+        QJsonObject object = res.at(i).toObject();
+        User *user = new User(object);
+        users.append(user);
+    }
+
+    return users;
+}
+
 LoginDialog::LoginDialog()
 {
 }
