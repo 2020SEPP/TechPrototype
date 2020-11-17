@@ -10,6 +10,8 @@ Canvas::Canvas(QWidget *parent) : QWidget(parent)
     CURR_POS = new QPointF(parent->width() / 2, CANVAS_HEIGHT / 2);
     CURR_ANGLE = 90;
     PEN_IS_DOWN = true;
+
+
 }
 
 // public
