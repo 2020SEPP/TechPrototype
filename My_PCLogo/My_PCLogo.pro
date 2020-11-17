@@ -21,12 +21,15 @@ SOURCES += \
     CodEditor.cpp \
     HttpRequest.cpp \
     LineEdit.cpp \
+    friendList.cpp \
     homepage.cpp \
     main.cpp \
     mainwindow.cpp \
     pvpwidget.cpp \
+    qlistwidgetitem.cpp \
     qscilexerLogo.cpp \
     region.cpp \
+    searchbar.cpp \
     signinwidget.cpp \
     signupwidget.cpp \
     singlewidget.cpp \
@@ -40,11 +43,14 @@ HEADERS += \
     HttpRequest.h \
     LineEdit.h \
     Network.h \
+    friendList.h \
     homepage.h \
     mainwindow.h \
     pvpwidget.h \
+    qlistwidgetitem.h \
     qscilexerLogo.h \
     region.h \
+    searchbar.h \
     signinwidget.h \
     signupwidget.h \
     singlewidget.h \

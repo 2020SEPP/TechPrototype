@@ -29,6 +29,7 @@ LoginDialog::LoginDialog()
 LoginDialog::LoginDialog(int width, int height, QWidget *p)
 {
     p->setVisible(0);
+    this->setStyleSheet("QDialog{border-image:url(:/images/image/login2.png)}");
     this->setParent(p);
     this->setFocus();
     this->width=width;
@@ -74,9 +75,9 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p)
     signup->setText("注册");
 
 
-    login->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:20px;}");
-    quit->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:20px;}");
-    signup->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:20px;}");
+    login->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:20px;}");
+    quit->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:20px;}");
+    signup->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:20px;}");
 
 
     usrinput = new LineEdit(this);
@@ -134,6 +135,7 @@ void LoginDialog::loginClicked()
         }
     }
     else{
+
         url += "loginByName?name="+usr+"&password="+pwd;
         qDebug() << url;
         QJsonObject res = http.get_json(url);
@@ -156,6 +158,7 @@ void LoginDialog::loginClicked()
     }
 //    qDebug() << res<<"res";
     emit LoginResponse(true);
+
 }
 
 void LoginDialog::quitClicked(){
@@ -169,6 +172,7 @@ LoginDialog::~LoginDialog(){
 void LoginDialog::signupClicked(){
     this->SignUpMode=!this->SignUpMode;
     if(this->SignUpMode){
+        this->setStyleSheet("QDialog{border-image:url(:/images/image/login11.png)}");
         login->setGeometry(width/10,8*height/10,width/5,height/10);
         quit->setGeometry(4*width/10,8*height/10,width/5,height/10);
         signup->setGeometry(7*width/10,8*height/10,width/5,height/10);
@@ -177,6 +181,7 @@ void LoginDialog::signupClicked(){
         phoneinput->show();
     }
     else{
+        this->setStyleSheet("QDialog{border-image:url(:/images/image/login2.png)}");
         pholabel->hide();
         phoneinput->hide();
         signup->setText("注册");

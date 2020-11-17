@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     home->show();
 
 
-    QPixmap pixmap = QPixmap(":/images/bk.png").scaled(this->size());
+    QPixmap pixmap = QPixmap(":/images/image/bk.png").scaled(this->size());
 
     QPalette palette(this->palette());
     palette.setBrush(QPalette::Background, QBrush(pixmap));

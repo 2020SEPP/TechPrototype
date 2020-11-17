@@ -7,8 +7,10 @@
 #include <QPropertyAnimation>
 #include <QDialog>
 #include <QLabel>
+#include <QPushButton>
 #include "window.h"
 #include "user.h"
+#include "friendList.h"
 
 class UserInfo : public QWidget
 {
@@ -28,6 +30,8 @@ private:
     QLabel *Vphone;
     QLabel *exp;
     QLabel *Vexp;
+    QPushButton *friendList;
+    FriendList *fl;
 
 public:
     void setUser(User U);
@@ -35,6 +39,7 @@ public:
     ~UserInfo() {}
 public slots:
     void annimation();
+    void friendListClicked();
 };
 
 #endif // USERINFO_H

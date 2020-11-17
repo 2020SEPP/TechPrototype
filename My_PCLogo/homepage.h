@@ -27,7 +27,7 @@ public:
     User *USER;
 private:
     Window window;
-    bool logined = false;
+    bool logined = true;
 
     UserInfo *usrinfo;
     LoginDialog *logindialog;

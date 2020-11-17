@@ -22,14 +22,19 @@ SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent)
 
     canvas = new Canvas(this);
     canvas->setGeometry(0, 0, width, (height * 3) / 4);
-    canvas->setStyleSheet("border: 2px solid darkgray; background");
     setCanvasBG("ffffff");
+    canvas->setStyleSheet("QWidget {"
+                          "border-image:url(:/images/image/paint1.png);"
+                          "}");
 
     console = new Console(this);
     console->setGeometry(0, (height * 3) / 4, width, height / 4);
     console->setStyleSheet(QString::fromUtf8("border: 2px solid gray;"));
     console->write("Welcome to the PC Logo!\nPlease type your code.\n");
-
+    console->setStyleSheet("QTextEdit {"
+                           "border-image:url(:/images/image/paint2222.png);"
+                           "}");
+    console->setAttribute(Qt::WA_InputMethodEnabled, false);
 
 //    connect(console, SIGNAL(newLineWriten(QStringList)), canvas, SLOT(draw(qreal, qreal)));
     connect(console, SIGNAL(newLine(QString)), canvas, SLOT(parse_line(QString)));

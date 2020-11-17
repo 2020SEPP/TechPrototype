@@ -12,6 +12,10 @@ Console::Console(QWidget *parent) : QTextEdit(parent)
 {
     this->setFocusPolicy(Qt::StrongFocus);
     storage = "";
+     this->setStyleSheet("QTextEdit {border-image: url(:/images/image/paint2.png);"
+                         "background:rgba(255,255,255,0.5);"
+                         ""
+                         "}");
 }
 
 void Console::write(QString str)

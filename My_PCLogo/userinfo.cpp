@@ -1,12 +1,14 @@
 #include "userinfo.h"
 
-UserInfo::UserInfo(QWidget *parent, int w, int h,User *U) : WIN_W(w/3), WIN_H(h)
+UserInfo::UserInfo(QWidget *parent, int w, int h,User *U) : WIN_W(w/10*3), WIN_H(h)
 {
 
     QFont font;
     font.setPixelSize(30);
     font.setWeight(30);
     this->setFont(font);
+
+
     this->setParent(parent);
     this->setUser(*U);
     visible = false;
@@ -21,6 +23,19 @@ UserInfo::UserInfo(QWidget *parent, int w, int h,User *U) : WIN_W(w/3), WIN_H(h)
     this->Vusername=new QLabel(this->w);
     this->phone=new QLabel(this->w);
     this->Vphone=new QLabel(this->w);
+    this->friendList=new QPushButton(this->w);
+
+    friendList->setGeometry(WIN_W/15,WIN_H-WIN_W/7,WIN_W/10,WIN_W/10);
+    friendList->setMask(QRegion(0,0,WIN_W/10,WIN_W/10,QRegion::Ellipse));
+    friendList->setStyleSheet("QPushButton{border-image: url(:/images/image/friend.png);}");
+    friendList->setCursor(Qt::PointingHandCursor);
+
+
+    fl=new FriendList (this->w,WIN_W,WIN_H);
+    fl->show();
+    fl->stackUnder(friendList);
+
+
 
     id->setText("账号：");
     username->setText("用户名：");
@@ -60,9 +75,10 @@ UserInfo::UserInfo(QWidget *parent, int w, int h,User *U) : WIN_W(w/3), WIN_H(h)
 
     this->w->show();
     this->w->raise();
-    this->w->setStyleSheet("QWidget{border-image: url(:/images/sidenav.png);}");
+    this->w->setStyleSheet("QWidget{border-image: url(:/images/image/sidenav.png);}");
+    this->fl->setStyleSheet("QWidget{border-image: url(:/images/image/sidenav.png);}");
 
-
+    connect(friendList,SIGNAL(clicked()),this,SLOT(friendListClicked()));
 
 }
 
@@ -92,4 +108,9 @@ void UserInfo::annimation()
 
 void UserInfo::setUser(User U){
     this->user=U;
+}
+
+void UserInfo::friendListClicked(){
+    qDebug()<<"fl";
+    this->fl->annimation();
 }

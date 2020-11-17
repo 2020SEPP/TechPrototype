@@ -1,15 +1,26 @@
 <RCC>
     <qresource prefix="/images">
-        <file>bk.png</file>
-        <file>turtle.png</file>
-        <file>button.png</file>
-        <file>sidenav.png</file>
-        <file>log-yellow.png</file>
-        <file>log-green.png</file>
-        <file>soundless.png</file>
-        <file>setting.png</file>
-        <file>input.png</file>
-        <file>sound.png</file>
+        <file>image/bk.png</file>
+        <file>image/button.png</file>
+        <file>image/error.png</file>
+        <file>image/log-green.png</file>
+        <file>image/input.png</file>
+        <file>image/paint1.png</file>
+        <file>image/ok.png</file>
+        <file>image/login11.png</file>
+        <file>image/login2.png</file>
+        <file>image/log-yellow.png</file>
+        <file>image/paint2.png</file>
+        <file>image/setting.png</file>
+        <file>image/paint2222.png</file>
+        <file>image/sidenav.png</file>
+        <file>image/sound.png</file>
+        <file>image/turtle.png</file>
+        <file>image/soundless.png</file>
+        <file>image/friend.png</file>
+        <file>image/f2.png</file>
+        <file>image/friend3.jpeg</file>
+        <file>image/space.png</file>
     </qresource>
     <qresource prefix="/Font">
         <file>newfont.ttf</file>
