@@ -95,32 +95,48 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p)
     phoneinput->hide();
 }
 
-
-
 void LoginDialog::loginClicked()
 {
-    QString usr = usrinput->text();
-    QString pwd = pwdinput->text();
+//    QString usr = usrinput->text();
+//    QString pwd = pwdinput->text();
+    QString usr = "laffery";
+    QString pwd = "111111";
     QString pho = phoneinput->text();
     QString res;
     User user(usr, pwd);
-    QString req=ADDR+"/user/";
+    QString url = ADDR + "/user/";
 
     if(SignUpMode){
-        req+="register?phone="+pho+"&password="+pwd+"&name="+usr;
-        res = http.get(req);//, user.toJsonObeject(false));
-        qDebug()<<req;
+        url += "register?phone="+pho+"&password="+pwd+"&name="+usr;
+        res = http.get(url);
+        qDebug() << url;
         if(res=="1"){
             this->hide();
             emit LoginResponse(true);
         }
     }
     else{
-        req+="loginByName?name="+usr+"&password="+pwd;
-        qDebug()<<req;
-        res = http.get(req);//, user.toJsonObeject(false));
+        url += "loginByName?name="+usr+"&password="+pwd;
+        qDebug() << url;
+        QJsonObject res = http.get_json(url);
+
+        // TODO: Token: how to?
+//        if (object.contains("token"))
+//        {
+//            QString token = object.value("token").toString();
+//        }
+
+        User *user = new User(res);
+
+        QList<QString> list;
+        list.append("name");
+        list.append("phone");
+        list.append("avatar");
+        list.append("id");
+        list.append("friends");
+        qDebug() << user->toJsonObject(list);
     }
-    qDebug() << res<<"res";
+//    qDebug() << res<<"res";
     emit LoginResponse(true);
 }
 
@@ -141,7 +157,6 @@ void LoginDialog::signupClicked(){
         signup->setText("取消");
         pholabel->show();
         phoneinput->show();
-
     }
     else{
         pholabel->hide();

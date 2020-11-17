@@ -7,9 +7,11 @@
 #include <QTextCodec>
 #include <QTimer>
 
+#include <QJsonObject>
+#include <QJsonDocument>
+
 HttpRequest::HttpRequest()
 {
-
 }
 
 QString HttpRequest::get(QString url)
@@ -31,6 +33,28 @@ QString HttpRequest::get(QString url)
     reply->deleteLater();
     delete naManager;
     return strReply;
+}
+
+QJsonObject HttpRequest::get_json(QString url)
+{
+    QNetworkRequest request;
+    QNetworkAccessManager *naManager = new QNetworkAccessManager();
+    QUrl strUrl = url;
+    request.setUrl(strUrl);
+    request.setRawHeader("Content-Type", "charset='utf-8'");
+    request.setRawHeader("Content-Type", "application/json");
+
+    QNetworkReply* reply = naManager->get(request);
+
+    QEventLoop eventLoop;
+    connect(naManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
+    eventLoop.exec();
+
+    QJsonObject object = QJsonDocument::fromJson(reply->readAll()).object();
+
+    reply->deleteLater();
+    delete naManager;
+    return object;
 }
 
 QString HttpRequest::getRequest(QString url)
@@ -79,7 +103,7 @@ QString HttpRequest::getRequest(QString url)
 	return strReply;
 }
 
-QString HttpRequest::post(QString url, QString jsondata)
+QString HttpRequest::post_str(QString url, QString jsondata)
 {
     QByteArray array = jsondata.toLatin1();
     QNetworkRequest request;
@@ -95,9 +119,32 @@ QString HttpRequest::post(QString url, QString jsondata)
     eventLoop.exec();
     QTextCodec* codec = QTextCodec::codecForName("utf8");
     QString strReply = codec->toUnicode(reply->readAll());
+
     reply->deleteLater();
     delete naManager;
     return strReply;
+}
+
+QJsonObject HttpRequest::post_json(QString url, QString jsondata)
+{
+    QByteArray array = jsondata.toLatin1();
+    QNetworkRequest request;
+    QNetworkAccessManager *naManager=new QNetworkAccessManager();
+    QUrl strUrl = url;
+    request.setUrl(strUrl);
+    request.setRawHeader("Content-Type", "charset='utf-8'");
+    request.setRawHeader("Content-Type", "application/json");
+
+    QNetworkReply* reply = naManager->post(request, array);
+    QEventLoop eventLoop;
+    connect(naManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
+    eventLoop.exec();
+
+    QJsonObject object = QJsonDocument::fromJson(reply->readAll()).object();
+
+    reply->deleteLater();
+    delete naManager;
+    return object;
 }
 
 QString HttpRequest::postHeadRequest(QString url, QString jsondata)
@@ -125,9 +172,25 @@ QString HttpRequest::postHeadRequest(QString url, QString jsondata)
 	eventLoop.exec();
 	QTextCodec* codec = QTextCodec::codecForName("utf8");
 	QString strReply = codec->toUnicode(reply->readAll());
-	qDebug() << "post address:" << request.url().toEncoded();
-	qDebug() << strReply;
+//	qDebug() << "post address:" << request.url().toEncoded();
+//	qDebug() << strReply;
 	reply->deleteLater();
 	delete naManager;
 	return strReply;
+}
+
+QList<int> JsonValue2ListInt(QJsonValue value)
+{
+    QList<int> list;
+
+    if (value.isArray())
+    {
+        QJsonArray array = value.toArray();
+        for(int i = 0; i < array.size(); ++i)
+        {
+            list.append(array.at(i).toInt());
+        }
+    }
+
+    return list;
 }

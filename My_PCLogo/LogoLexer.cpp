@@ -2,7 +2,18 @@
 
 LogoLexer::LogoLexer(QObject *parent) : QsciLexerCustom(parent)
 {
-    this->setDefaultColor("#CF8D41");
+//    this->setDefaultColor("#CF8D41");
+	styleStack = QList<int>();
+	resetStyle ();
+
+	declareStyle(Default,
+			QColor(0x0, 0x0, 0x0),
+			QColor("white"),
+			QFont("Liberation Mono", 10));
+	declareStyle(CommentLine,
+			QColor(0x0, 0x80, 0x0),
+			QColor("white"),
+			QFont("Liberation Mono", 10));
 }
 
 const char* LogoLexer::language() const
@@ -57,8 +68,66 @@ QString LogoLexer::description(int style) const
 
 void LogoLexer::styleText(int start, int end)
 {
-    this->startStyling(start);
+	QString source;
+	int len;
 
-    end++;
-    return;
+	if (!this->editor())
+		return;
+
+	resetStyle();
+
+	char *chars = new char[(end - start) + 1];
+	this->editor()->SendScintilla(QsciScintilla::SCI_GETTEXTRANGE, start, end, chars);
+	source = QString(chars);
+	delete [] chars;
+
+	len = end - start;
+
+// 	qDebug() << "source =" << source;
+
+	startStyling(start, 0x1f);
+	setStyling(len, getStyle());
 }
+
+bool LogoLexer::pushStyle(int style)
+{
+	bool pushed = false;
+
+	if (style >= getStyle()) {
+		styleStack << style;
+		pushed = true;
+// 		qDebug() << __FUNCTION__ << description(style);
+	}
+	return pushed;
+}
+
+bool LogoLexer::popStyle()
+{
+	int style;
+	bool popped = false;
+	if (styleStack.size() > 1) {
+		style = styleStack.takeLast() ;
+		popped = true;
+// 		qDebug() << __FUNCTION__ << description(style);
+	}
+	return popped;
+}
+
+int LogoLexer::getStyle()
+{
+	int style;
+	style = styleStack.at(styleStack.size()-1) ;
+	return style;
+}
+
+bool LogoLexer::hasStyle(int style)
+{
+	return styleStack.contains(style);
+}
+
+void LogoLexer::resetStyle()
+{
+	styleStack.clear();
+	styleStack << Default;
+}
+

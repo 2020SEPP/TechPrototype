@@ -1,7 +1,12 @@
 #ifndef MYLEXER_H
 #define MYLEXER_H
 
+#include <QString>
+#include <QMap>
+#include <QList>
 #include "Qsci/qscilexercustom.h"
+#include "Qsci/qscistyle.h"
+#include "Qsci/qsciscintilla.h"
 
 class LogoLexer : public QsciLexerCustom
 {
@@ -42,6 +47,19 @@ public:
     QString description(int) const;
     void styleText(int, int);
 
+    bool pushStyle(int style);
+    bool popStyle();
+    int getStyle();
+    bool hasStyle(int);
+    void resetStyle();
+
+private:
+    QMap<int,QString> styleNames;
+    #define declareStyle(style,color, paper, font) styleNames[style] = tr(#style); \
+            setColor(color, style); \
+            setPaper(paper, style); \
+            setFont(font, style);
+    QList<int> styleStack;
 
 private:
     LogoLexer(const LogoLexer &);
