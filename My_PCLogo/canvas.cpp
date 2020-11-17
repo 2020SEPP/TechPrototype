@@ -14,6 +14,18 @@ Canvas::Canvas(QWidget *parent) : QWidget(parent)
 
 }
 
+Canvas::Canvas(QWidget *parent, int xPos, int yPos, int xScale, int yScale)
+    : QWidget(parent)
+{
+    CANVAS_XPOS = xPos;
+    CANVAS_YPOS = yPos;
+    CANVAS_WIDTH = xScale;
+    CANVAS_HEIGHT = yScale;
+    CURR_POS = new QPointF(CANVAS_XPOS + CANVAS_WIDTH/2, CANVAS_YPOS + CANVAS_HEIGHT / 2);
+    CURR_ANGLE = 90;
+    PEN_IS_DOWN = true;
+}
+
 // public
 void
 Canvas::addAngle(qreal delta)
@@ -290,8 +302,8 @@ Canvas::reset()
     LINES.clear();
     CIRCLES.clear();
 
-    CURR_POS->setX(CANVAS_WIDTH/2);
-    CURR_POS->setY(CANVAS_HEIGHT/2);
+    CURR_POS->setX(CANVAS_XPOS + CANVAS_WIDTH/2);
+    CURR_POS->setY(CANVAS_YPOS + CANVAS_HEIGHT/2);
     CURR_ANGLE = 90;
 
     update();

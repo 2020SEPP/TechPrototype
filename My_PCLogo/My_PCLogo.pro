@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    CmdFileWidget.cpp \
     CodEditor.cpp \
     HttpRequest.cpp \
     LineEdit.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
     mainwindow.cpp \
     pvpwidget.cpp \
     qlistwidgetitem.cpp \
+    qscilexerLogo.cpp \
     region.cpp \
     searchbar.cpp \
     signinwidget.cpp \
@@ -36,6 +38,7 @@ SOURCES += \
     console.cpp
 
 HEADERS += \
+    CmdFileWidget.h \
     CodEditor.h \
     HttpRequest.h \
     LineEdit.h \
@@ -45,6 +48,7 @@ HEADERS += \
     mainwindow.h \
     pvpwidget.h \
     qlistwidgetitem.h \
+    qscilexerLogo.h \
     region.h \
     searchbar.h \
     signinwidget.h \
@@ -66,23 +70,16 @@ RESOURCES += \
 
 # Add Code Texter QScintilla
 
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5_debug.15.0.0
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5_debug.15.0.0
-#else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5_debug.15.0.0
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5d
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5d
+else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5d
+
+INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
+DEPENDPATH +=$$PWD/QScintilla-2.11.5/Qt4Qt5
+
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5
+#else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5
 
 #INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
 #DEPENDPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
-
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5d
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5d
-#else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5d
-
-#INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
-#DEPENDPATH +=$$PWD/QScintilla-2.11.5/Qt4Qt5
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5
-else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5
-
-INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
-DEPENDPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5

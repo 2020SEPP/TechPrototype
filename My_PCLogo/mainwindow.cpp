@@ -33,40 +33,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
     this->setFocus();
 
-    editor = new CodEditor(this);
-    editor->hide();
+    cmdfile = new CmdFileWidget(this);
+    cmdfile->hide();
     single = new SingleWidget(this);
     single->hide();
     pvp = new PvpWidget(this);
     pvp->hide();
 
-    connect(home, SIGNAL(CodeEditor(void)), this, SLOT(CodeEditor()));
+    connect(home, SIGNAL(CommandFile(void)), this, SLOT(CommandFile()));
     connect(home, SIGNAL(CommandLine(void)), this, SLOT(CommandLine()));
     connect(home, SIGNAL(PVPMode(void)), this, SLOT(PVP()));
 
-    connect(editor, SIGNAL(CloseEditor(int)), this, SLOT(SwitchWidget(int)));
+    connect(cmdfile, SIGNAL(CloseCmdFile(int)), this, SLOT(SwitchWidget(int)));
     connect(single, SIGNAL(CloseSingle(int)), this, SLOT(SwitchWidget(int)));
     connect(pvp, SIGNAL(ClosePvP(int)), this, SLOT(SwitchWidget(int)));
 }
 
 // SLOTS
-void MainWindow::CodeEditor(){
-    editor = new CodEditor(this);
-    setCentralWidget(editor);
-    editor->show();
-    return ;
+void MainWindow::CommandFile()
+{
+    setCentralWidget(cmdfile);
+    cmdfile->show();
 }
 
 void MainWindow::CommandLine()
 {
-    single = new SingleWidget(this);
     single->show();
     single->InAnnimation();
 }
 
 void MainWindow::PVP()
 {
-    pvp = new PvpWidget(this);
     pvp->show();
     pvp->InAnnimation();
 }
@@ -79,7 +76,7 @@ void MainWindow::SwitchWidget(int xXCode)
         single->hide();
         break;
     case 2:
-        editor->hide();
+        cmdfile->hide();
         break;
     case 3:
         pvp->hide();

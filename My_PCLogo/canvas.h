@@ -7,7 +7,7 @@
 
 /*
     | 小海龟的前后、转向 | FD, BK, RT, LT  n |
-    | 清屏复位 | LT |
+    | 清屏复位 | CS |
     | 提笔、落笔 | PU, PD |
     | 坐标定位 | SETXT[x y]|
     | 设置笔的颜色 | SETPC n (n为颜色号) |
@@ -37,9 +37,11 @@ class Canvas : public QWidget
     Q_OBJECT
 public:
     explicit Canvas(QWidget *parent = nullptr);
+    explicit Canvas(QWidget *, int, int, int, int);
     ~Canvas() override { LINES.clear(); }
 
 private:
+    int CANVAS_XPOS = 0, CANVAS_YPOS = 0;
     int CANVAS_WIDTH, CANVAS_HEIGHT;
     QPointF *CURR_POS;
     qreal CURR_ANGLE;

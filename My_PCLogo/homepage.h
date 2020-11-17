@@ -47,7 +47,7 @@ private slots:
     void textClicked();
 
 signals:
-    void CodeEditor();
+    void CommandFile();
     void CommandLine();
     void SingleMode();
     void PVPMode();
