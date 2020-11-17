@@ -1,7 +1,6 @@
 #include "userinfo.h"
 
-
-UserInfo::UserInfo(QWidget *parent, int w, int h) : WIN_W(w/3), WIN_H(h)
+UserInfo::UserInfo(QWidget *parent, int w, int h,User *U) : WIN_W(w/3), WIN_H(h)
 {
 
     QFont font;
@@ -9,6 +8,7 @@ UserInfo::UserInfo(QWidget *parent, int w, int h) : WIN_W(w/3), WIN_H(h)
     font.setWeight(30);
     this->setFont(font);
     this->setParent(parent);
+    this->setUser(*U);
     visible = false;
     this->setGeometry(0, 0, -WIN_W, WIN_H);
     this->w=new QWidget(this);
@@ -25,9 +25,9 @@ UserInfo::UserInfo(QWidget *parent, int w, int h) : WIN_W(w/3), WIN_H(h)
     id->setText("账号：");
     username->setText("用户名：");
     phone->setText("手机：");
-    Vid->setText("的");
-    Vusername->setText("***");
-    Vphone->setText("*****");
+    Vid->setText(QString::number(user.getId()));
+    Vusername->setText(user.getName());
+    Vphone->setText(user.getPhone());
 
 
     id->setAttribute(Qt::WA_TranslucentBackground, true);

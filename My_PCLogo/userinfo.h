@@ -31,7 +31,7 @@ private:
 
 public:
     void setUser(User U);
-    UserInfo(QWidget *, int, int);
+    UserInfo(QWidget *, int, int,User *U);
     ~UserInfo() {}
 public slots:
     void annimation();
