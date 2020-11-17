@@ -43,23 +43,23 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent)
                           "border-radius:" + QString::number(WIN_W/20) +
                           ";"
                           "border-color: red;"
-                          "border-image: url(:/images/log-green.png);"
+                          "border-image: url(:/images/image/log-green.png);"
                           "}"
                           "QPushButton:hover {"
-                          "border-image: url(:/images/log-yellow.png);"
+                          "border-image: url(:/images/image/log-yellow.png);"
                           "}");
     ava_border->setStyleSheet("QLabel {"
                               "border-style: solid;"
                               "border-width:1px;"
                               "border-radius:" + QString::number(WIN_W/20+8) +
                               ";"
-                              "border-image: url(:/images/log-green.png);"
+                              "border-image: url(:/images/image/log-green.png);"
                               "}"
                               );
 
-    line->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:30px;}");
-    text->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:30px;}");
-    pvp->setStyleSheet("QPushButton{border-image: url(:/images/button.png);border-radius:30px;}");
+    line->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:30px;}");
+    text->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:30px;}");
+    pvp->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:30px;}");
 
     avatar->setMask(QRegion(0,0,WIN_W/10,WIN_W/10,QRegion::Ellipse));
     ava_border->setMask(QRegion(0,0,WIN_W/10+16,WIN_W/10+16,QRegion::Ellipse));
@@ -95,7 +95,6 @@ void HomePage::avatarClicked()
     if(logined)
     usrinfo->annimation();
     else logindialog->show();
-    this->logined=!this->logined;
     return ;
 }
 
