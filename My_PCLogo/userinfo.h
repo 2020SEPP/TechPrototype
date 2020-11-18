@@ -36,6 +36,7 @@ private:
 public:
     void setUser(User *U);
     UserInfo(QWidget *, int, int,User *U);
+    void updateFL(){fl->reset();}
     ~UserInfo() {}
 public slots:
     void annimation();

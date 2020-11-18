@@ -19,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->resize(WIN_W, WIN_H);
     home = new HomePage(this);
     home->setGeometry(0, 0, WIN_W, WIN_H);
-//    this->setCentralWidget(home);
     home->show();
 
 
@@ -70,7 +69,6 @@ void MainWindow::PVP()
 
 void MainWindow::SwitchWidget(int xXCode)
 {
-    qDebug() << xXCode;
     switch (xXCode) {
     case 1:
         single->hide();

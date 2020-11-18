@@ -1,6 +1,7 @@
 #include "homepage.h"
 #include <QtGlobal>
 #include <qdebug.h>
+#include "token.h"
 HomePage::HomePage(QWidget *parent) : QWidget(parent)
 {
     WIN_W = window.getW();
@@ -115,7 +116,7 @@ void HomePage::dialogResponse(User* u)
 {
     this->logined=true;
     QPixmap image;
-    qDebug()<<u->getName();
+    ID=u->getId();
     image.loadFromData(QByteArray::fromBase64(u->getavatar()=="" ? USER->getavatar().section(",", 1).toLocal8Bit(): u->getavatar().section(",", 1).toLocal8Bit()));
     image.save("./"+QString::number(u->getId())+".png");
     if(logined){
@@ -131,6 +132,7 @@ void HomePage::dialogResponse(User* u)
     ava_border->show();
     avatar->raise();
     usrinfo->setUser(u);
+    usrinfo->updateFL();
     }
     else {
         ava_border->hide();

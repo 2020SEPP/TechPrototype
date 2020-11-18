@@ -8,14 +8,20 @@
 class Searchbar :public QLineEdit
 {
     Q_OBJECT
+private:
+    bool searching = false;
+    QPushButton *searchBtn;
+    QPushButton *cancelBtn;
 public:
     Searchbar(QWidget *p,int w,int h);
 
   public  slots:
       void buttonclicked();
+      void cancelclicked();
 
 signals:
     void Search(QString s);
+
 };
 
 #endif // SEARCHBAR_H

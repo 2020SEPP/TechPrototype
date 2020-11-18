@@ -49,18 +49,14 @@ QJsonObject HttpRequest::get_json(QString url)
     request.setRawHeader("Content-Type", "charset='utf-8'");
     request.setRawHeader("Content-Type", "application/json");
     if(token!="") request.setRawHeader("token",token.toLocal8Bit());
-    qDebug()<<'a';
     QNetworkReply* reply = naManager->get(request);
-    qDebug()<<'b';
     QEventLoop eventLoop;
     connect(naManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
     eventLoop.exec();
-    qDebug()<<'c';
     QJsonObject object = QJsonDocument::fromJson(reply->readAll()).object();
 
     reply->deleteLater();
     delete naManager;
-    qDebug()<<'d';
     return object;
 }
 
@@ -70,8 +66,12 @@ QJsonArray HttpRequest::get_array(QString url)
     QNetworkAccessManager *naManager = new QNetworkAccessManager();
     QUrl strUrl = url;
     request.setUrl(strUrl);
+
+
+
     request.setRawHeader("Content-Type", "charset='utf-8'");
     request.setRawHeader("Content-Type", "application/json");
+    if(token!="") request.setRawHeader("token",token.toLocal8Bit());
 
     QNetworkReply* reply = naManager->get(request);
 
@@ -95,7 +95,6 @@ QString HttpRequest::getRequest(QString url)
 
     QUrl strUrl = url;
     request.setUrl(strUrl);
-    qDebug() << "post address:" << request.url().toEncoded();
     request.setRawHeader("Content-Type", "charset='utf-8'");
     request.setRawHeader("Content-Type", "application/json");
 
@@ -118,7 +117,6 @@ QString HttpRequest::getRequest(QString url)
 		QTextCodec* codec = QTextCodec::codecForName("utf8");
 		//获取响应的内容
 		strReply = codec->toUnicode(reply->readAll());
-		qDebug()<<"strReply: "<<strReply;
 		reply->deleteLater();
 	} else //超时处理
 	{
@@ -127,7 +125,6 @@ QString HttpRequest::getRequest(QString url)
 		reply->close();
 		reply->deleteLater();
 	}
-	qDebug()<<"code:"<<reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).value<int>();
 	delete naManager;
 	return strReply;
 }
@@ -182,7 +179,6 @@ QString HttpRequest::postHeadRequest(QString url, QString jsondata)
 
 	QByteArray postArray;
 	postArray.append("mac="+ mac);
-	qDebug() << "postArray" << postArray;
 
 	QNetworkAccessManager *naManager = new QNetworkAccessManager();
 	QNetworkRequest request;
@@ -201,8 +197,7 @@ QString HttpRequest::postHeadRequest(QString url, QString jsondata)
 	eventLoop.exec();
 	QTextCodec* codec = QTextCodec::codecForName("utf8");
 	QString strReply = codec->toUnicode(reply->readAll());
-//	qDebug() << "post address:" << request.url().toEncoded();
-//	qDebug() << strReply;
+
 	reply->deleteLater();
 	delete naManager;
 	return strReply;
