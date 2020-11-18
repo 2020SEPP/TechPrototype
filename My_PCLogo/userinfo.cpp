@@ -1,5 +1,5 @@
 #include "userinfo.h"
-
+#include "token.h"
 UserInfo::UserInfo(QWidget *parent, int w, int h,User *U) : WIN_W(w/10*3), WIN_H(h)
 {
 
@@ -102,17 +102,15 @@ void UserInfo::annimation()
 
     this->visible = !(this->visible);
     this->setWindowModality(Qt::ApplicationModal);
-    qDebug()<<this->isVisible()<<123;
 
 }
 
 void UserInfo::setUser(User *U){
     this->user=U;
-    Vid->setText(QString::number(U->getId()));
+    Vid->setText(QString::number(ID));
     this->Vusername->setText(U->getName());
     Vphone->setText(user->getPhone());
-    qDebug()<<U->getName();
-    qDebug()<<"13333";
+
 }
 
 void UserInfo::friendListClicked(){

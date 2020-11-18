@@ -65,12 +65,10 @@ Canvas::paintEvent(QPaintEvent *)
 
 QString get_qreal_str(QString str)
 {
-//    qDebug() << "get qreal string: " << str;
     int index = 0;
     while (index < str.length())
     {
         QChar ch = str.at(index);
-//        qDebug() << index << " : " << ch;
         if ((ch >= '0' && ch <= '9') || ch == '.')
         {
             index++;
@@ -98,7 +96,6 @@ Canvas::parse_line(QString line)
     if (line == "")
         return;
 
-//    qDebug() << "parse line: " << line;
 
     int line_index = 0;
     QString inst;
@@ -107,7 +104,6 @@ Canvas::parse_line(QString line)
         line_index++;
 
     inst = line.left(line_index);
-//    qDebug() << "inst: " << inst;
 
     if (INSTRUCTIONS.indexOf(inst) != -1)
     {
@@ -135,7 +131,6 @@ Canvas::parse_line(QString line)
         }
 
         QString arg0 = get_qreal_str(line);
-//        qDebug() << "arg0: " << arg0;
 
         if (arg0 == "")
         {
@@ -179,7 +174,6 @@ argument_type_err:
         {
             two_arg_flag = true;
             QString arg1 = get_qreal_str(line);
-//            qDebug() << "arg1: " << arg1;
 
             if (arg1 == "")
                 goto argument_type_err;

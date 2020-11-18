@@ -4,17 +4,32 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextStream>
-
+#include <QHBoxLayout>
 CmdFileWidget::CmdFileWidget(QWidget *parent) : QWidget(parent)
 {
+
+
     WIN_W = window.getW();
     WIN_H = window.getH();
 
+    QPixmap pixmap = QPixmap(":/images/image/paint2.png").scaled(this->size());
+
+    QPalette palette(this->palette());
+    palette.setBrush(QPalette::Background, QBrush(pixmap));
+    this->setPalette(palette);
+    this->setStyleSheet("QWidget{"
+                        "border-image:url(:/images/image/paint2.png);"
+                        "}");
+
     canvas = new Canvas(this, 0, 0, WIN_W*2/3, WIN_H);
+
     canvas->setGeometry(0, 0, WIN_W*2/3, WIN_H);
     canvas->setStyleSheet("border: 2px solid darkgray; background-color: #ffffff");
 
     editor = new CodEditor(this);
+    editor->setStyleSheet("QWidget{"
+                        "border-image:url(:/images/image/paint1.png);"
+                        "}");
     editor->setGeometry(WIN_W*2/3, WIN_H/18, WIN_W, WIN_H*17/18);
 
     import = new QPushButton(this);
@@ -26,6 +41,8 @@ CmdFileWidget::CmdFileWidget(QWidget *parent) : QWidget(parent)
     save->setText("保存");
     run->setText("运行");
     debug->setText("调试");
+
+
 
     import->setGeometry(WIN_W*37/54, 0, WIN_W*2/27, WIN_H/18);
     save->setGeometry(WIN_W*41/54, 0, WIN_W*2/27, WIN_H/18);
@@ -42,10 +59,10 @@ CmdFileWidget::CmdFileWidget(QWidget *parent) : QWidget(parent)
     run->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     debug->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
 
-    import->setFlat(false);
-    save->setFlat(false);
-    run->setFlat(false);
-    debug->setFlat(false);
+//    import->setFlat(false);
+//    save->setFlat(false);
+//    run->setFlat(false);
+//    debug->setFlat(false);
 
     connect(import, SIGNAL(clicked()), this, SLOT(Import()));
     connect(save, SIGNAL(clicked()), this, SLOT(Save()));
@@ -130,7 +147,6 @@ void CmdFileWidget::Run()
 {
     debug->setText("调试");
     QString content = editor->getAllContent();
-//    qDebug() << content;
 
     canvas->reset();
 

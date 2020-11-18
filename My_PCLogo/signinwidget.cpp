@@ -4,7 +4,7 @@
 #include <QPalette>
 #include <QtCore>
 #include <QRegExpValidator>
-
+#include "token.h"
 QList<User *> getFriend(int uid)
 {
     HttpRequest http;
@@ -138,12 +138,10 @@ void LoginDialog::loginClicked()
         Edit->setText("请输入密码");
         return;
     }
-//    QString usr = "laffery";
-//    QString pwd = "111111";
     QString pho = phoneinput->text();
     QString res;
-    User user(usr, pwd);
     QString url = ADDR + "/user/";
+
 
     if(SignUpMode){
         if(pho=="") {
@@ -156,7 +154,6 @@ void LoginDialog::loginClicked()
         }
         url += "register?phone="+pho+"&password="+pwd+"&name="+usr;
         res = http.get(url);
-        qDebug() << url;
         if(res=="-1"){
             Edit->setText("用户名重复");
             return;
@@ -165,29 +162,28 @@ void LoginDialog::loginClicked()
             Edit->setText("电话号码重复");
             return;
             }
-        if(res=="1"){
-            this->hide();
-            emit DialogResponse(&user);
-        }
+//        if(res=="1"){
+//            this->hide();
+//            emit DialogResponse(user);
+//        }
     }
 
 
 
-    else{
 
-        url += "loginByName?name="+usr+"&password="+pwd;
-        qDebug() << url;
-        QJsonObject res = http.get_json(url);
+
+        url =ADDR+"/user/"+ "loginByName?name="+usr+"&password="+pwd;
+        QJsonObject Res = http.get_json(url);
 
         // TODO: Token: how to?
-        if (res.contains("token"))
+        if (Res.contains("token"))
         {
-            token = res.value("token").toString();
+            token = Res.value("token").toString();
         }
 
-        User *user = new User(res);
+        User *user = new User(Res);
         if(user->getName()==""){
-            Edit->setText("电话号码重复");
+            Edit->setText("用户名或密码错误");
             return;
         }
 
@@ -197,11 +193,8 @@ void LoginDialog::loginClicked()
         list.append("avatar");
         list.append("id");
         list.append("friends");
-        qDebug() << user->toJsonObject(list);
         this->hide();
         emit DialogResponse(user);
-    }
-//    qDebug() << res<<"res";
 
 
 }
