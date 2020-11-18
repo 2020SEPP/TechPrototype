@@ -3,6 +3,7 @@
 #include <QBrush>
 #include <QPalette>
 #include <QtCore>
+#include <QRegExpValidator>
 
 QList<User *> getFriend(int uid)
 {
@@ -51,6 +52,7 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p)
     login    = new QPushButton(this);
     quit     = new QPushButton(this);
     signup= new QPushButton(this);
+    Edit= new QLabel(this);
 
     usrlabel->setFont(font);
     pwdlabel->setFont(font);
@@ -67,6 +69,12 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p)
     usrlabel->setGeometry(1*width/15,height/5,width/5,height/10);
     pwdlabel->setGeometry(1*width/15,2*height/5,width/5,height/10);
     pholabel->setGeometry(1*width/15,3*height/5,width/5,height/10);
+    Edit->setGeometry(width/10,height*5/10+20,width/10*8,height/20);
+    Edit->show();
+    Edit->setStyleSheet("QLabel{color:rgb(200,0,0);"
+                        "font-size:20px"
+                        "}");
+    Edit->setAlignment(Qt::AlignCenter);
     usrlabel->setText("用户名:");
     pwdlabel->setText("密  码:");
     pholabel->setText("电话号码");
@@ -84,6 +92,10 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p)
     pwdinput = new LineEdit(this);
     phoneinput=new LineEdit(this);
 
+    QRegExp rx("^1[0-9]{10}$");
+
+    QRegExpValidator *validator = new QRegExpValidator(rx, this);
+    phoneinput->setValidator(validator);
 
     usrinput->setGeometry(width/4+50,height*13/60,width/2,height/15);
     usrinput->setFont(font);
@@ -116,24 +128,51 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p)
 
 void LoginDialog::loginClicked()
 {
-//    QString usr = usrinput->text();
-//    QString pwd = pwdinput->text();
-    QString usr = "laffery";
-    QString pwd = "111111";
+    QString usr = usrinput->text();
+    if(usr=="") {
+        Edit->setText("请输入用户名");
+        return;
+    }
+    QString pwd = pwdinput->text();
+    if(pwd=="") {
+        Edit->setText("请输入密码");
+        return;
+    }
+//    QString usr = "laffery";
+//    QString pwd = "111111";
     QString pho = phoneinput->text();
     QString res;
     User user(usr, pwd);
     QString url = ADDR + "/user/";
 
     if(SignUpMode){
+        if(pho=="") {
+            Edit->setText("请输入电话号码");
+            return;
+        }
+        if(pho.length()!=11){
+            Edit->setText("电话号码格式不可用");
+            return;
+        }
         url += "register?phone="+pho+"&password="+pwd+"&name="+usr;
         res = http.get(url);
         qDebug() << url;
+        if(res=="-1"){
+            Edit->setText("用户名重复");
+            return;
+        }
+        else if(res=="0"){
+            Edit->setText("电话号码重复");
+            return;
+            }
         if(res=="1"){
             this->hide();
-            emit LoginResponse(true);
+            emit DialogResponse(&user);
         }
     }
+
+
+
     else{
 
         url += "loginByName?name="+usr+"&password="+pwd;
@@ -141,12 +180,16 @@ void LoginDialog::loginClicked()
         QJsonObject res = http.get_json(url);
 
         // TODO: Token: how to?
-//        if (object.contains("token"))
-//        {
-//            QString token = object.value("token").toString();
-//        }
+        if (res.contains("token"))
+        {
+            token = res.value("token").toString();
+        }
 
         User *user = new User(res);
+        if(user->getName()==""){
+            Edit->setText("电话号码重复");
+            return;
+        }
 
         QList<QString> list;
         list.append("name");
@@ -155,9 +198,11 @@ void LoginDialog::loginClicked()
         list.append("id");
         list.append("friends");
         qDebug() << user->toJsonObject(list);
+        this->hide();
+        emit DialogResponse(user);
     }
 //    qDebug() << res<<"res";
-    emit LoginResponse(true);
+
 
 }
 
@@ -176,11 +221,15 @@ void LoginDialog::signupClicked(){
         login->setGeometry(width/10,8*height/10,width/5,height/10);
         quit->setGeometry(4*width/10,8*height/10,width/5,height/10);
         signup->setGeometry(7*width/10,8*height/10,width/5,height/10);
+        Edit->setGeometry(width/10,height*7/10+20,width/10*8,height/20);
+        Edit->setText("");
         signup->setText("取消");
         pholabel->show();
         phoneinput->show();
     }
     else{
+        Edit->setGeometry(width/10,height*5/10+20,width/10*8,height/20);
+        Edit->setText("");
         this->setStyleSheet("QDialog{border-image:url(:/images/image/login2.png)}");
         pholabel->hide();
         phoneinput->hide();

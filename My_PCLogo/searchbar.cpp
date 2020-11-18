@@ -1,5 +1,5 @@
 #include "searchbar.h"
-
+#include <QtDebug>
 Searchbar::Searchbar(QWidget *p,int w,int h)
 {
     this->setParent(p);
@@ -22,6 +22,14 @@ Searchbar::Searchbar(QWidget *p,int w,int h)
     setStyleSheet("height:"+QString::number(h-10)+
                   "px;border:none solid #eaeaea;");
     this->setAttribute(Qt::WA_MacShowFocusRect, 0);
+    connect(searchBtn,SIGNAL(clicked()),this,SLOT(buttonclicked()));
 
 
+}
+
+
+void Searchbar::buttonclicked(){
+    QString name = this->text();
+    qDebug()<<name;
+    emit Search(name);
 }

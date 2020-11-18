@@ -20,7 +20,7 @@ private:
     int WIN_W;
     int WIN_H;
     bool visible;
-    User user;
+    User *user;
     QWidget *w;  //没有w会出大问题！！！！！！！！！！！！！！！！！
     QLabel  *id;
     QLabel *Vid;
@@ -34,12 +34,13 @@ private:
     FriendList *fl;
 
 public:
-    void setUser(User U);
+    void setUser(User *U);
     UserInfo(QWidget *, int, int,User *U);
     ~UserInfo() {}
 public slots:
     void annimation();
     void friendListClicked();
+
 };
 
 #endif // USERINFO_H

@@ -10,7 +10,7 @@ UserInfo::UserInfo(QWidget *parent, int w, int h,User *U) : WIN_W(w/10*3), WIN_H
 
 
     this->setParent(parent);
-    this->setUser(*U);
+//    this->setUser(U);
     visible = false;
     this->setGeometry(0, 0, -WIN_W, WIN_H);
     this->w=new QWidget(this);
@@ -40,9 +40,9 @@ UserInfo::UserInfo(QWidget *parent, int w, int h,User *U) : WIN_W(w/10*3), WIN_H
     id->setText("账号：");
     username->setText("用户名：");
     phone->setText("手机：");
-    Vid->setText(QString::number(user.getId()));
-    Vusername->setText(user.getName());
-    Vphone->setText(user.getPhone());
+    Vid->setText("-1");
+    Vusername->setText("-1");
+    Vphone->setText("-1");
 
 
     id->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -106,11 +106,15 @@ void UserInfo::annimation()
 
 }
 
-void UserInfo::setUser(User U){
+void UserInfo::setUser(User *U){
     this->user=U;
+    Vid->setText(QString::number(U->getId()));
+    this->Vusername->setText(U->getName());
+    Vphone->setText(user->getPhone());
+    qDebug()<<U->getName();
+    qDebug()<<"13333";
 }
 
 void UserInfo::friendListClicked(){
-    qDebug()<<"fl";
     this->fl->annimation();
 }

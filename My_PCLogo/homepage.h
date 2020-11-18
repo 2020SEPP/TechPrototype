@@ -27,7 +27,7 @@ public:
     User *USER;
 private:
     Window window;
-    bool logined = true;
+    bool logined = false;
 
     UserInfo *usrinfo;
     LoginDialog *logindialog;
@@ -42,7 +42,7 @@ private:
 private slots:
     void avatarClicked();
     void pvpPressed();
-    void dialogResponse(bool);
+    void dialogResponse(User * u);
     void lineClicked();
     void textClicked();
 
