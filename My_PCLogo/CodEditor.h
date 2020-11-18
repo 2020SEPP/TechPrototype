@@ -4,6 +4,7 @@
 #include "window.h"
 
 #include <QWidget>
+#include <QList>
 #include <QMainWindow>
 
 #include "Qsci/qsciscintilla.h"
@@ -17,9 +18,12 @@ class CodEditor : public QWidget
 private:
     Window window;
     QsciScintilla *editor;
+    QList<int> points;
+
 public:
     int WIN_W;
     int WIN_H;
+
 public:
     CodEditor(QWidget *parent = nullptr);
     virtual ~CodEditor() override {}
@@ -27,9 +31,14 @@ public:
 public:
     QString getAllContent();
     void setContent(QString);
+    QList<int> getPoints();
+
+private slots:
+    void addMarker(int, int, Qt::KeyboardModifiers);
 
 signals:
     void CloseEditor(int);
+    void Mark();
 };
 
 #endif // CODEDITOR_H
