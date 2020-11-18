@@ -18,10 +18,13 @@ private:
     QListWidget *friends;
     Searchbar *sb;
     HttpRequest *http;
+    
 public:
     FriendList(QWidget *p,int w,int h);
     void annimation();
     void setFriends(QList<User> FL);
+    void reset();
+    
 public slots:
     void search(QString);
 };

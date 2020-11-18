@@ -14,6 +14,10 @@ HttpRequest::HttpRequest()
 {
 }
 
+HttpRequest::HttpRequest(QString token)
+{
+    this->token=token;
+}
 QString HttpRequest::get(QString url)
 {
     QNetworkRequest request;
@@ -22,6 +26,7 @@ QString HttpRequest::get(QString url)
     request.setUrl(strUrl);
     request.setRawHeader("Content-Type", "charset='utf-8'");
     request.setRawHeader("Content-Type", "application/json");
+    if(token!="") request.setRawHeader("Authorization", token.toLocal8Bit());
 
     QNetworkReply* reply = naManager->get(request);
 
@@ -43,17 +48,19 @@ QJsonObject HttpRequest::get_json(QString url)
     request.setUrl(strUrl);
     request.setRawHeader("Content-Type", "charset='utf-8'");
     request.setRawHeader("Content-Type", "application/json");
-
+    if(token!="") request.setRawHeader("token",token.toLocal8Bit());
+    qDebug()<<'a';
     QNetworkReply* reply = naManager->get(request);
-
+    qDebug()<<'b';
     QEventLoop eventLoop;
     connect(naManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
     eventLoop.exec();
-
+    qDebug()<<'c';
     QJsonObject object = QJsonDocument::fromJson(reply->readAll()).object();
 
     reply->deleteLater();
     delete naManager;
+    qDebug()<<'d';
     return object;
 }
 

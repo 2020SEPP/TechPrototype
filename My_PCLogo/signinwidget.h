@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QLineEdit>
+#include "token.h"
 
 class LoginDialog : public QDialog
 {
@@ -35,6 +36,8 @@ private:
     QPushButton *signup;
     SingleWidget *single;
 
+    QLabel *Edit;
+
     HttpRequest http;
 
 private slots:
@@ -48,7 +51,7 @@ public:
     ~LoginDialog();
 
 signals:
-    void LoginResponse(bool);
+    void DialogResponse(User *);
 };
 
 #endif // LOGINWIDGET_H

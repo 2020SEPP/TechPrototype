@@ -7,8 +7,15 @@
 #include <QPushButton>
 class Searchbar :public QLineEdit
 {
+    Q_OBJECT
 public:
     Searchbar(QWidget *p,int w,int h);
+
+  public  slots:
+      void buttonclicked();
+
+signals:
+    void Search(QString s);
 };
 
 #endif // SEARCHBAR_H

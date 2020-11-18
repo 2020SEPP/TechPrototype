@@ -6,7 +6,9 @@
 #include <QLineEdit>
 #include <QListWidgetItem>
 #include <QWidget>
+#include <QDebug>
 #include "qlistwidgetitem.h"
+#include "token.h"
 FriendList::FriendList(QWidget *p,int w,int h): QWidget(p),WIN_W(w),WIN_H(h/3*2-50),p_H(h)
 {
 
@@ -63,6 +65,7 @@ FriendList::FriendList(QWidget *p,int w,int h): QWidget(p),WIN_W(w),WIN_H(h/3*2-
 //    aItem->setSizeHint(QSize(50,80));
 //    friends->addItem(aItem);
 //    friends->setItemWidget(aItem,sb);
+    connect(sb,SIGNAL(Search(QString)),this,SLOT(search(QString)));
 
 }
 
@@ -98,4 +101,20 @@ void FriendList::setFriends(QList<User> FL){
         friends->addItem(d);
         friends->setItemWidget(d,new ListWidgetItem(&FL[i],friends));
     }
+}
+
+
+void FriendList:: search(QString s){
+    http=new HttpRequest(token);
+    qDebug()<<http->getToken();
+    qDebug()<<s;
+    QString url = ADDR + "/user/searchByPhone?friendPhone="+s;
+    QJsonObject res = http->get_json(url);
+    qDebug()<<res;
+    User *user = new User(res);
+    qDebug()<<"成功："<<user->getName();
+    QList<User> fl;
+    fl.append(*user);
+    this->friends->clear();
+    this->setFriends(fl);
 }
