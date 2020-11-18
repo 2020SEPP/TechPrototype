@@ -12,13 +12,10 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
     this->setMinimumSize(800,600);
 
     editor = new QsciScintilla(this);
-
     editor->resize(WIN_W, WIN_H);
 
-    //设置语法
     QsciLexerLogo *lexer = new QsciLexerLogo;
-//    QsciLexerPython *textLexer = new QsciLexerPython;//创建一个词法分析器
-//    editor->setLexer(textLexer);
+
     editor->setLexer(lexer);
     lexer->setPaper(QColor(200, 250, 200));
     lexer->setColor(QColor(0, 170, 0));
@@ -27,13 +24,13 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
 
     //代码提示
     QsciAPIs *apis = new QsciAPIs(lexer);
-//    QsciAPIs *apis = new QsciAPIs(textLexer);
     apis->add(QString("gongjianbo1"));
     apis->add(QString("Gong"));
     apis->prepare();
 
     //行号提示
     editor->SendScintilla(QsciScintilla::SCI_SETCODEPAGE,QsciScintilla::SC_CP_UTF8);//设置编码为UTF-8
+
     QFont line_font;
     line_font.setFamily("Microsoft YaHei");
     line_font.setPointSize(11);
@@ -82,7 +79,17 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
     //editor->setMarginMarkerMask(0,QsciScintilla::Background);//页边掩码
     //editor->setMarginSensitivity(0,true);//注册通知事件，当用户点击边栏时，scintilla会通知我们
     editor->setMarginLineNumbers(0,true);//设置第0个边栏为行号边栏，True表示显示
-    editor->setMarginWidth(0,15);//设置0边栏宽度
+    editor->setMarginWidth(0, 30);//设置0边栏宽度
+
+    editor->setMarginType(1, QsciScintilla::SymbolMargin);
+    editor->SendScintilla(QsciScintilla::SCI_MARKERSETFORE, 1, QColor("black"));
+    editor->SendScintilla(QsciScintilla::SCI_MARKERSETBACK, 1, QColor("red"));
+    editor->SendScintilla(QsciScintilla::SCI_SETMARGINMASKN, 1, 0x02);
+    editor->setMarginSensitivity(1, true);
+
+    connect(editor,SIGNAL(marginClicked(int,int,Qt::KeyboardModifiers)),this,SLOT(addMarker(int,int,Qt::KeyboardModifiers)));
+
+
     editor->setMarginsBackgroundColor(Qt::gray);
     editor->setMarginsForegroundColor(Qt::white);
 
@@ -107,4 +114,30 @@ QString CodEditor::getAllContent()
 void CodEditor::setContent(QString content)
 {
     editor->setText(content);
+}
+
+QList<int> CodEditor::getPoints()
+{
+    std::sort(points.begin(), points.end());
+    return points;
+}
+
+// SLOTS
+void CodEditor::addMarker(int margin, int row, Qt::KeyboardModifiers)
+{
+    int maskn = editor->SendScintilla(QsciScintilla::SCI_MARKERGET, row);
+    unsigned long rowul = static_cast<unsigned long>(row);
+
+    if(maskn == 0)
+    {
+        editor->SendScintilla(QsciScintilla::SCI_MARKERADD, rowul, margin);
+        points.append(row);
+    }
+    else
+    {
+        editor->SendScintilla(QsciScintilla::SCI_MARKERDELETE, rowul, margin);
+        points.removeAt(points.indexOf(row));
+    }
+
+    emit Mark();
 }

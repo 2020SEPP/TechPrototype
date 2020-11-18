@@ -18,9 +18,14 @@ private:
 
 public:
     bool step;
+    int point = -1;
+    QList<int> points;
+
     QString Curr_file;
     QPushButton *import;
+    QPushButton *save;
     QPushButton *run;
+    QPushButton *debug;
     Canvas *canvas;
     CodEditor *editor;
 
@@ -33,7 +38,14 @@ signals:
 
 private slots:
     void Import();
+    void Save();
     void Run();
+    void Debug();
+    void MarkChanged();
+
+private:
+    bool saveAs();
+    bool saveFile(QString filename);
 };
 
 #endif // CMDFILEWIDGET_H
