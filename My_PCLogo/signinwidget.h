@@ -15,14 +15,13 @@
 #include <QLineEdit>
 #include "token.h"
 
-class LoginDialog : public QDialog
-{
+class LoginDialog : public QDialog {
     Q_OBJECT
 
-private:
+  private:
     int width;
     int height;
-    bool SignUpMode=false;
+    bool SignUpMode = false;
     Window window;
 
     QLabel *usrlabel;
@@ -40,17 +39,17 @@ private:
 
     HttpRequest http;
 
-private slots:
+  private slots:
     void loginClicked();
     void quitClicked();
     void signupClicked();
 
-public:
+  public:
     LoginDialog();
-    LoginDialog(int widght,int height,QWidget *p);
+    LoginDialog(int widght, int height, QWidget *p);
     ~LoginDialog();
 
-signals:
+  signals:
     void DialogResponse(User *);
 };
 

@@ -14,18 +14,17 @@
 #include "userinfo.h"
 #include "CmdFileWidget.h"
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
-public:
+  public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow() {}
 
-public:
+  public:
     int WIN_W;
     int WIN_H;
 
-private:
+  private:
     Window window;
     CmdFileWidget *cmdfile;
     SingleWidget *single;
@@ -33,7 +32,7 @@ private:
     HomePage *home;
     UserInfo *usrinfo;
 
-private slots:
+  private slots:
     void CommandFile();
     void CommandLine();
     void PVP();

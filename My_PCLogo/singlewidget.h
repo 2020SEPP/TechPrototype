@@ -11,13 +11,12 @@
 #include "window.h"
 
 
-class SingleWidget : public QWidget
-{
+class SingleWidget : public QWidget {
     Q_OBJECT
-public:
+  public:
     explicit SingleWidget(QWidget *parent);
     ~SingleWidget() override {}
-private:
+  private:
     Canvas *canvas;
     Console *console;
     Window window;
@@ -25,13 +24,13 @@ private:
     int width;
     bool visible;
 
-protected:
+  protected:
     void keyPressEvent(QKeyEvent *) override;
 
-signals:
+  signals:
     void CloseSingle(int);
 
-public slots:
+  public slots:
     void setCanvasBG(QString);
     void InAnnimation();
 };

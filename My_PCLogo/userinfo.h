@@ -12,10 +12,9 @@
 #include "user.h"
 #include "friendList.h"
 
-class UserInfo : public QWidget
-{
+class UserInfo : public QWidget {
     Q_OBJECT
-private:
+  private:
     Window window;
     int WIN_W;
     int WIN_H;
@@ -33,12 +32,14 @@ private:
     QPushButton *friendList;
     FriendList *fl;
 
-public:
+  public:
     void setUser(User *U);
-    UserInfo(QWidget *, int, int,User *U);
-    void updateFL(){fl->reset();}
+    UserInfo(QWidget *, int, int, User *U);
+    void updateFL() {
+        fl->reset();
+    }
     ~UserInfo() {}
-public slots:
+  public slots:
     void annimation();
     void friendListClicked();
 

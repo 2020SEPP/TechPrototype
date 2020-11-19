@@ -12,31 +12,30 @@
 #include "qscilexerLogo.h"
 #include "Qsci/qscilexerpython.h"
 
-class CodEditor : public QWidget
-{
+class CodEditor : public QWidget {
     Q_OBJECT
-private:
+  private:
     Window window;
     QsciScintilla *editor;
     QList<int> points;
 
-public:
+  public:
     int WIN_W;
     int WIN_H;
 
-public:
+  public:
     CodEditor(QWidget *parent = nullptr);
     virtual ~CodEditor() override {}
 
-public:
+  public:
     QString getAllContent();
     void setContent(QString);
     QList<int> getPoints();
 
-private slots:
+  private slots:
     void addMarker(int, int, Qt::KeyboardModifiers);
 
-signals:
+  signals:
     void CloseEditor(int);
     void Mark();
 };

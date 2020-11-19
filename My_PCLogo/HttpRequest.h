@@ -9,12 +9,11 @@
 
 QList<int> JsonValue2ListInt(QJsonValue value);
 
-class HttpRequest : public QObject
-{
+class HttpRequest : public QObject {
     Q_OBJECT
-private:
-    QString token="";
-public:
+  private:
+    QString token = "";
+  public:
     HttpRequest();
     HttpRequest(QString token);
 
@@ -25,7 +24,9 @@ public:
     QString post_str(QString url,  QString jsondata);
     QJsonObject post_json(QString url, QString jsondata);
     QString postHeadRequest(QString url, QString jsondata);
-    QString getToken(){return token;}
+    QString getToken() {
+        return token;
+    }
 };
 
 #endif // HTTPREQUEST_H
