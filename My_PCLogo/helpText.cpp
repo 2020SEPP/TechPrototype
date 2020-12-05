@@ -18,7 +18,7 @@ HelpText::HelpText(int wid, int hei, QWidget *p)
     //圆角遮罩
     Region *Re = new Region(width, height, width / 25);
     Re->mask(this);
-    close->setGeometry(width * 9 / 10, height / 13, width / 11, height / 11);
+    close->setGeometry(width * 9 / 10, height / 20, width / 15, height / 11);
     close->setStyleSheet("QPushButton{border-image:url(:/images/image/error.png)}");
     text->append("1.	 引言");
     text->append("\t编写目的");
