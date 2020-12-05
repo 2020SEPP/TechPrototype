@@ -30,6 +30,20 @@ SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent) {
                            "border-image:url(:/images/image/paint2222.png);"
                            "}");
     console->setAttribute(Qt::WA_InputMethodEnabled, false);
+
+    help = new QPushButton(this);
+    exit  = new QPushButton(this);
+    help->setGeometry(width * 13 / 15, 0, height/ 15,height / 15);
+    exit->setGeometry(width * 14/ 15, 0, height/ 15,height / 15);
+    help->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    exit->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    help->setStyleSheet("QPushButton{"
+                        "border-image:url(:/images/image/bangzhu.png)"
+                        "}");
+    exit->setStyleSheet("QPushButton{"
+                        "border-image:url(:/images/image/tuichu.png)"
+                        "}");
+
 //    connect(console, SIGNAL(newLineWriten(QStringList)), canvas, SLOT(draw(qreal, qreal)));
     connect(console, SIGNAL(newLine(QString)), canvas, SLOT(parse_line(QString)));
     connect(console, SIGNAL(drawLine(qreal, bool)), canvas, SLOT(drawLine(qreal, bool)));
@@ -40,6 +54,7 @@ SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent) {
     connect(console, SIGNAL(setBG(QString)), this, SLOT(setCanvasBG(QString)));
     connect(console, SIGNAL(stampoval(qreal, qreal)), canvas, SLOT(stampoval(qreal, qreal)));
     connect(canvas, SIGNAL(setBG(QString)), this, SLOT(setCanvasBG(QString)));
+    connect(exit,SIGNAL(clicked()),this,SLOT(exitClicked()));
 }
 
 // SLOT
@@ -73,4 +88,8 @@ SingleWidget::keyPressEvent(QKeyEvent *ev) {
     if (ev->key() == Qt::Key_Escape) {
         emit CloseSingle(1);
     }
+}
+
+void SingleWidget::exitClicked(){
+    emit CloseSingle(1);
 }

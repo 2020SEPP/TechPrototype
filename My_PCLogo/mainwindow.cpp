@@ -58,6 +58,7 @@ void MainWindow::PVP() {
 void MainWindow::SwitchWidget(int xXCode) {
     switch (xXCode) {
     case 1:
+        single->InAnnimation();
         single->hide();
         break;
     case 2:
