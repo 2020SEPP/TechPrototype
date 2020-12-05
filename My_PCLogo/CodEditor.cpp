@@ -17,7 +17,7 @@ CodEditor::CodEditor(QWidget *parent) : QWidget(parent)
     QsciLexerLogo *lexer = new QsciLexerLogo;
 
     editor->setLexer(lexer);
-    lexer->setPaper(QColor(200, 250, 200));
+    lexer->setPaper(QColor(0, 250, 200,60));
     lexer->setColor(QColor(0, 170, 0));
 //    textLexer->setPaper(QColor(200,250,200));//文本区域背景色
 //    textLexer->setColor(QColor(0,170,0),QsciLexerPython::Comment); //设置自带的注释行为灰色
