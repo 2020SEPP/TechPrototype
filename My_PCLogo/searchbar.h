@@ -5,21 +5,20 @@
 #include <QLineEdit>
 #include <QHBoxLayout>
 #include <QPushButton>
-class Searchbar :public QLineEdit
-{
+class Searchbar : public QLineEdit {
     Q_OBJECT
-private:
+  private:
     bool searching = false;
     QPushButton *searchBtn;
     QPushButton *cancelBtn;
-public:
-    Searchbar(QWidget *p,int w,int h);
+  public:
+    Searchbar(QWidget *p, int w, int h);
 
   public  slots:
-      void buttonclicked();
-      void cancelclicked();
+    void buttonclicked();
+    void cancelclicked();
 
-signals:
+  signals:
     void Search(QString s);
 
 };

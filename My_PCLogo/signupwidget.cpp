@@ -1,6 +1,4 @@
 #include "signupwidget.h"
 
-SignUpWidget::SignUpWidget()
-{
-
+SignUpWidget::SignUpWidget() {
 }

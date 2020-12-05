@@ -72,16 +72,13 @@ RESOURCES += \
 
 # Add Code Texter QScintilla
 
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5d
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5d
-#else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5d
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5d
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5d
+else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5d
 
-#INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
-#DEPENDPATH +=$$PWD/QScintilla-2.11.5/Qt4Qt5
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5
-else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5
+#else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5
 
 INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
 DEPENDPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5

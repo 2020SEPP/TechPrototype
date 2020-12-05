@@ -10,13 +10,12 @@
 #include "console.h"
 #include "window.h"
 
-class PvpWidget : public QWidget
-{
+class PvpWidget : public QWidget {
     Q_OBJECT
-public:
+  public:
     explicit PvpWidget(QWidget *parent);
     ~PvpWidget() override {}
-private:
+  private:
     Canvas *canvas;
     Console *console;
     Window window;
@@ -24,14 +23,14 @@ private:
     int WIN_W;
     bool visible;
 
-signals:
+  signals:
     void ClosePvP(int);
 
-public slots:
+  public slots:
     void setCanvasBG(QString);
     void InAnnimation();
 
-protected:
+  protected:
     virtual void keyPressEvent(QKeyEvent *) override;
 };
 

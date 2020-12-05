@@ -6,24 +6,23 @@
 #include <QPainter>
 #include <QKeyEvent>
 
-class Console : public QTextEdit
-{
+class Console : public QTextEdit {
     Q_OBJECT
-public:
+  public:
     explicit Console(QWidget *parent = nullptr);
     ~Console() override {}
     void clear();
     void write(QString);
     void writetoStorage(QString);
 
-private:
+  private:
     QString storage;
-protected:
+  protected:
     virtual void keyPressEvent(QKeyEvent *) override;
 
-public slots:
+  public slots:
 
-signals:
+  signals:
     void newLine(QString);
     void newLineWriten(QStringList);
     void drawLine(qreal, bool);

@@ -4,15 +4,14 @@
 #include <QObject>
 #include <QListWidgetItem>
 #include "user.h"
-class ListWidgetItem:public QWidget
-{
-Q_OBJECT
-private:
+class ListWidgetItem: public QWidget {
+    Q_OBJECT
+  private:
     User user;
-public:
+  public:
     ListWidgetItem(QWidget *p);
-    ListWidgetItem(User *u,QWidget *p);
-public slots:
+    ListWidgetItem(User *u, QWidget *p);
+  public slots:
     void addClicked();
 };
 

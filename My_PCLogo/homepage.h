@@ -13,19 +13,18 @@
 #include "signinwidget.h"
 #include "HttpRequest.h"
 
-class HomePage : public QWidget
-{
+class HomePage : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     HomePage(QWidget *);
     ~HomePage() {}
 
-public:
+  public:
     int WIN_W;
     int WIN_H;
     User *USER;
-private:
+  private:
     Window window;
     bool logined = false;
 
@@ -39,14 +38,14 @@ private:
     QWidget *w;
     QLabel *ava_border;
 
-private slots:
+  private slots:
     void avatarClicked();
     void pvpPressed();
     void dialogResponse(User * u);
     void lineClicked();
     void textClicked();
 
-signals:
+  signals:
     void CommandFile();
     void CommandLine();
     void SingleMode();
