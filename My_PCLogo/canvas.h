@@ -25,22 +25,22 @@ const QStringList INSTRUCTIONS = {
     "stampoval", "repeat"
 };
 
-typedef struct circle
-{
+typedef struct circle {
     QPointF center;
     qreal rx;
     qreal ry;
 } circle_t;
 
-class Canvas : public QWidget
-{
+class Canvas : public QWidget {
     Q_OBJECT
-public:
+  public:
     explicit Canvas(QWidget *parent = nullptr);
     explicit Canvas(QWidget *, int, int, int, int);
-    ~Canvas() override { LINES.clear(); }
+    ~Canvas() override {
+        LINES.clear();
+    }
 
-private:
+  private:
     int CANVAS_XPOS = 0, CANVAS_YPOS = 0;
     int CANVAS_WIDTH, CANVAS_HEIGHT;
     QPointF *CURR_POS;
@@ -52,13 +52,13 @@ private:
     QVector<QLineF> LINES;
     QVector<circle_t> CIRCLES;
 
-public:
+  public:
     void addAngle(qreal);
 
-signals:
+  signals:
     void setBG(QString);
 
-public slots:
+  public slots:
     void parse_line(QString);
     void drawLine(qreal, bool);
     void turnDirection(qreal, bool);
@@ -69,7 +69,7 @@ public slots:
     void setPC(uint);
     void stampoval(qreal, qreal);
 
-protected:
+  protected:
     virtual void paintEvent(QPaintEvent *ev) override;
 };
 

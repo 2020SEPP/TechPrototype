@@ -3,15 +3,14 @@
 
 #include <QLineEdit>
 
-class LineEdit:public QLineEdit
-{
+class LineEdit: public QLineEdit {
     Q_OBJECT
-public:
+  public:
     LineEdit(QWidget* parent);
     void keyPressEvent(QKeyEvent* e);
     void focusInEvent(QFocusEvent *e);
     void focusOutEvent(QFocusEvent *e);
-public slots:
+  public slots:
     void SlotLineEditDeselect();
 
 };

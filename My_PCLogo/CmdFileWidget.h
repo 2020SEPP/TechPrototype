@@ -8,15 +8,14 @@
 #include "CodEditor.h"
 #include "canvas.h"
 
-class CmdFileWidget : public QWidget
-{
+class CmdFileWidget : public QWidget {
     Q_OBJECT
-private:
+  private:
     int WIN_W;
     int WIN_H;
     Window window;
 
-public:
+  public:
     bool step;
     int point = -1;
     QList<int> points;
@@ -26,24 +25,26 @@ public:
     QPushButton *save;
     QPushButton *run;
     QPushButton *debug;
+    QPushButton *exit;
     Canvas *canvas;
     CodEditor *editor;
 
-public:
+  public:
     CmdFileWidget(QWidget *);
     ~CmdFileWidget() {}
 
-signals:
+  signals:
     void CloseCmdFile(int);
 
-private slots:
+  private slots:
     void Import();
     void Save();
     void Run();
     void Debug();
+    void Exit();
     void MarkChanged();
 
-private:
+  private:
     bool saveAs();
     bool saveFile(QString filename);
 };

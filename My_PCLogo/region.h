@@ -5,14 +5,13 @@
 #include <QPainterPath>
 #include <QWidget>
 
-class Region:public QRegion
-{
-private:
+class Region: public QRegion {
+  private:
     QPainterPath path;
     QRectF *rect;
     QPolygon po;
-public:
-    Region(int width,int height,int radius);
+  public:
+    Region(int width, int height, int radius);
     ~Region() {}
     void mask(QWidget *p);
 };

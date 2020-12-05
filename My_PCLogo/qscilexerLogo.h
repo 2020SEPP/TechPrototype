@@ -6,11 +6,10 @@
 #include <Qsci/qsciglobal.h>
 #include <Qsci/qscilexer.h>
 
-class QsciLexerLogo : public QsciLexer
-{
+class QsciLexerLogo : public QsciLexer {
     Q_OBJECT
 
-public:
+  public:
     //! This enum defines the meanings of the different styles used by the
     //! C++ lexer.
     enum {
@@ -206,28 +205,38 @@ public:
     //! Returns true if "} else {" lines can be folded.
     //!
     //! \sa setFoldAtElse()
-    bool foldAtElse() const {return fold_atelse;}
+    bool foldAtElse() const {
+        return fold_atelse;
+    }
 
     //! Returns true if multi-line comment blocks can be folded.
     //!
     //! \sa setFoldComments()
-    bool foldComments() const {return fold_comments;}
+    bool foldComments() const {
+        return fold_comments;
+    }
 
     //! Returns true if trailing blank lines are included in a fold block.
     //!
     //! \sa setFoldCompact()
-    bool foldCompact() const {return fold_compact;}
+    bool foldCompact() const {
+        return fold_compact;
+    }
 
     //! Returns true if preprocessor blocks can be folded.
     //!
     //! \sa setFoldPreprocessor()
-    bool foldPreprocessor() const {return fold_preproc;}
+    bool foldPreprocessor() const {
+        return fold_preproc;
+    }
 
     //! Returns true if preprocessor lines (after the preprocessor
     //! directive) are styled.
     //!
     //! \sa setStylePreprocessor()
-    bool stylePreprocessor() const {return style_preproc;}
+    bool stylePreprocessor() const {
+        return style_preproc;
+    }
 
     //! If \a allowed is true then '$' characters are allowed in identifier
     //! names.  The default is true.
@@ -238,7 +247,9 @@ public:
     //! Returns true if '$' characters are allowed in identifier names.
     //!
     //! \sa setDollarsAllowed()
-    bool dollarsAllowed() const {return dollars;}
+    bool dollarsAllowed() const {
+        return dollars;
+    }
 
     //! If \a enabled is true then triple quoted strings are highlighted.  The
     //! default is false.
@@ -249,7 +260,9 @@ public:
     //! Returns true if triple quoted strings should be highlighted.
     //!
     //! \sa setHighlightTripleQuotedStrings()
-    bool highlightTripleQuotedStrings() const {return highlight_triple;}
+    bool highlightTripleQuotedStrings() const {
+        return highlight_triple;
+    }
 
     //! If \a enabled is true then hash quoted strings are highlighted.  The
     //! default is false.
@@ -260,7 +273,9 @@ public:
     //! Returns true if hash quoted strings should be highlighted.
     //!
     //! \sa setHighlightHashQuotedStrings()
-    bool highlightHashQuotedStrings() const {return highlight_hash;}
+    bool highlightHashQuotedStrings() const {
+        return highlight_hash;
+    }
 
     //! If \a enabled is true then back-quoted raw strings are highlighted.
     //! The default is false.
@@ -271,7 +286,9 @@ public:
     //! Returns true if back-quoted raw strings should be highlighted.
     //!
     //! \sa setHighlightBackQuotedStrings()
-    bool highlightBackQuotedStrings() const {return highlight_back;}
+    bool highlightBackQuotedStrings() const {
+        return highlight_back;
+    }
 
     //! If \a enabled is true then escape sequences in strings are highlighted.
     //! The default is false.
@@ -282,7 +299,9 @@ public:
     //! Returns true if escape sequences in strings should be highlighted.
     //!
     //! \sa setHighlightEscapeSequences()
-    bool highlightEscapeSequences() const {return highlight_escape;}
+    bool highlightEscapeSequences() const {
+        return highlight_escape;
+    }
 
     //! If \a allowed is true then escape sequences are allowed in verbatim
     //! strings.  The default is false.
@@ -293,9 +312,11 @@ public:
     //! Returns true if hash quoted strings should be highlighted.
     //!
     //! \sa setVerbatimStringEscapeSequencesAllowed()
-    bool verbatimStringEscapeSequencesAllowed() const {return vs_escape;}
+    bool verbatimStringEscapeSequencesAllowed() const {
+        return vs_escape;
+    }
 
-public slots:
+  public slots:
     //! If \a fold is true then "} else {" lines can be folded.  The
     //! default is false.
     //!
@@ -326,22 +347,22 @@ public slots:
     //! \sa stylePreprocessor()
     virtual void setStylePreprocessor(bool style);
 
-protected:
+  protected:
     //! The lexer's properties are read from the settings \a qs.  \a prefix
     //! (which has a trailing '/') should be used as a prefix to the key of
     //! each setting.  true is returned if there is no error.
     //!
     //! \sa writeProperties()
-    bool readProperties(QSettings &qs,const QString &prefix);
+    bool readProperties(QSettings &qs, const QString &prefix);
 
     //! The lexer's properties are written to the settings \a qs.
     //! \a prefix (which has a trailing '/') should be used as a prefix to
     //! the key of each setting.  true is returned if there is no error.
     //!
     //! \sa readProperties()
-    bool writeProperties(QSettings &qs,const QString &prefix) const;
+    bool writeProperties(QSettings &qs, const QString &prefix) const;
 
-private:
+  private:
     void setAtElseProp();
     void setCommentProp();
     void setCompactProp();

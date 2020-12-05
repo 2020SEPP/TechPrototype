@@ -10,27 +10,29 @@
 #include <QDesktopWidget>
 #include <QPropertyAnimation>
 
-class Window
-{
-private:
-//    bool visible;
+class Window {
+  private:
     int winWidth;
     int winHeight;
 
-public:
+  public:
     Window() {
-//        QScreen *screen = QGuiApplication::primaryScreen();
-//        QRect mm = screen->availableGeometry() ;
-//        winWidth = mm.width();
-//        winHeight = mm.height();
-        QRect screenRect = QApplication::desktop()->screenGeometry();
-        winWidth = screenRect.width();
-        winHeight = screenRect.height();
+        QScreen *screen = QGuiApplication::primaryScreen();
+        QRect mm = screen->availableGeometry() ;
+        winWidth = mm.width();
+        winHeight = mm.height();
+//        QRect screenRect = QApplication::desktop()->screenGeometry();
+//        winWidth = screenRect.width();
+//        winHeight = screenRect.height();
     }
     ~Window() {}
 
-    int getW() { return winWidth; }
-    int getH() { return winHeight; }
+    int getW() {
+        return winWidth;
+    }
+    int getH() {
+        return winHeight;
+    }
 };
 
 #endif // WINDOW_H

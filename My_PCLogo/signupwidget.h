@@ -4,9 +4,8 @@
 #include <QObject>
 #include <QWidget>
 
-class SignUpWidget
-{
-public:
+class SignUpWidget {
+  public:
     SignUpWidget();
 };
 
