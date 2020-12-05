@@ -1,15 +1,12 @@
 #include "canvas.h"
+#include <QMatrix>
 #include <QApplication>
 #include <QStyleOption>
 #include <QDebug>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
-Canvas::Canvas(QWidget *parent) : QWidget(parent) {
-    CANVAS_WIDTH = (parent->width() * 3) / 4;
-    CANVAS_HEIGHT = (parent->height() * 3) / 4;
-    CURR_POS = new QPointF(parent->width() / 2, CANVAS_HEIGHT / 2);
-    CURR_ANGLE = 90;
-    PEN_IS_DOWN = true;
-}
+//#define DEBUG
 
 Canvas::Canvas(QWidget *parent, int xPos, int yPos, int xScale, int yScale)
     : QWidget(parent) {
@@ -20,6 +17,15 @@ Canvas::Canvas(QWidget *parent, int xPos, int yPos, int xScale, int yScale)
     CURR_POS = new QPointF(CANVAS_XPOS + CANVAS_WIDTH / 2, CANVAS_YPOS + CANVAS_HEIGHT / 2);
     CURR_ANGLE = 90;
     PEN_IS_DOWN = true;
+    pixmap.load(":/images/image/turtle.png");
+    turtle = new QLabel(this);
+    turtle->setStyleSheet("QLabel {"
+                          "background:none;"
+                          "border-image:url(:/images/image/space.png);"
+                          "}");
+    this->setStyleSheet("QWidget {"
+                        "border-image:url(:/images/image/paint1.png);"
+                        "}");
 }
 
 // public
@@ -47,6 +53,10 @@ Canvas::paintEvent(QPaintEvent *) {
     }
     const QPointF curr(CURR_POS->rx(), CURR_POS->ry());
     p.drawPoint(curr);
+    turtle->setGeometry(qRound(CURR_POS->rx()) - TURTLE_SIZE / 2, qRound(CURR_POS->ry()) - TURTLE_SIZE / 2, TURTLE_SIZE, TURTLE_SIZE);
+    QMatrix matrix;
+    matrix.rotate(90 - CURR_ANGLE);
+    turtle->setPixmap(pixmap.scaled(turtle->size()).transformed(matrix, Qt::SmoothTransformation));
 }
 
 // UTILS
@@ -178,10 +188,12 @@ argument_type_err:
 
 void
 Canvas::drawLine(qreal rlen, bool flag) {
+#ifdef DEBUG
     if (flag)
         qDebug() << "fd: " << rlen;
     else
         qDebug() << "bk: " << rlen;
+#endif
     const QPointF aP1(CURR_POS->rx(), CURR_POS->ry());
     QLineF line;
     line.setP1(aP1);
@@ -200,10 +212,12 @@ Canvas::drawLine(qreal rlen, bool flag) {
 
 void
 Canvas::turnDirection(qreal delta, bool flag) {
+#ifdef DEBUG
     if (flag)
         qDebug() << "set direction: " << delta << " right\n";
     else
         qDebug() << "set direction: " << delta << " left\n";
+#endif
     if (flag)
         addAngle(delta * (-1));
     else
@@ -212,7 +226,9 @@ Canvas::turnDirection(qreal delta, bool flag) {
 
 void
 Canvas::reset() {
+#ifdef DEBUG
     qDebug() << "reset";
+#endif
     LINES.clear();
     CIRCLES.clear();
     CURR_POS->setX(CANVAS_XPOS + CANVAS_WIDTH / 2);
@@ -223,26 +239,34 @@ Canvas::reset() {
 
 void
 Canvas::penDown() {
+#ifdef DEBUG
     qDebug() << "pen down";
+#endif
     PEN_IS_DOWN = true;
 }
 
 void
 Canvas::penUp() {
+#ifdef DEBUG
     qDebug() << "pen up";
+#endif
     PEN_IS_DOWN = false;
 }
 
 void
 Canvas::setXT(qreal rx, qreal ry) {
+#ifdef DEBUG
     qDebug() << "setxy: " << rx << ' ' << ry;
+#endif
     CURR_POS->setX(rx);
     CURR_POS->setY(ry);
 }
 
 void
 Canvas::setPC(uint color) {
+#ifdef DEBUG
     qDebug() << "setpencolor: " << color;
+#endif
     pen.setColor(color);
     update();
 }
@@ -250,7 +274,9 @@ Canvas::setPC(uint color) {
 
 void
 Canvas::stampoval(qreal rx, qreal ry) {
+#ifdef DEBUG
     qDebug() << "stampoval: " << rx << ' ' << ry;
+#endif
     const QPointF center(CURR_POS->rx(), CURR_POS->ry());
     circle_t cl;
     cl.center = center;
