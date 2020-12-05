@@ -26,6 +26,7 @@ class CmdFileWidget : public QWidget {
     QPushButton *run;
     QPushButton *debug;
     QPushButton *exit;
+
     Canvas *canvas;
     CodEditor *editor;
 

@@ -26,6 +26,8 @@
         <file>image/icon/file-import.png</file>
         <file>image/icon/file-save.png</file>
         <file>image/icon/run.png</file>
+        <file>image/bangzhu.png</file>
+        <file>image/tuichu.png</file>
     </qresource>
     <qresource prefix="/Font">
         <file>newfont.ttf</file>

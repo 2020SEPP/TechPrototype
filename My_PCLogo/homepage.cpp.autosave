@@ -32,6 +32,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     help->setStyleSheet("QPushButton{"
                         "border-image:url(:/images/image/bangzhu.png)"
                         "}");
+    help->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     avatar->setStyleSheet("QPushButton {"
                           "background-color: white;"
                           "border-style: solid;"
@@ -72,6 +73,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     connect(text, SIGNAL(clicked()), this, SLOT(textClicked()));
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
     connect(logindialog, SIGNAL(DialogResponse(User*)), this, SLOT(dialogResponse(User *)));
+    connect(help,SIGNAL(cliked()),SLOT(helpClicked()));
     pvp->show();
     line->show();
     text->show();
@@ -127,4 +129,8 @@ void HomePage::lineClicked() {
 
 void HomePage::textClicked() {
     emit CommandFile();
+}
+
+void HomePage::helpClicked(){
+    return ;
 }
