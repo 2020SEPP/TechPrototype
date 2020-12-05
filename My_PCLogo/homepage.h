@@ -12,6 +12,7 @@
 #include "userinfo.h"
 #include "signinwidget.h"
 #include "HttpRequest.h"
+#include "helpText.h"
 
 class HomePage : public QWidget {
     Q_OBJECT
@@ -38,6 +39,8 @@ class HomePage : public QWidget {
     SingleWidget *single;
     QWidget *w;
     QLabel *ava_border;
+//    QDialog *helpText;
+    HelpText *helpText;
 
   private slots:
     void avatarClicked();
@@ -45,6 +48,7 @@ class HomePage : public QWidget {
     void dialogResponse(User * u);
     void lineClicked();
     void textClicked();
+    void show_help();
 
   signals:
     void CommandFile();

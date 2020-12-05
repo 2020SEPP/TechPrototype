@@ -17,6 +17,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     text   = new QPushButton(this);
     pvp    = new QPushButton(this);
     avatar = new QPushButton(this);
+    helpText = new HelpText(WIN_W / 2, WIN_H * 2 / 3, this);
     help = new QPushButton(this);
     ava_border = new QLabel(this);
     line->setGeometry(2 * WIN_W / 5, 3 * WIN_H / 10, WIN_W / 5, WIN_H / 10);
@@ -67,6 +68,9 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     line->stackUnder(usrinfo);
     text->stackUnder(usrinfo);
     pvp->stackUnder(usrinfo);
+//    helpText->setGeometry(WIN_W / 4, 200, WIN_W / 2, WIN_H * 2 / 3);
+    helpText->
+    connect(help, SIGNAL(clicked()), this, SLOT(show_help()));
     connect(avatar, SIGNAL(clicked()), this, SLOT(avatarClicked()));
     connect(line, SIGNAL(clicked()), this, SLOT(lineClicked()));
     connect(text, SIGNAL(clicked()), this, SLOT(textClicked()));
@@ -127,4 +131,12 @@ void HomePage::lineClicked() {
 
 void HomePage::textClicked() {
     emit CommandFile();
+}
+
+void HomePage::show_help()
+{
+    if(helpText->isVisible())
+        helpText->hide();
+    else helpText->show();
+//    helpText->show();
 }
