@@ -38,13 +38,13 @@ class HomePage : public QWidget {
     SingleWidget *single;
     QWidget *w;
     QLabel *ava_border;
-
   private slots:
     void avatarClicked();
     void pvpPressed();
     void dialogResponse(User * u);
     void lineClicked();
     void textClicked();
+    void helpClicked();
 
   signals:
     void CommandFile();

@@ -29,9 +29,12 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     line->setText("命令行绘图");
     text->setText("命令文件绘图");
     pvp->setText("PVP对战");
+
+
     help->setStyleSheet("QPushButton{"
                         "border-image:url(:/images/image/bangzhu.png)"
                         "}");
+    help->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     avatar->setStyleSheet("QPushButton {"
                           "background-color: white;"
                           "border-style: solid;"
@@ -72,6 +75,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     connect(text, SIGNAL(clicked()), this, SLOT(textClicked()));
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
     connect(logindialog, SIGNAL(DialogResponse(User*)), this, SLOT(dialogResponse(User *)));
+    connect(help,SIGNAL(cliked()),SLOT(helpClicked()));
     pvp->show();
     line->show();
     text->show();
@@ -127,4 +131,9 @@ void HomePage::lineClicked() {
 
 void HomePage::textClicked() {
     emit CommandFile();
+}
+
+void HomePage::helpClicked(){
+
+    return ;
 }
