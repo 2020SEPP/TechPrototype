@@ -2,8 +2,12 @@
 #define CANVAS_H
 
 #include <QWidget>
+#include <QIcon>
 #include <QPainter>
+#include <QLabel>
+#include <QPushButton>
 #include <QMouseEvent>
+
 
 /*
     | 小海龟的前后、转向 | FD, BK, RT, LT  n |
@@ -34,15 +38,20 @@ typedef struct circle {
 class Canvas : public QWidget {
     Q_OBJECT
   public:
-    explicit Canvas(QWidget *parent = nullptr);
     explicit Canvas(QWidget *, int, int, int, int);
     ~Canvas() override {
         LINES.clear();
+        CIRCLES.clear();
     }
 
   private:
     int CANVAS_XPOS = 0, CANVAS_YPOS = 0;
     int CANVAS_WIDTH, CANVAS_HEIGHT;
+
+    QPixmap pixmap;
+    QLabel *turtle;
+    int TURTLE_SIZE = 80;
+
     QPointF *CURR_POS;
     qreal CURR_ANGLE;
 

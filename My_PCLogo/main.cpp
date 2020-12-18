@@ -8,6 +8,7 @@ int main(int argc, char *argv[]) {
     int fontID = QFontDatabase::addApplicationFont(":/Font/newfont.ttf");
     QString msyh = QFontDatabase::applicationFontFamilies ( fontID ).at(0);
     QFont font(msyh);
+    font.setPixelSize(30);
     QApplication::setFont(font);
     MainWindow w;
     w.show();

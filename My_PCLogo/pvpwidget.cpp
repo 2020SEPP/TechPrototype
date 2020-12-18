@@ -16,7 +16,7 @@ PvpWidget::PvpWidget(QWidget *parent) : QWidget(parent) {
     font.setBold(true);
     font.setPixelSize(20);
     this->setFont(font);
-    canvas = new Canvas(this);
+    canvas = new Canvas(this, 0, 0, WIN_W, (WIN_H * 3) / 4);
     canvas->setGeometry(0, 0, WIN_W, (WIN_H * 3) / 4);
     canvas->setStyleSheet("border: 2px solid darkgray; background");
     setCanvasBG("ffffff");
@@ -24,7 +24,6 @@ PvpWidget::PvpWidget(QWidget *parent) : QWidget(parent) {
     console->setGeometry(0, (WIN_H * 3) / 4, WIN_W, WIN_H / 4);
     console->setStyleSheet(QString::fromUtf8("border: 2px solid gray;"));
     console->write("Welcome to the PC Logo!\nPlease type your code.\n");
-//    connect(console, SIGNAL(newLineWriten(QStringList)), canvas, SLOT(draw(qreal, qreal)));
     connect(console, SIGNAL(newLine(QString)), canvas, SLOT(parse_line(QString)));
     connect(console, SIGNAL(drawLine(qreal, bool)), canvas, SLOT(drawLine(qreal, bool)));
     connect(console, SIGNAL(turnDirection(qreal, bool)), canvas, SLOT(turnDirection(qreal, bool)));
