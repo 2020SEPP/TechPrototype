@@ -21,8 +21,10 @@ class Console : public QTextEdit {
     virtual void keyPressEvent(QKeyEvent *) override;
 
   public slots:
+    void wrap();
 
   signals:
+    void enter();
     void newLine(QString);
     void newLineWriten(QStringList);
     void drawLine(qreal, bool);

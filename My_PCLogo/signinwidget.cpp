@@ -28,8 +28,11 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p) {
     this->setFocus();
     this->width = width;
     this->height = height;
+    //设置模量其他窗口屏蔽
     this->setWindowModality(Qt::ApplicationModal);
+    //取消边框
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+    //圆角遮罩
     Region *Re = new Region(width, height, width / 25);
     Re->mask(this);
     this->raise();
