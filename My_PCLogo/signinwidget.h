@@ -14,11 +14,11 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include "token.h"
-
 class LoginDialog : public QDialog {
     Q_OBJECT
 
   private:
+      friend class uniT;
     int width;
     int height;
     bool SignUpMode = false;
@@ -46,7 +46,7 @@ class LoginDialog : public QDialog {
 
   public:
     LoginDialog();
-    LoginDialog(int widght, int height, QWidget *p);
+    LoginDialog(int widght, int height, QWidget *p=nullptr);
     ~LoginDialog();
 
   signals:

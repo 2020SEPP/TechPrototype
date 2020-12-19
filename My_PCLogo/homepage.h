@@ -1,4 +1,4 @@
-#ifndef HOMEPAGE_H
+ #ifndef HOMEPAGE_H
 #define HOMEPAGE_H
 
 #include <QMainWindow>
@@ -39,23 +39,18 @@ class HomePage : public QWidget {
     SingleWidget *single;
     QWidget *w;
     QLabel *ava_border;
-<<<<<<< HEAD
-=======
+
 //    QDialog *helpText;
     HelpText *helpText;
 
->>>>>>> d34da0350a60e524779abe2ec9069bd890a46c25
   private slots:
     void avatarClicked();
     void pvpPressed();
     void dialogResponse(User * u);
     void lineClicked();
     void textClicked();
-<<<<<<< HEAD
-    void helpClicked();
-=======
+
     void show_help();
->>>>>>> d34da0350a60e524779abe2ec9069bd890a46c25
 
   signals:
     void CommandFile();

@@ -137,16 +137,11 @@ void HomePage::textClicked() {
     emit CommandFile();
 }
 
-<<<<<<< HEAD
-void HomePage::helpClicked(){
 
-    return ;
-=======
 void HomePage::show_help()
 {
     if(helpText->isVisible())
         helpText->hide();
     else helpText->show();
 //    helpText->show();
->>>>>>> d34da0350a60e524779abe2ec9069bd890a46c25
 }

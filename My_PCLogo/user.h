@@ -10,6 +10,7 @@
 
 class User {
   private:
+      friend class uniT;
     int id;
     QString name;
     QString phone;
