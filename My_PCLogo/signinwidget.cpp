@@ -22,7 +22,7 @@ LoginDialog::LoginDialog() {
 }
 
 LoginDialog::LoginDialog(int width, int height, QWidget *p) {
-    p->setVisible(0);
+//    p->setVisible(0);®
     this->setStyleSheet("QDialog{border-image:url(:/images/image/login2.png)}");
     this->setParent(p);
     this->setFocus();
@@ -91,7 +91,7 @@ LoginDialog::LoginDialog(int width, int height, QWidget *p) {
     pwdinput->setEchoMode(QLineEdit::Password);
     phoneinput->setGeometry(width / 4 + 50, height * 37 / 60, width / 2, height / 15);
     phoneinput->setFont(font);
-    phoneinput->setMaxLength(16);
+    phoneinput->setMaxLength(11);
     login->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     quit->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     signup->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
