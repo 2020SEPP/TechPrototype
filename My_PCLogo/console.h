@@ -14,6 +14,7 @@ class Console : public QTextEdit {
     void clear();
     void write(QString);
     void writetoStorage(QString);
+    void parse_line(QString);
 
   private:
     QString storage;
@@ -26,10 +27,11 @@ class Console : public QTextEdit {
   signals:
     void enter();
     void newLine(QString);
-    void newLineWriten(QStringList);
+    void reset();
     void drawLine(qreal, bool);
     void turnDirection(qreal, bool);
-    void penDownUp(bool);
+    void penDown();
+    void penUp();
     void setXT(qreal, qreal);
     void setPC(uint);
     void setBG(QString);

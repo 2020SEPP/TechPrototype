@@ -23,15 +23,13 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     line->setGeometry(2 * WIN_W / 5, 3 * WIN_H / 10, WIN_W / 5, WIN_H / 10);
     text->setGeometry(2 * WIN_W / 5, 5 * WIN_H / 10, WIN_W / 5, WIN_H / 10);
     pvp->setGeometry(2 * WIN_W / 5, 7 * WIN_H / 10, WIN_W / 5, WIN_H / 10);
-     help->setGeometry(WIN_W * 13 / 15, 0, WIN_H/ 15,WIN_H / 15);
+    help->setGeometry(WIN_W * 13 / 15, 0, WIN_H / 15, WIN_H / 15);
     avatar->setGeometry(1 * WIN_W / 10, 1 * WIN_H / 10, WIN_W / 10, WIN_W / 10);
     ava_border->setGeometry(1 * WIN_W / 10 - 8, 1 * WIN_H / 10 - 8, WIN_W / 10 + 16, WIN_W / 10 + 16);
     ava_border->hide();
     line->setText("命令行绘图");
     text->setText("命令文件绘图");
     pvp->setText("PVP对战");
-
-
     help->setStyleSheet("QPushButton{"
                         "border-image:url(:/images/image/bangzhu.png)"
                         "}");
@@ -71,15 +69,12 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     line->stackUnder(usrinfo);
     text->stackUnder(usrinfo);
     pvp->stackUnder(usrinfo);
-//    helpText->setGeometry(WIN_W / 4, 200, WIN_W / 2, WIN_H * 2 / 3);
-    helpText->
-    connect(help, SIGNAL(clicked()), this, SLOT(show_help()));
     connect(avatar, SIGNAL(clicked()), this, SLOT(avatarClicked()));
     connect(line, SIGNAL(clicked()), this, SLOT(lineClicked()));
     connect(text, SIGNAL(clicked()), this, SLOT(textClicked()));
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
     connect(logindialog, SIGNAL(DialogResponse(User*)), this, SLOT(dialogResponse(User *)));
-    connect(help,SIGNAL(cliked()),SLOT(helpClicked()));
+    connect(help, SIGNAL(clicked()), SLOT(helpClicked()));
     pvp->show();
     line->show();
     text->show();
@@ -90,19 +85,16 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
 void HomePage::avatarClicked() {
     if(logined)
         usrinfo->annimation();
-    else {
+    else
         logindialog->show();
-    }
-    return ;
 }
 
-
 void HomePage::pvpPressed() {
-    if (logined) {
+    logined = true;
+    if (logined)
         emit PVPMode();
-    } else {
+    else
         logindialog->show();
-    }
 }
 
 void HomePage::dialogResponse(User* u) {
@@ -137,11 +129,9 @@ void HomePage::textClicked() {
     emit CommandFile();
 }
 
-
-void HomePage::show_help()
-{
+void HomePage::helpClicked() {
     if(helpText->isVisible())
         helpText->hide();
-    else helpText->show();
-//    helpText->show();
+    else
+        helpText->show();
 }

@@ -1,4 +1,4 @@
- #ifndef HOMEPAGE_H
+#ifndef HOMEPAGE_H
 #define HOMEPAGE_H
 
 #include <QMainWindow>
@@ -39,8 +39,6 @@ class HomePage : public QWidget {
     SingleWidget *single;
     QWidget *w;
     QLabel *ava_border;
-
-//    QDialog *helpText;
     HelpText *helpText;
 
   private slots:
@@ -49,8 +47,7 @@ class HomePage : public QWidget {
     void dialogResponse(User * u);
     void lineClicked();
     void textClicked();
-
-    void show_help();
+    void helpClicked();
 
   signals:
     void CommandFile();

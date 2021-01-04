@@ -28,7 +28,7 @@ SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent) {
                            "}");
     console->setAttribute(Qt::WA_InputMethodEnabled, false);
     help = new QPushButton(this);
-    exit  = new QPushButton(this);
+    exit = new QPushButton(this);
     help->setGeometry(width * 13 / 15, 0, height / 15, height / 15);
     exit->setGeometry(width * 14 / 15, 0, height / 15, height / 15);
     help->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
@@ -41,8 +41,10 @@ SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent) {
                         "}");
     connect(console, SIGNAL(newLine(QString)), canvas, SLOT(parse_line(QString)));
     connect(console, SIGNAL(drawLine(qreal, bool)), canvas, SLOT(drawLine(qreal, bool)));
+    connect(console, SIGNAL(reset()), canvas, SLOT(reset()));
+    connect(console, SIGNAL(penDown()), canvas, SLOT(penDown()));
+    connect(console, SIGNAL(penUp()), canvas, SLOT(penUp()));
     connect(console, SIGNAL(turnDirection(qreal, bool)), canvas, SLOT(turnDirection(qreal, bool)));
-//    connect(console, SIGNAL(penDownUp(bool)), canvas, SLOT(penDownUp(bool)));
     connect(console, SIGNAL(setXT(qreal, qreal)), canvas, SLOT(setXT(qreal, qreal)));
     connect(console, SIGNAL(setPC(uint)), canvas, SLOT(setPC(uint)));
     connect(console, SIGNAL(setBG(QString)), this, SLOT(setCanvasBG(QString)));
@@ -84,6 +86,7 @@ SingleWidget::keyPressEvent(QKeyEvent *ev) {
     }
 }
 
-void SingleWidget::exitClicked() {
+void
+SingleWidget::exitClicked() {
     emit CloseSingle(1);
 }
