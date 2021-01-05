@@ -11,7 +11,6 @@
 #include "console.h"
 #include "window.h"
 
-
 class SingleWidget : public QWidget {
     Q_OBJECT
   public:
@@ -38,4 +37,5 @@ class SingleWidget : public QWidget {
     void InAnnimation();
     void exitClicked();
 };
+
 #endif // SINGLEWIDGET_H

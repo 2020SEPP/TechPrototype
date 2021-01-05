@@ -3,7 +3,7 @@
 #include <QtTest>
 #include <QObject>
 #include "user.h"
-#include "signinwidget.h"
+#include "loginwidget.h"
 #include "mainwindow.h"
 #include "homepage.h"
 class uniT:public QObject{

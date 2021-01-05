@@ -1,4 +1,5 @@
 #include "canvas.h"
+#include "instructions.h"
 #include <QMatrix>
 #include <QApplication>
 #include <QStyleOption>
@@ -15,6 +16,7 @@ Canvas::Canvas(QWidget *parent, int xPos, int yPos, int xScale, int yScale)
     CANVAS_WIDTH = xScale;
     CANVAS_HEIGHT = yScale;
     CURR_POS = new QPointF(CANVAS_XPOS + CANVAS_WIDTH / 2, CANVAS_YPOS + CANVAS_HEIGHT / 2);
+    qDebug() << CURR_POS->rx() << CURR_POS->ry();
     CURR_ANGLE = 90;
     PEN_IS_DOWN = true;
     pixmap.load(":/images/image/turtle.png");
@@ -59,19 +61,17 @@ Canvas::paintEvent(QPaintEvent *) {
     turtle->setPixmap(pixmap.scaled(turtle->size()).transformed(matrix, Qt::SmoothTransformation));
 }
 
-// UTILS
-
-QString get_qreal_str(QString str) {
+QString
+Qstr2real(QString str) {
     int index = 0;
     while (index < str.length()) {
         QChar ch = str.at(index);
-        if ((ch >= '0' && ch <= '9') || ch == '.') {
+        if ((ch >= '0' && ch <= '9') || ch == '.')
             index++;
-        } else if (ch == ' ' || ch == ']') {
+        else if (ch == ' ' || ch == ']')
             break;
-        } else {
+        else
             return "";
-        }
     }
     return str.left(index);
 }
@@ -105,7 +105,7 @@ Canvas::parse_line(QString line) {
             parse_line(line);
             return;
         }
-        QString arg0 = get_qreal_str(line);
+        QString arg0 = Qstr2real(line);
         if (arg0 == "") {
 argument_type_err:
             qDebug() << "ERROR!" << inst << "expect a real number as argument";
@@ -135,7 +135,7 @@ argument_type_err:
         }
         if (inst == "setxy" || inst == "stampoval") {
             two_arg_flag = true;
-            QString arg1 = get_qreal_str(line);
+            QString arg1 = Qstr2real(line);
             if (arg1 == "")
                 goto argument_type_err;
             if (inst == "setxy")
@@ -182,7 +182,7 @@ argument_type_err:
             return;
         }
     }
-    qDebug() << "ERROR! unknown command " << line;
+    qDebug() << "ERROR! unknown command \'" << line << "\'";
     return;
 }
 

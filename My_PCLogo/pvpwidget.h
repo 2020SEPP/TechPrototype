@@ -17,11 +17,17 @@ class PvpWidget : public QWidget {
     ~PvpWidget() override {}
   private:
     Canvas *canvas;
+    Canvas *enermy;
     Console *console;
     Window window;
-    int WIN_H;
-    int WIN_W;
+    QPushButton *exit;
+    QPushButton *help;
+    int height;
+    int width;
     bool visible;
+
+  protected:
+    virtual void keyPressEvent(QKeyEvent *) override;
 
   signals:
     void ClosePvP(int);
@@ -29,9 +35,7 @@ class PvpWidget : public QWidget {
   public slots:
     void setCanvasBG(QString);
     void InAnnimation();
-
-  protected:
-    virtual void keyPressEvent(QKeyEvent *) override;
+    void exitClicked();
 };
 
 #endif // PVPWINDOW_H

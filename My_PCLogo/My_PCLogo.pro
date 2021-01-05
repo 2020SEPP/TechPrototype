@@ -24,15 +24,15 @@ SOURCES += \
     friendList.cpp \
     helpText.cpp \
     homepage.cpp \
+    loginwidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    matchwidget.cpp \
     pvpwidget.cpp \
     qlistwidgetitem.cpp \
     qscilexerLogo.cpp \
     region.cpp \
     searchbar.cpp \
-    signinwidget.cpp \
-    signupwidget.cpp \
     singlewidget.cpp \
     test/unitTest.cpp \
     token.cpp \
@@ -49,14 +49,15 @@ HEADERS += \
     friendList.h \
     helpText.h \
     homepage.h \
+    instructions.h \
+    loginwidget.h \
     mainwindow.h \
+    matchwidget.h \
     pvpwidget.h \
     qlistwidgetitem.h \
     qscilexerLogo.h \
     region.h \
     searchbar.h \
-    signinwidget.h \
-    signupwidget.h \
     singlewidget.h \
     test/unitTest.h \
     token.h \
@@ -76,13 +77,13 @@ RESOURCES += \
 
 # Add Code Texter QScintilla
 
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5d
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5d
-#else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5d
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5d
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5d
+else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5d
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5
-else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/release/ -lqscintilla2_qt5
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/debug/ -lqscintilla2_qt5
+#else:unix: LIBS += -L$$PWD/QScintilla-2.11.5/build-Debug/ -lqscintilla2_qt5
 
 INCLUDEPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
 DEPENDPATH += $$PWD/QScintilla-2.11.5/Qt4Qt5
