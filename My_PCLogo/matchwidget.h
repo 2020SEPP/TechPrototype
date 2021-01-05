@@ -5,7 +5,7 @@
 #include "region.h"
 #include "HttpRequest.h"
 #include "user.h"
-
+#include "LineEdit.h"
 #include <QObject>
 #include <QDialog>
 #include <QLabel>
@@ -16,7 +16,11 @@ class MatchDialog : public QDialog {
     Q_OBJECT
 
     enum btnStat {
-        MATCH = 0,
+        MODE = 0,
+        CREATE,
+        CERTAIN,
+        RANDOM,
+        MATCH,
         CONFIRM,
         CANCEL
     };
@@ -28,23 +32,38 @@ class MatchDialog : public QDialog {
     bool SignUpMode = false;
     Window window;
 
-    QLabel *usrlabel;
-    QLabel *pwdlabel;
-    QPushButton *btn;
+    QPushButton *createRoom;
+    QPushButton *certainRoom;
+    QPushButton *randomRoom;
+    QPushButton *quitRoom;
+    QPushButton *cnfm;
+    QPushButton *back;
+    LineEdit *roominput;
     btnStat stat;
 
     HttpRequest http;
 
+  private:
+    void btnDisplay(bool);
+
   private slots:
-    void btnClicked();
+    void createClicked();
+    void certainClicked();
+    void randomClicked();
+    void quitClicked();
+    void cnfmClicked();
+    void backClicked();
 
   public:
     MatchDialog();
     MatchDialog(int widght, int height, QWidget *p = nullptr);
-    ~MatchDialog();
+    ~MatchDialog() override;
 
   signals:
     void DialogResponse(User *);
+
+  protected:
+    virtual void paintEvent(QPaintEvent *) override;
 };
 
 

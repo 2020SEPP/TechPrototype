@@ -28,7 +28,7 @@ class LoginDialog : public QDialog {
     QLabel *usrlabel;
     QLabel *pwdlabel;
     QLabel *pholabel;
-    LineEdit  *usrinput;
+    LineEdit *usrinput;
     LineEdit *pwdinput;
     LineEdit *phoneinput;
     QPushButton *login;

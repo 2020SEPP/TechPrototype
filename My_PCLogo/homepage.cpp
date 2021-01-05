@@ -75,7 +75,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     connect(text, SIGNAL(clicked()), this, SLOT(textClicked()));
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
     connect(logindialog, SIGNAL(DialogResponse(User *)), this, SLOT(dialogResponse(User *)));
-    connect(matchdialog, SIGNAL(DialogResponce(User *)), this, SLOT(dialogResponse(User *)));
+    connect(matchdialog, SIGNAL(DialogResponse(User *)), this, SLOT(dialogResponse(User *)));
     connect(help, SIGNAL(clicked()), SLOT(helpClicked()));
     pvp->show();
     line->show();

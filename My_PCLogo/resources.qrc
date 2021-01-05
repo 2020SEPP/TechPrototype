@@ -28,6 +28,10 @@
         <file>image/icon/run.png</file>
         <file>image/bangzhu.png</file>
         <file>image/tuichu.png</file>
+        <file>image/room.png</file>
+        <file>image/certain.png</file>
+        <file>image/exit.png</file>
+        <file>image/random.png</file>
     </qresource>
     <qresource prefix="/Font">
         <file>newfont.ttf</file>
