@@ -18,7 +18,7 @@ PvpWidget::PvpWidget(QWidget *parent) : QWidget(parent) {
     this->setFont(font);
     canvas = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
     canvas->setGeometry(0, 0, width / 2, (height * 3) / 4);
-    enermy = new Canvas(this, width / 2, 0, width / 2, (height * 3) / 4);
+    enermy = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
     enermy->setGeometry(width / 2, 0, width / 2, (height * 3) / 4);
     setCanvasBG("ffffff");
     console = new Console(this);

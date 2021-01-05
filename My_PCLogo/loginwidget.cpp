@@ -1,10 +1,11 @@
-#include "signinwidget.h"
+#include "loginwidget.h"
 
 #include <QBrush>
 #include <QPalette>
 #include <QtCore>
 #include <QRegExpValidator>
 #include "token.h"
+
 QList<User *> getFriend(int uid) {
     HttpRequest http;
     QString url = ADDR + "/user/getFriend?uid=" + QString::number(uid);

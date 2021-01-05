@@ -24,15 +24,15 @@ SOURCES += \
     friendList.cpp \
     helpText.cpp \
     homepage.cpp \
+    loginwidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    matchwidget.cpp \
     pvpwidget.cpp \
     qlistwidgetitem.cpp \
     qscilexerLogo.cpp \
     region.cpp \
     searchbar.cpp \
-    signinwidget.cpp \
-    signupwidget.cpp \
     singlewidget.cpp \
     test/unitTest.cpp \
     token.cpp \
@@ -50,14 +50,14 @@ HEADERS += \
     helpText.h \
     homepage.h \
     instructions.h \
+    loginwidget.h \
     mainwindow.h \
+    matchwidget.h \
     pvpwidget.h \
     qlistwidgetitem.h \
     qscilexerLogo.h \
     region.h \
     searchbar.h \
-    signinwidget.h \
-    signupwidget.h \
     singlewidget.h \
     test/unitTest.h \
     token.h \

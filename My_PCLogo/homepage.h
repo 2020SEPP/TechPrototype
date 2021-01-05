@@ -10,7 +10,8 @@
 
 #include "window.h"
 #include "userinfo.h"
-#include "signinwidget.h"
+#include "loginwidget.h"
+#include "matchwidget.h"
 #include "HttpRequest.h"
 #include "helpText.h"
 
@@ -31,6 +32,7 @@ class HomePage : public QWidget {
 
     UserInfo *usrinfo;
     LoginDialog *logindialog;
+    MatchDialog *matchdialog;
     QPushButton *line;
     QPushButton *text;
     QPushButton *pvp;

@@ -13,6 +13,8 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     usrinfo = new UserInfo(this, WIN_W, WIN_H, USER);
     logindialog = new LoginDialog(WIN_W / 2, WIN_H * 2 / 3, this);
     logindialog->setGeometry(WIN_W / 4, WIN_H / 6, WIN_W / 2, WIN_H * 2 / 3);
+    matchdialog = new MatchDialog(WIN_W / 2, WIN_H * 2 / 3, this);
+    matchdialog->setGeometry(WIN_W / 4, WIN_H / 6, WIN_W / 2, WIN_H * 2 / 3);
     line   = new QPushButton(this);
     text   = new QPushButton(this);
     pvp    = new QPushButton(this);
@@ -52,8 +54,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
                               "border-radius:" + QString::number(WIN_W / 20 + 8) +
                               ";"
                               "border-image: url(:/images/image/log-green.png);"
-                              "}"
-                             );
+                              "}");
     line->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:30px;}");
     text->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:30px;}");
     pvp->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:30px;}");
@@ -73,7 +74,8 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     connect(line, SIGNAL(clicked()), this, SLOT(lineClicked()));
     connect(text, SIGNAL(clicked()), this, SLOT(textClicked()));
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
-    connect(logindialog, SIGNAL(DialogResponse(User*)), this, SLOT(dialogResponse(User *)));
+    connect(logindialog, SIGNAL(DialogResponse(User *)), this, SLOT(dialogResponse(User *)));
+    connect(matchdialog, SIGNAL(DialogResponce(User *)), this, SLOT(dialogResponse(User *)));
     connect(help, SIGNAL(clicked()), SLOT(helpClicked()));
     pvp->show();
     line->show();
@@ -91,9 +93,10 @@ void HomePage::avatarClicked() {
 
 void HomePage::pvpPressed() {
     logined = true;
-    if (logined)
-        emit PVPMode();
-    else
+    if (logined) {
+        matchdialog->show();
+//        emit PVPMode();
+    } else
         logindialog->show();
 }
 
