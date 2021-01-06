@@ -1,10 +1,8 @@
 #include "matchwidget.h"
-
 #include <QBrush>
 #include <QPainter>
 #include <QPalette>
 #include <QtCore>
-#include "token.h"
 
 MatchDialog::MatchDialog() {
 }
@@ -28,9 +26,11 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     quitRoom    = new QPushButton(this);
     cnfm        = new QPushButton(this);
     back        = new QPushButton(this);
-    btn         = new QPushButton(this);
+    vs          = new QPushButton(this);
     stat = MODE;
     currroom = -1;
+    one.load(":/images/image/friend.png");
+    two.load(":/images/image/another.jpg");
     createRoom->setGeometry(width * 2 / 15, height * 2 / 15, height / 3, height / 3);
     certainRoom->setGeometry(width * 13 / 15 - height / 3, height * 2 / 15, height / 3, height / 3);
     randomRoom->setGeometry(width * 2 / 15, height * 8 / 15, height / 3, height / 3);
@@ -75,19 +75,19 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     back->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     back->setFont(font);
     back->hide();
-    btn->setGeometry(width * 2 / 5, 7 * height / 10, width / 5, height / 10);
-    btn->setText("返回");
-    btn->setStyleSheet("QPushButton{border-image: url(:/images/image/button.png);border-radius:20px;}");
-    btn->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-    btn->setFont(font);
-    btn->hide();
+    vs->setGeometry(width * 2 / 5, height / 2, width / 5, width / 5);
+    vs->setStyleSheet("QPushButton{border-image: url(:/images/image/vs.png);border-radius:10px;}");
+    vs->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    vs->setFont(font);
+    vs->hide();
     connect(createRoom, SIGNAL(clicked()), this, SLOT(createClicked()));
     connect(certainRoom, SIGNAL(clicked()), this, SLOT(certainClicked()));
     connect(randomRoom, SIGNAL(clicked()), this, SLOT(randomClicked()));
     connect(quitRoom, SIGNAL(clicked()), this, SLOT(quitClicked()));
     connect(cnfm, SIGNAL(clicked()), this, SLOT(cnfmClicked()));
     connect(back, SIGNAL(clicked()), this, SLOT(backClicked()));
-    connect(btn, SIGNAL(clicked()), this, SLOT(btnClicked()));
+    timer = new QTimer;
+    connect(timer, SIGNAL(timeout()), this, SLOT(listen()));
 }
 
 void MatchDialog::btnDisplay(bool flag) {
@@ -117,6 +117,10 @@ void MatchDialog::createClicked() {
     currroom = res.toInt();
     room->show();
     room->setText("房间号：" + res);
+    vs->show();
+    two.load(":/images/image/another.jpg");
+    update();
+    timer->start(5000);
 }
 
 void MatchDialog::certainClicked() {
@@ -140,6 +144,9 @@ void MatchDialog::randomClicked() {
     QString res = QString("%1").arg(http.get(url).toUInt(), 4, 10, QLatin1Char('0'));
     currroom = res.toInt();
     room->show();
+    vs->show();
+    two.load(":/images/image/another.jpg");
+    update();
     room->setText("房间号：" + res);
 }
 
@@ -173,33 +180,46 @@ void MatchDialog::backClicked() {
     room->hide();
     cnfm->hide();
     back->hide();
+    vs->hide();
     btnDisplay(true);
+    timer->stop();
+    stat = MODE;
 }
 
-void MatchDialog::btnClicked() {
+void MatchDialog::listen() {
+    QString url = ADDR + "/match" + "/getOtherPlayer?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(currroom);
+    QJsonObject res = http.get_json(url);
+    if (res.contains("name")) {
+        qDebug() << res;
+        if (res.value("name").toString() != "") {
+            timer->stop();
+            two.load(":/images/image/vs.png");
+            update();
+        }
+    }
 }
 
 MatchDialog::~MatchDialog() {
 }
 
 void MatchDialog::paintEvent(QPaintEvent *) {
-//    QPainter painter;
-//    painter.begin(this);
-//    painter.setRenderHints(QPainter::Antialiasing, true);
-//    QPainterPath path;
-//    path.addEllipse(width / 8, height / 6, width / 6, width / 6);
-//    painter.setClipPath(path);
-//    painter.drawPixmap(QRect(width / 8, height / 6, width / 6, width / 6), QPixmap(":/images/image/friend.png"));
-//    painter.end();
-//    if (stat == MATCH) {
-//        painter.begin(this);
-//        painter.setRenderHints(QPainter::Antialiasing, true);
-//        QPainterPath path1;
-//        path1.addEllipse((width * 17) / 24, height / 6, width / 6, width / 6);
-//        painter.setClipPath(path1);
-//        painter.drawPixmap(QRect((width * 17) / 24, height / 6, width / 6, width / 6), QPixmap(":/images/image/friend.png"));
-//        painter.end();
-//    } else {
-//        return;
-//    }
+    if (stat == CREATE || stat == RANDOM) {
+        QPainter painter;
+        painter.begin(this);
+        painter.setRenderHints(QPainter::Antialiasing, true);
+        QPainterPath path;
+        path.addEllipse(width / 8, height / 6, width / 6, width / 6);
+        painter.setClipPath(path);
+        painter.drawPixmap(QRect(width / 8, height / 6, width / 6, width / 6), one);
+        painter.end();
+        painter.begin(this);
+        painter.setRenderHints(QPainter::Antialiasing, true);
+        QPainterPath path1;
+        path1.addEllipse(width * 17 / 24, height / 6, width / 6, width / 6);
+        painter.setClipPath(path1);
+        painter.drawPixmap(QRect(width * 17 / 24, height / 6, width / 6, width / 6), two);
+        painter.end();
+        update();
+    }
 }

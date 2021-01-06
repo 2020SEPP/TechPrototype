@@ -47,6 +47,8 @@ void PvpWidget::init(int r) {
     exit->setStyleSheet("QPushButton{"
                         "border-image:url(:/images/image/tuichu.png)"
                         "}");
+    timer = new QTimer;
+    if (room > 0) timer->start(5000);
     connect(console, SIGNAL(drawLine(qreal, bool)), this, SLOT(drawLine(qreal, bool)));
     connect(console, SIGNAL(turnDirection(qreal, bool)), this, SLOT(turnDirection(qreal, bool)));
     connect(console, SIGNAL(setXT(qreal, qreal)), this, SLOT(setXT(qreal, qreal)));
@@ -54,9 +56,23 @@ void PvpWidget::init(int r) {
     connect(console, SIGNAL(setBG(QString)), this, SLOT(setBG(QString)));
     connect(console, SIGNAL(stampoval(qreal, qreal)), this, SLOT(stampoval(qreal, qreal)));
     connect(exit, SIGNAL(clicked()), this, SLOT(exitClicked()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(listen()));
 }
 
 // SLOT
+void PvpWidget::listen() {
+    QString url = ADDR + "/match" + "/getCommand?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(room);
+    QJsonArray res = http.get_array(url);
+    if (res.size()) {
+        qDebug() << res;
+        for (int i = 0; i < res.size(); i++) {
+            QString cmd = res.at(i).toString();
+            enermy->parse_line(cmd);
+        }
+    }
+}
+
 void PvpWidget::drawLine(qreal len, bool flag) {
     canvas->drawLine(len, flag);
     QString command = (flag ? "fd " : "bk ") + QString::number(len);
@@ -64,6 +80,7 @@ void PvpWidget::drawLine(qreal len, bool flag) {
                   + "/sendCommand?uid=" + QString::number(ID)
                   + "&rid=" + QString::number(room)
                   + "&command=" + command;
+    http.get(url);
 }
 
 void PvpWidget::turnDirection(qreal angle, bool flag) {
@@ -73,6 +90,7 @@ void PvpWidget::turnDirection(qreal angle, bool flag) {
                   + "/sendCommand?uid=" + QString::number(ID)
                   + "&rid=" + QString::number(room)
                   + "&command=" + command;
+    http.get(url);
 }
 
 void PvpWidget::setXT(qreal x, qreal y) {
@@ -82,6 +100,7 @@ void PvpWidget::setXT(qreal x, qreal y) {
                   + "/sendCommand?uid=" + QString::number(ID)
                   + "&rid=" + QString::number(room)
                   + "&command=" + command;
+    http.get(url);
 }
 
 void PvpWidget::setPC(uint color) {
@@ -91,6 +110,7 @@ void PvpWidget::setPC(uint color) {
                   + "/sendCommand?uid=" + QString::number(ID)
                   + "&rid=" + QString::number(room)
                   + "&command=" + command;
+    http.get(url);
 }
 
 void PvpWidget::setBG(QString color) {
@@ -103,6 +123,7 @@ void PvpWidget::setBG(QString color) {
                   + "/sendCommand?uid=" + QString::number(ID)
                   + "&rid=" + QString::number(room)
                   + "&command=" + command;
+    http.get(url);
 }
 
 void PvpWidget::stampoval(qreal x, qreal y) {
@@ -112,6 +133,7 @@ void PvpWidget::stampoval(qreal x, qreal y) {
                   + "/sendCommand?uid=" + QString::number(ID)
                   + "&rid=" + QString::number(room)
                   + "&command=" + command;
+    http.get(url);
 }
 
 void
@@ -133,11 +155,14 @@ PvpWidget::InAnnimation() {
 
 void
 PvpWidget::keyPressEvent(QKeyEvent *ev) {
-    if (ev->key() == Qt::Key_Escape)
+    if (ev->key() == Qt::Key_Escape) {
         emit ClosePvP(3);
+        timer->stop();
+    }
 }
 
 void
 PvpWidget::exitClicked() {
     emit ClosePvP(3);
+    timer->stop();
 }

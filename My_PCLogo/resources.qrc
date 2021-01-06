@@ -32,6 +32,8 @@
         <file>image/certain.png</file>
         <file>image/exit.png</file>
         <file>image/random.png</file>
+        <file>image/another.jpg</file>
+        <file>image/vs.png</file>
     </qresource>
     <qresource prefix="/Font">
         <file>newfont.ttf</file>

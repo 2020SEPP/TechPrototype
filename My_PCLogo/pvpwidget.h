@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QKeyEvent>
+#include <QTimer>
 #include "canvas.h"
 #include "console.h"
 #include "window.h"
@@ -13,7 +14,7 @@
 class PvpWidget : public QWidget {
     Q_OBJECT
   public:
-      friend class uniT;
+    friend class uniT;
     explicit PvpWidget(QWidget *parent);
     ~PvpWidget() override {}
     void init(int);
@@ -28,7 +29,8 @@ class PvpWidget : public QWidget {
     int width;
     int room;
     bool visible;
-    HttpRequest *http;
+    QTimer *timer;
+    HttpRequest http;
 
   protected:
     virtual void keyPressEvent(QKeyEvent *) override;
@@ -36,6 +38,7 @@ class PvpWidget : public QWidget {
   signals:
     void ClosePvP(int);
   public slots:
+    void listen();
     void drawLine(qreal, bool);
     void turnDirection(qreal, bool);
     void setXT(qreal, qreal);

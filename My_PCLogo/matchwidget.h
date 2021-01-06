@@ -10,6 +10,8 @@
 #include <QDialog>
 #include <QLabel>
 #include <QPushButton>
+#include <QTimer>
+#include <QPixmap>
 #include "token.h"
 
 class MatchDialog : public QDialog {
@@ -36,7 +38,7 @@ class MatchDialog : public QDialog {
     QPushButton *quitRoom;
     QPushButton *cnfm;
     QPushButton *back;
-    QPushButton *btn;
+    QPushButton *vs;
     QLabel *room;
     QLabel *title;
     LineEdit *roominput;
@@ -44,17 +46,19 @@ class MatchDialog : public QDialog {
     int currroom;
     HttpRequest http;
 
+    QPixmap one, two;
+
   private:
     void btnDisplay(bool);
-
+    QTimer *timer;
   private slots:
+    void listen();
     void createClicked();
     void certainClicked();
     void randomClicked();
     void quitClicked();
     void cnfmClicked();
     void backClicked();
-    void btnClicked();
 
   public:
     MatchDialog();
