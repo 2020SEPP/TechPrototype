@@ -76,6 +76,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
     connect(logindialog, SIGNAL(DialogResponse(User *)), this, SLOT(dialogResponse(User *)));
     connect(matchdialog, SIGNAL(DialogResponse(User *)), this, SLOT(dialogResponse(User *)));
+    connect(matchdialog, SIGNAL(EnterRoom(int)), this, SLOT(EnterRoom(int)));
     connect(help, SIGNAL(clicked()), SLOT(helpClicked()));
     pvp->show();
     line->show();
@@ -92,12 +93,16 @@ void HomePage::avatarClicked() {
 }
 
 void HomePage::pvpPressed() {
-//    logined = true;
+    logined = true;
+    ID = 1;
     if (logined) {
         matchdialog->show();
-//        emit PVPMode();
     } else
         logindialog->show();
+}
+
+void HomePage::EnterRoom(int room) {
+    emit PVPMode(room);
 }
 
 void HomePage::dialogResponse(User* u) {

@@ -22,10 +22,9 @@ QList<User *> getFriend(int uid) {
 LoginDialog::LoginDialog() {
 }
 
-LoginDialog::LoginDialog(int width, int height, QWidget *p) {
-//    p->setVisible(0);®
+LoginDialog::LoginDialog(int width, int height, QWidget *p) : QDialog(p) {
     this->setStyleSheet("QDialog{border-image:url(:/images/image/login2.png)}");
-    this->setParent(p);
+//    this->setParent(p);
     this->setFocus();
     this->width = width;
     this->height = height;

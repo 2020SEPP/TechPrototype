@@ -1,4 +1,5 @@
 #include "pvpwidget.h"
+#include "token.h"
 #include <QApplication>
 #include <QDebug>
 #include <QPropertyAnimation>
@@ -16,15 +17,20 @@ PvpWidget::PvpWidget(QWidget *parent) : QWidget(parent) {
     font.setBold(true);
     font.setPixelSize(20);
     this->setFont(font);
+    init(-1);
+}
+
+void PvpWidget::init(int r) {
+    room = r;
     canvas = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
     canvas->setGeometry(0, 0, width / 2, (height * 3) / 4);
     enermy = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
     enermy->setGeometry(width / 2, 0, width / 2, (height * 3) / 4);
-    setCanvasBG("ffffff");
+    setBG("ffffff");
     console = new Console(this);
     console->setGeometry(0, (height * 3) / 4, width, height / 4);
     console->setStyleSheet(QString::fromUtf8("border: 2px solid gray;"));
-    console->write("Welcome to the PC Logo!\nPlease type your code.\n>> ");
+    console->write("Welcome to room " + QString::number(room) + "!\nPlease type your code.\n>> ");
     console->setStyleSheet("QTextEdit {"
                            "border-image:url(:/images/image/paint2222.png);"
                            "}");
@@ -41,24 +47,71 @@ PvpWidget::PvpWidget(QWidget *parent) : QWidget(parent) {
     exit->setStyleSheet("QPushButton{"
                         "border-image:url(:/images/image/tuichu.png)"
                         "}");
-    connect(console, SIGNAL(newLine(QString)), canvas, SLOT(parse_line(QString)));
-    connect(console, SIGNAL(drawLine(qreal, bool)), canvas, SLOT(drawLine(qreal, bool)));
-    connect(console, SIGNAL(turnDirection(qreal, bool)), canvas, SLOT(turnDirection(qreal, bool)));
-    connect(console, SIGNAL(setXT(qreal, qreal)), canvas, SLOT(setXT(qreal, qreal)));
-    connect(console, SIGNAL(setPC(uint)), canvas, SLOT(setPC(uint)));
-    connect(console, SIGNAL(setBG(QString)), this, SLOT(setCanvasBG(QString)));
-    connect(console, SIGNAL(stampoval(qreal, qreal)), canvas, SLOT(stampoval(qreal, qreal)));
-    connect(canvas, SIGNAL(setBG(QString)), this, SLOT(setCanvasBG(QString)));
+    connect(console, SIGNAL(drawLine(qreal, bool)), this, SLOT(drawLine(qreal, bool)));
+    connect(console, SIGNAL(turnDirection(qreal, bool)), this, SLOT(turnDirection(qreal, bool)));
+    connect(console, SIGNAL(setXT(qreal, qreal)), this, SLOT(setXT(qreal, qreal)));
+    connect(console, SIGNAL(setPC(uint)), this, SLOT(setPC(uint)));
+    connect(console, SIGNAL(setBG(QString)), this, SLOT(setBG(QString)));
+    connect(console, SIGNAL(stampoval(qreal, qreal)), this, SLOT(stampoval(qreal, qreal)));
     connect(exit, SIGNAL(clicked()), this, SLOT(exitClicked()));
 }
 
 // SLOT
-void
-PvpWidget::setCanvasBG(QString color) {
+void PvpWidget::drawLine(qreal len, bool flag) {
+    canvas->drawLine(len, flag);
+    QString command = (flag ? "fd " : "bk ") + QString::number(len);
+    QString url = ADDR + "/match"
+                  + "/sendCommand?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(room)
+                  + "&command=" + command;
+}
+
+void PvpWidget::turnDirection(qreal angle, bool flag) {
+    canvas->turnDirection(angle, flag);
+    QString command = (flag ? "rt " : "lt ") + QString::number(angle);
+    QString url = ADDR + "/match"
+                  + "/sendCommand?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(room)
+                  + "&command=" + command;
+}
+
+void PvpWidget::setXT(qreal x, qreal y) {
+    canvas->setXT(x, y);
+    QString command = "setxy " + QString::number(x) + " " + QString::number(y);
+    QString url = ADDR + "/match"
+                  + "/sendCommand?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(room)
+                  + "&command=" + command;
+}
+
+void PvpWidget::setPC(uint color) {
+    canvas->setPC(color);
+    QString command = "setpc " + QString::number(color);
+    QString url = ADDR + "/match"
+                  + "/sendCommand?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(room)
+                  + "&command=" + command;
+}
+
+void PvpWidget::setBG(QString color) {
     QString qss = "border: 2px solid darkgray; background-color: #";
     qss.append(color);
     canvas->setStyleSheet(qss);
     enermy->setStyleSheet(qss);
+    QString command = "setbg " + color;
+    QString url = ADDR + "/match"
+                  + "/sendCommand?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(room)
+                  + "&command=" + command;
+}
+
+void PvpWidget::stampoval(qreal x, qreal y) {
+    canvas->stampoval(x, y);
+    QString command = "stampoval " + QString::number(x) + " " + QString::number(y);
+    QString url = ADDR + "/match"
+                  + "/sendCommand?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(room)
+                  + "&command=" + command;
 }
 
 void
@@ -80,9 +133,8 @@ PvpWidget::InAnnimation() {
 
 void
 PvpWidget::keyPressEvent(QKeyEvent *ev) {
-    if (ev->key() == Qt::Key_Escape) {
+    if (ev->key() == Qt::Key_Escape)
         emit ClosePvP(3);
-    }
 }
 
 void

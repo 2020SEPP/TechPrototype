@@ -35,8 +35,7 @@ class MainWindow : public QMainWindow {
   private slots:
     void CommandFile();
     void CommandLine();
-    void PVP();
-
+    void PVP(int);
     void SwitchWidget(int);
 };
 #endif // MAINWINDOW_H

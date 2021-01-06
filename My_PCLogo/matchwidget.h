@@ -26,10 +26,8 @@ class MatchDialog : public QDialog {
     };
 
   private:
-    friend class uniT;
     int width;
     int height;
-    bool SignUpMode = false;
     Window window;
 
     QPushButton *createRoom;
@@ -38,9 +36,12 @@ class MatchDialog : public QDialog {
     QPushButton *quitRoom;
     QPushButton *cnfm;
     QPushButton *back;
+    QPushButton *btn;
+    QLabel *room;
+    QLabel *title;
     LineEdit *roominput;
     btnStat stat;
-
+    int currroom;
     HttpRequest http;
 
   private:
@@ -53,6 +54,7 @@ class MatchDialog : public QDialog {
     void quitClicked();
     void cnfmClicked();
     void backClicked();
+    void btnClicked();
 
   public:
     MatchDialog();
@@ -60,6 +62,7 @@ class MatchDialog : public QDialog {
     ~MatchDialog() override;
 
   signals:
+    void EnterRoom(int);
     void DialogResponse(User *);
 
   protected:

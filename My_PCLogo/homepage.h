@@ -33,8 +33,7 @@ class HomePage : public QWidget {
     QWidget *w;
     QLabel *ava_border;
     HelpText *helpText;
-public:
-
+  public:
     HomePage(QWidget *);
     ~HomePage() {}
     int WIN_W;
@@ -43,6 +42,7 @@ public:
   private slots:
     void avatarClicked();
     void pvpPressed();
+    void EnterRoom(int);
     void dialogResponse(User * u);
     void lineClicked();
     void textClicked();
@@ -52,7 +52,7 @@ public:
     void CommandFile();
     void CommandLine();
     void SingleMode();
-    void PVPMode();
+    void PVPMode(int);
 };
 
 #endif // HOMEPAGE_H

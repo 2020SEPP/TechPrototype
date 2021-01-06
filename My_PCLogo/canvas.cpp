@@ -16,7 +16,6 @@ Canvas::Canvas(QWidget *parent, int xPos, int yPos, int xScale, int yScale)
     CANVAS_WIDTH = xScale;
     CANVAS_HEIGHT = yScale;
     CURR_POS = new QPointF(CANVAS_XPOS + CANVAS_WIDTH / 2, CANVAS_YPOS + CANVAS_HEIGHT / 2);
-    qDebug() << CURR_POS->rx() << CURR_POS->ry();
     CURR_ANGLE = 90;
     PEN_IS_DOWN = true;
     pixmap.load(":/images/image/turtle.png");

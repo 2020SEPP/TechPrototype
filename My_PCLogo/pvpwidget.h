@@ -5,16 +5,17 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QKeyEvent>
-
 #include "canvas.h"
 #include "console.h"
 #include "window.h"
+#include "HttpRequest.h"
 
 class PvpWidget : public QWidget {
     Q_OBJECT
   public:
     explicit PvpWidget(QWidget *parent);
     ~PvpWidget() override {}
+    void init(int);
   private:
     Canvas *canvas;
     Canvas *enermy;
@@ -24,16 +25,22 @@ class PvpWidget : public QWidget {
     QPushButton *help;
     int height;
     int width;
+    int room;
     bool visible;
+    HttpRequest *http;
 
   protected:
     virtual void keyPressEvent(QKeyEvent *) override;
 
   signals:
     void ClosePvP(int);
-
   public slots:
-    void setCanvasBG(QString);
+    void drawLine(qreal, bool);
+    void turnDirection(qreal, bool);
+    void setXT(qreal, qreal);
+    void setPC(uint);
+    void setBG(QString);
+    void stampoval(qreal, qreal);
     void InAnnimation();
     void exitClicked();
 };
