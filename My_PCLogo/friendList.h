@@ -10,6 +10,7 @@
 class FriendList: public QWidget {
     Q_OBJECT
   private:
+      friend class uniT;
     int WIN_W;
     int WIN_H;
     int p_H;

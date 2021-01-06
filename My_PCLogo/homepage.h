@@ -14,19 +14,10 @@
 #include "matchwidget.h"
 #include "HttpRequest.h"
 #include "helpText.h"
-
 class HomePage : public QWidget {
     Q_OBJECT
-
-  public:
-    HomePage(QWidget *);
-    ~HomePage() {}
-
-  public:
-    int WIN_W;
-    int WIN_H;
-    User *USER;
   private:
+    friend class uniT;
     Window window;
     bool logined = false;
 
@@ -42,7 +33,13 @@ class HomePage : public QWidget {
     QWidget *w;
     QLabel *ava_border;
     HelpText *helpText;
+public:
 
+    HomePage(QWidget *);
+    ~HomePage() {}
+    int WIN_W;
+    int WIN_H;
+    User *USER;
   private slots:
     void avatarClicked();
     void pvpPressed();

@@ -9,6 +9,7 @@ class HelpText : public QDialog
     Q_OBJECT
 
 private:
+    friend class uniT;
     int width;
     int height;
     QPushButton *close;
