@@ -13,6 +13,7 @@
 class PvpWidget : public QWidget {
     Q_OBJECT
   public:
+      friend class uniT;
     explicit PvpWidget(QWidget *parent);
     ~PvpWidget() override {}
   private:

@@ -2,10 +2,27 @@
 #include <QtGui>
 #include <QDebug>
 using namespace  QTest;
+
+
+/**
+ * @brief uniT
+ *
+ * 单元测试
+ *  1 测试每个界面组件、事件、函数功能
+ *  2 对于信号函数的测试将在对应槽函数所在类测试
+ *  3 测试尽可能覆盖所有函数功能、语句、界面
+ *  4 最终测试报告将以文件形式另外存储
+ *  5 如需单独跑测试文件，请将main函数注释。并取消本文件最后一行注释
+ *  6 若想运行程序，反向进行5操作
+ */
+
+
+
 void uniT::_User() {
-//    user.setName("ddd");
-//    QCOMPARE(user.getName(),"ddd");
-//    QCOMPARE(user.name,"ddd");
+    User user;
+    user.setName("ddd");
+    QCOMPARE(user.getName(),"ddd");
+    QCOMPARE(user.name,"ddd");
 }
 
 
@@ -171,7 +188,7 @@ void uniT::_signinwidget_advance_data() {
     newRow("login without password" ) << false << "the_junhan" << "" << "" << "请输入密码";
     newRow("register without username ( has password or phone ) ") << true << "" << "123456" << "18796700152" << "请输入用户名";
     newRow("register without username ( has no password or phone ) ") << true << "" << "" << "" << "请输入用户名";
-    newRow("register with error name ( exist name ) ") << true << "poker0" << "123456" << "18796700199" << "用户名重复";
+    newRow("register with error name ( exist name ) ") << true << "poker" << "123456" << "18796700190" << "用户名重复";
     newRow("register without password ( has phone ) ") << true << "the_junhan" << "" << "18796700152" << "请输入密码";
     newRow("register without password ( has no phone ) ") << true << "the_junhan" << "" << "" << "请输入密码";
     newRow("register with no phone") << true << "the_junhan" << "123456" << "" << "请输入电话号码";
@@ -250,23 +267,173 @@ void uniT::_friendlist(){
      * @brief 该部分用于登陆
      */
     LoginDialog login(800,600,nullptr);
-    login.usrinput->setText("poker12");
+    login.usrinput->setText("poker");
     login.pwdinput->setText("123456");
     QCOMPARE(token,"");
     login.loginClicked();
 
-    ID=12;
+    ID=2;
 
 
     fl.reset();
     QCOMPARE(fl.friends->count(),2);
 
-    fl.search("18796700000");
+    fl.search("18796700153");
     QCOMPARE(fl.friends->count(),1);
 //    FL.insert()
 }
 
 
+/**
+ * @brief uniT::_singleWidget
+ * 单人窗口：函数功能、动画效果
+ */
+void uniT::_singleWidget(){
+    MainWindow mw(nullptr);
+    SingleWidget sw(nullptr);
+    sw.setCanvasBG("001100");
+    QCOMPARE(sw.canvas->styleSheet(), "border: 2px solid darkgray; background-color: #001100");
+
+    QCOMPARE(sw.visible,false);
+    sw.InAnnimation();
+   QCOMPARE(sw.visible,true);
+   sw.InAnnimation();
+   QCOMPARE(sw.visible,false);
+}
+
+
+
+/**
+ * @brief uniT::_mainWindow
+ * 窗口转换
+ */
+void uniT::_mainWindow(){
+    MainWindow mw(nullptr);
+
+    QCOMPARE(mw.cmdfile->isHidden(),true);
+    mw.home->logined=true;
+    mouseClick(mw.home->text,Qt::LeftButton);
+    QCOMPARE(mw.cmdfile->isHidden(),false);
+
+    QCOMPARE(mw.single->isHidden(),true);
+    mouseClick(mw.home->line,Qt::LeftButton);
+    QCOMPARE(mw.single->isHidden(),false);
+
+    QCOMPARE(mw.pvp->isHidden(),true);
+    mouseClick(mw.home->pvp,Qt::LeftButton);
+//    QCOMPARE(mw.pvp->isHidden(),false);
+
+
+    mouseClick(mw.cmdfile->exit,Qt::LeftButton);
+    QCOMPARE(mw.cmdfile->isHidden(),true);
+    mouseClick(mw.single->exit,Qt::LeftButton);
+    QCOMPARE(mw.single->isHidden(),true);
+    mouseClick(mw.pvp->exit,Qt::LeftButton);
+    QCOMPARE(mw.pvp->isHidden(),true);
+}
+
+
+
+/**
+ * @brief uniT::_console
+ * 函数功能、命令输入
+ */
+void uniT::_console_basic_data(){
+    addColumn<int>("Index");   // 1 for str2real
+    addColumn<QString>("input");
+    addColumn<QString>("expect");
+    newRow("pure num") << 1 << "123" << "123";
+    newRow("pure num with dot") << 1 << "123.2" << "123.2";
+    newRow("pure num with dots") << 1 << "123.2.02" << "123.2.02";
+    newRow("pure num with space") << 1 << "123 2" << "123";
+    newRow("pure num with spaces") << 1 << "123 2 2" << "123";
+    newRow("pure num with ]") << 1 << "123]" << "123";
+    newRow("pure num with ]s") << 1 << "123]]2]" << "123";
+    newRow("pure num with odd") << 1 << "123a" << "";
+    newRow("pure num with odds") << 1 << "12a3a" << "";
+    newRow("complex1") << 1 << "12.2]2.0 12" << "12.2";
+    newRow("complex2") << 1 << "asd12.2]2.0 12" << "";
+    newRow("complex3") << 1 << "  2 asd12.2]2.0 12" << "";
+}
+
+void uniT::_console_basic(){
+    Console cs(nullptr);
+    QFETCH(int, Index);
+    QFETCH(QString, input);
+    QFETCH(QString, expect);
+
+    switch (Index) {
+    case 1:
+        QCOMPARE(cs.str2real(input),expect);
+        break;
+    }
+}
+
+void uniT::_console_complex(){
+    Console cs(nullptr);
+    QCOMPARE(cs.toPlainText(),"");
+    cs.wrap();
+    QCOMPARE(cs.toPlainText(),"\n>> ");
+    cs.write("123");
+    QCOMPARE(cs.toPlainText(),"\n>> 123");
+    cs.write("123\n");
+    QCOMPARE(cs.toPlainText(),"\n>> 123123\n");
+    cs.wrap();
+    QCOMPARE(cs.toPlainText(),"\n>> 123123\n\n>> ");
+}
+
+
+
+/**
+ * @brief uniT::_canvas
+    画布测试
+*/
+void uniT::_canvas(){
+    Canvas cv(nullptr,0,0,800,600);
+    cv.addAngle(100);
+    QCOMPARE(cv.CURR_ANGLE,190);
+    cv.addAngle(200);
+    QCOMPARE(cv.CURR_ANGLE,30);
+    cv.addAngle(-100);
+    QCOMPARE(cv.CURR_ANGLE,290);
+}
+
+/**
+ * @brief uniT::_singleMode
+ * 单人模式测试、包括console输入到canvas响应
+ */
+
+void uniT::_singleWidget_complex_data(){
+    addColumn<QString>("input");
+    addColumn<qreal>("px");
+    addColumn<qreal>("py");
+    addColumn<qreal>("a");
+    addColumn<bool>("p");
+    newRow("no line") <<""<<720.0<<301.0<<90.0<<true;
+    newRow("RT") <<"rt 100"<<720.0<<301.0<<350.0<<true;
+    newRow("LT") <<"lt  300"<<720.0<<301.0<<30.0<<true;
+    newRow("FD") <<"fd  300"<<720.0<<1.0<<90.0<<true;
+    newRow("setxy") <<"setxy  100 200"<<100.0<<200.0<<90.0<<true;
+    newRow("UP") <<"pu"<<720.0<<301.0<<90.0<<false;
+    newRow("BK") <<"bk 100"<<720.0<<401.0<<90.0<<true;
+}
+void uniT::_singleWidget_complex(){
+    SingleWidget sw(nullptr);
+    QFETCH(QString, input);
+    QFETCH(qreal,px);
+    QFETCH(qreal,py);
+    QFETCH(qreal,a);
+    QFETCH(bool,p);
+    sw.console->parse_line(input);
+    QCOMPARE(sw.canvas->CURR_POS->rx(),px);
+    QCOMPARE(sw.canvas->CURR_POS->ry(),py);
+    QCOMPARE(sw.canvas->CURR_ANGLE,a);
+    QCOMPARE(sw.canvas->PEN_IS_DOWN,p);
+}
+
+
+
+QTEST_MAIN(uniT);
 
 
 
@@ -284,24 +451,6 @@ void uniT::_friendlist(){
 
 
 
-//QTEST_MAIN(uniT);
-//#include "unit.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//moc"

@@ -9,12 +9,14 @@
 class Console : public QTextEdit {
     Q_OBJECT
   public:
+      friend class uniT;
     explicit Console(QWidget *parent = nullptr);
     ~Console() override {}
     void clear();
     void write(QString);
     void writetoStorage(QString);
     void parse_line(QString);
+    QString str2real(QString);
 
   private:
     QString storage;

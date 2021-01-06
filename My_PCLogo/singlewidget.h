@@ -14,6 +14,7 @@
 class SingleWidget : public QWidget {
     Q_OBJECT
   public:
+      friend class uniT;
     explicit SingleWidget(QWidget *parent);
     ~SingleWidget() override {}
   private:
