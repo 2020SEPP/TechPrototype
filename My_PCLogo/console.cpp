@@ -13,7 +13,7 @@ typedef unsigned int uint;
 
 // utils
 QString
-str2real(QString str) {
+Console::str2real(QString str) {
     int index = 0;
     while (index < str.length()) {
         QChar ch = str.at(index);

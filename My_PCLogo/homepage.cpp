@@ -106,7 +106,7 @@ void HomePage::EnterRoom(int room) {
 }
 
 void HomePage::dialogResponse(User* u) {
-//    this->logined = true;
+    this->logined = true;
     QPixmap image;
     ID = u->getId();
     image.loadFromData(QByteArray::fromBase64(u->getavatar() == "" ? USER->getavatar().section(",", 1).toLocal8Bit() : u->getavatar().section(",", 1).toLocal8Bit()));

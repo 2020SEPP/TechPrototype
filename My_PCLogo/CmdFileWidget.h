@@ -14,7 +14,6 @@ class CmdFileWidget : public QWidget {
     int WIN_W;
     int WIN_H;
     Window window;
-
   public:
     bool step;
     int point = -1;

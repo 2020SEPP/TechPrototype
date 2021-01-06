@@ -17,6 +17,7 @@ typedef struct circle {
 class Canvas : public QWidget {
     Q_OBJECT
   public:
+      friend class uniT;
     explicit Canvas(QWidget *, int, int, int, int);
     ~Canvas() override {
         LINES.clear();
