@@ -92,7 +92,7 @@ void HomePage::avatarClicked() {
 }
 
 void HomePage::pvpPressed() {
-    logined = true;
+//    logined = true;
     if (logined) {
         matchdialog->show();
 //        emit PVPMode();
@@ -101,7 +101,7 @@ void HomePage::pvpPressed() {
 }
 
 void HomePage::dialogResponse(User* u) {
-    this->logined = true;
+//    this->logined = true;
     QPixmap image;
     ID = u->getId();
     image.loadFromData(QByteArray::fromBase64(u->getavatar() == "" ? USER->getavatar().section(",", 1).toLocal8Bit() : u->getavatar().section(",", 1).toLocal8Bit()));
@@ -125,11 +125,20 @@ void HomePage::dialogResponse(User* u) {
 }
 
 void HomePage::lineClicked() {
-    emit CommandLine();
+    if (logined) {
+        emit CommandLine();
+        //        emit PVPMode();
+    } else
+        logindialog->show();
 }
 
+
+
 void HomePage::textClicked() {
-    emit CommandFile();
+    if (logined) {
+        emit CommandFile();
+    } else
+        logindialog->show();
 }
 
 void HomePage::helpClicked() {

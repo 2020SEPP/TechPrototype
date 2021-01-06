@@ -15,6 +15,7 @@
 class UserInfo : public QWidget {
     Q_OBJECT
   private:
+      friend class uniT;
     Window window;
     int WIN_W;
     int WIN_H;
