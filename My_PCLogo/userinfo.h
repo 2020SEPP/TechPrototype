@@ -15,7 +15,7 @@
 class UserInfo : public QWidget {
     Q_OBJECT
   private:
-      friend class uniT;
+    friend class uniT;
     Window window;
     int WIN_W;
     int WIN_H;
@@ -31,19 +31,21 @@ class UserInfo : public QWidget {
     QLabel *exp;
     QLabel *Vexp;
     QPushButton *friendList;
+    QPushButton *inviteList;
     FriendList *fl;
+    bool f, v;
 
   public:
     void setUser(User *U);
     UserInfo(QWidget *, int, int, User *U);
-    void updateFL() {
-        fl->reset();
+    void updateFL(int mode = 0) {
+        fl->reset(mode);
     }
     ~UserInfo() {}
   public slots:
     void annimation();
     void friendListClicked();
-
+    void inviteListClicked();
 };
 
 #endif // USERINFO_H

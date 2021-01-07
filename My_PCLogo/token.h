@@ -3,5 +3,6 @@
 #include <QString>
 extern int ID;
 extern QString token;
-extern QString avatar;
+extern QString NAME;
+QString getAvatarByName(QString);
 #endif // TOKEN_H

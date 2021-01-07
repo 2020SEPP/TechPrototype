@@ -35,6 +35,41 @@
         <file>image/another.jpg</file>
         <file>image/vs.png</file>
         <file>image/icon/logo.png</file>
+        <file>image/invite.png</file>
+        <file>image/friendlist.png</file>
+        <file>image/invitelist.png</file>
+        <file>image/accept.png</file>
+        <file>image/reject.png</file>
+        <file>image/battle.png</file>
+        <file>image/cooper.png</file>
+        <file>image/coming.png</file>
+        <file>image/avatar/#.png</file>
+        <file>image/avatar/B.png</file>
+        <file>image/avatar/C.png</file>
+        <file>image/avatar/D.png</file>
+        <file>image/avatar/E.png</file>
+        <file>image/avatar/F.png</file>
+        <file>image/avatar/G.png</file>
+        <file>image/avatar/H.png</file>
+        <file>image/avatar/I.png</file>
+        <file>image/avatar/J.png</file>
+        <file>image/avatar/K.png</file>
+        <file>image/avatar/L.png</file>
+        <file>image/avatar/M.png</file>
+        <file>image/avatar/N.png</file>
+        <file>image/avatar/O.png</file>
+        <file>image/avatar/P.png</file>
+        <file>image/avatar/Q.png</file>
+        <file>image/avatar/R.png</file>
+        <file>image/avatar/S.png</file>
+        <file>image/avatar/T.png</file>
+        <file>image/avatar/U.png</file>
+        <file>image/avatar/V.png</file>
+        <file>image/avatar/W.png</file>
+        <file>image/avatar/X.png</file>
+        <file>image/avatar/Y.png</file>
+        <file>image/avatar/Z.png</file>
+        <file>image/avatar/A.png</file>
     </qresource>
     <qresource prefix="/Font">
         <file>newfont.ttf</file>

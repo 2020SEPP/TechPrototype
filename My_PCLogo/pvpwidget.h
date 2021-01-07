@@ -6,18 +6,26 @@
 #include <QPainter>
 #include <QKeyEvent>
 #include <QTimer>
+#include <QDialog>
 #include "canvas.h"
 #include "console.h"
 #include "window.h"
 #include "HttpRequest.h"
+#include "errorwidget.h"
 
 class PvpWidget : public QWidget {
     Q_OBJECT
+  private:
+    enum roomtype {
+        BATTLE = 0,
+        COOPER,
+        INIT
+    };
   public:
     friend class uniT;
     explicit PvpWidget(QWidget *parent);
     ~PvpWidget() override {}
-    void init(int);
+    void init(int, int);
   private:
     Canvas *canvas;
     Canvas *enermy;
@@ -28,9 +36,12 @@ class PvpWidget : public QWidget {
     int height;
     int width;
     int room;
+    int type;
+    int cycle;
     bool visible;
     QTimer *timer;
     HttpRequest http;
+    ErrorDialog *error;
 
   protected:
     virtual void keyPressEvent(QKeyEvent *) override;
@@ -47,6 +58,8 @@ class PvpWidget : public QWidget {
     void stampoval(qreal, qreal);
     void InAnnimation();
     void exitClicked();
+    void errorhandler1();
+    void errorhandler2();
 };
 
 #endif // PVPWINDOW_H

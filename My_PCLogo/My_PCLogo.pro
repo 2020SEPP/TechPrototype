@@ -23,6 +23,7 @@ SOURCES += \
     CodEditor.cpp \
     HttpRequest.cpp \
     LineEdit.cpp \
+    errorwidget.cpp \
     friendList.cpp \
     helpText.cpp \
     homepage.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     HttpRequest.h \
     LineEdit.h \
     Network.h \
+    errorwidget.h \
     friendList.h \
     helpText.h \
     homepage.h \

@@ -7,10 +7,11 @@
 #include "searchbar.h"
 #include "user.h"
 #include "HttpRequest.h"
+
 class FriendList: public QWidget {
     Q_OBJECT
   private:
-      friend class uniT;
+    friend class uniT;
     int WIN_W;
     int WIN_H;
     int p_H;
@@ -22,8 +23,8 @@ class FriendList: public QWidget {
   public:
     FriendList(QWidget *p, int w, int h);
     void annimation();
-    void setFriends(QList<User> FL);
-    void reset();
+    void setFriends(QList<User> list, int flag = 0);
+    void reset(int mode = 0);
 
   public slots:
     void search(QString);

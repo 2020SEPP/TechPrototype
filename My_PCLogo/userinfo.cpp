@@ -1,5 +1,6 @@
 #include "userinfo.h"
 #include "token.h"
+
 UserInfo::UserInfo(QWidget *parent, int w, int h, User *) : WIN_W(w / 10 * 3), WIN_H(h) {
     QFont font;
     font.setPixelSize(30);
@@ -8,6 +9,8 @@ UserInfo::UserInfo(QWidget *parent, int w, int h, User *) : WIN_W(w / 10 * 3), W
     this->setParent(parent);
 //    this->setUser(U);
     visible = false;
+    f = false;
+    v = false;
     this->setGeometry(0, 0, -WIN_W, WIN_H);
     this->w = new QWidget(this);
     this->w->lower();
@@ -21,14 +24,20 @@ UserInfo::UserInfo(QWidget *parent, int w, int h, User *) : WIN_W(w / 10 * 3), W
     this->friendList = new QPushButton(this->w);
     friendList->setGeometry(WIN_W / 15, WIN_H - WIN_W / 7, WIN_W / 10, WIN_W / 10);
     friendList->setMask(QRegion(0, 0, WIN_W / 10, WIN_W / 10, QRegion::Ellipse));
-    friendList->setStyleSheet("QPushButton{border-image: url(:/images/image/friend.png);}");
+    friendList->setStyleSheet("QPushButton{border-image: url(:/images/image/friendlist.png);}");
     friendList->setCursor(Qt::PointingHandCursor);
-    fl = new FriendList (this->w, WIN_W, WIN_H);
+    this->inviteList = new QPushButton(this->w);
+    inviteList->setGeometry(WIN_W * 11 / 15, WIN_H - WIN_W / 7, WIN_W / 10, WIN_W / 10);
+    inviteList->setMask(QRegion(0, 0, WIN_W / 10, WIN_W / 10, QRegion::Ellipse));
+    inviteList->setStyleSheet("QPushButton{border-image: url(:/images/image/invitelist.png);}");
+    inviteList->setCursor(Qt::PointingHandCursor);
+    fl = new FriendList(this->w, WIN_W, WIN_H);
     fl->show();
-    fl->stackUnder(friendList);
-    id->setText("账号：");
+    fl->stackUnder(inviteList);
+    inviteList->stackUnder(friendList);
+    id->setText("账 号：");
     username->setText("用户名：");
-    phone->setText("手机：");
+    phone->setText("手 机：");
     Vid->setText("-1");
     Vusername->setText("-1");
     Vphone->setText("-1");
@@ -61,11 +70,12 @@ UserInfo::UserInfo(QWidget *parent, int w, int h, User *) : WIN_W(w / 10 * 3), W
     this->w->setStyleSheet("QWidget{border-image: url(:/images/image/sidenav.png);}");
     this->fl->setStyleSheet("QWidget{border-image: url(:/images/image/sidenav.png);}");
     connect(friendList, SIGNAL(clicked()), this, SLOT(friendListClicked()));
+    connect(inviteList, SIGNAL(clicked()), this, SLOT(inviteListClicked()));
 }
 
 void UserInfo::annimation() {
     QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
-    animation->setDuration(100); //设置窗口进入的起始位置
+    animation->setDuration(100);
     if (visible) {
         animation->setStartValue(QRect(0, 0, WIN_W, WIN_H));
         animation->setEndValue(QRect(-WIN_W, 0, WIN_W, WIN_H));
@@ -87,5 +97,25 @@ void UserInfo::setUser(User *U) {
 }
 
 void UserInfo::friendListClicked() {
+    updateFL(0);
+    f = !f;
+    if (f && v) {
+        v = false;
+        return;
+    }
     this->fl->annimation();
+    friendList->raise();
+    inviteList->raise();
+}
+
+void UserInfo::inviteListClicked() {
+    updateFL(1);
+    v = !v;
+    if (f && v) {
+        f = false;
+        return;
+    }
+    this->fl->annimation();
+    friendList->raise();
+    inviteList->raise();
 }

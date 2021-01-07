@@ -1,7 +1,9 @@
 #include "homepage.h"
 #include <QtGlobal>
 #include <qdebug.h>
+#include <QApplication>
 #include "token.h"
+
 HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     WIN_W = window.getW();
     WIN_H = window.getH();
@@ -20,12 +22,14 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     pvp    = new QPushButton(this);
     avatar = new QPushButton(this);
     helpText = new HelpText(WIN_W / 2, WIN_H * 2 / 3, this);
-    help = new QPushButton(this);
+    help   = new QPushButton(this);
+    exit   = new QPushButton(this);
     ava_border = new QLabel(this);
     line->setGeometry(2 * WIN_W / 5, 3 * WIN_H / 10, WIN_W / 5, WIN_H / 10);
     text->setGeometry(2 * WIN_W / 5, 5 * WIN_H / 10, WIN_W / 5, WIN_H / 10);
     pvp->setGeometry(2 * WIN_W / 5, 7 * WIN_H / 10, WIN_W / 5, WIN_H / 10);
     help->setGeometry(WIN_W * 13 / 15, 0, WIN_H / 15, WIN_H / 15);
+    exit->setGeometry(WIN_W * 14 / 15, 0, WIN_H / 15, WIN_H / 15);
     avatar->setGeometry(1 * WIN_W / 10, 1 * WIN_H / 10, WIN_W / 10, WIN_W / 10);
     ava_border->setGeometry(1 * WIN_W / 10 - 8, 1 * WIN_H / 10 - 8, WIN_W / 10 + 16, WIN_W / 10 + 16);
     ava_border->hide();
@@ -36,6 +40,10 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
                         "border-image:url(:/images/image/bangzhu.png)"
                         "}");
     help->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    exit->setStyleSheet("QPushButton{"
+                        "border-image:url(:/images/image/tuichu.png)"
+                        "}");
+    exit->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     avatar->setStyleSheet("QPushButton {"
                           "background-color: white;"
                           "border-style: solid;"
@@ -76,8 +84,9 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     connect(pvp, SIGNAL(clicked()), this, SLOT(pvpPressed()));
     connect(logindialog, SIGNAL(DialogResponse(User *)), this, SLOT(dialogResponse(User *)));
     connect(matchdialog, SIGNAL(DialogResponse(User *)), this, SLOT(dialogResponse(User *)));
-    connect(matchdialog, SIGNAL(EnterRoom(int)), this, SLOT(EnterRoom(int)));
-    connect(help, SIGNAL(clicked()), SLOT(helpClicked()));
+    connect(matchdialog, SIGNAL(EnterRoom(int, int)), this, SLOT(EnterRoom(int, int)));
+    connect(help, SIGNAL(clicked()), this, SLOT(helpClicked()));
+    connect(exit, SIGNAL(clicked()), this, SLOT(exitClicked()));
     pvp->show();
     line->show();
     text->show();
@@ -86,31 +95,30 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
 }
 
 void HomePage::avatarClicked() {
-    if(logined)
+    if(logined) {
         usrinfo->annimation();
-    else
-        logindialog->show();
-}
-
-void HomePage::pvpPressed() {
-    logined = true;
-    ID = 1;
-    if (logined) {
-        matchdialog->show();
+        usrinfo->show();
     } else
         logindialog->show();
 }
 
-void HomePage::EnterRoom(int room) {
-    emit PVPMode(room);
+void HomePage::pvpPressed() {
+    if (logined) {
+        matchdialog->show();
+        matchdialog->loadAvatar();
+    } else
+        logindialog->show();
+    usrinfo->hide();
+}
+
+void HomePage::EnterRoom(int room, int type) {
+    emit PVPMode(room, type);
 }
 
 void HomePage::dialogResponse(User* u) {
     this->logined = true;
-    QPixmap image;
     ID = u->getId();
-    image.loadFromData(QByteArray::fromBase64(u->getavatar() == "" ? USER->getavatar().section(",", 1).toLocal8Bit() : u->getavatar().section(",", 1).toLocal8Bit()));
-    image.save("./" + QString::number(u->getId()) + ".png");
+    NAME = u->getName();
     if(logined) {
         avatar->setStyleSheet("QPushButton {"
                               "border-style: solid;"
@@ -118,7 +126,7 @@ void HomePage::dialogResponse(User* u) {
                               "border-radius:" + QString::number(WIN_W / 20) +
                               ";"
                               "border-color: red;" +
-                              "border-image:url(./" + QString::number(u->getId()) + ".png);"
+                              "border-image:url(:/images/image/avatar/" + getAvatarByName(NAME) + ")"
                               "}");
         ava_border->show();
         avatar->raise();
@@ -130,20 +138,11 @@ void HomePage::dialogResponse(User* u) {
 }
 
 void HomePage::lineClicked() {
-    if (logined) {
-        emit CommandLine();
-        //        emit PVPMode();
-    } else
-        logindialog->show();
+    emit CommandLine();
 }
 
-
-
 void HomePage::textClicked() {
-    if (logined) {
-        emit CommandFile();
-    } else
-        logindialog->show();
+    emit CommandFile();
 }
 
 void HomePage::helpClicked() {
@@ -151,4 +150,8 @@ void HomePage::helpClicked() {
         helpText->hide();
     else
         helpText->show();
+}
+
+void HomePage::exitClicked() {
+    QApplication::exit(0);
 }

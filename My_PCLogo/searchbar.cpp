@@ -1,5 +1,7 @@
 #include "searchbar.h"
 #include <QtDebug>
+#include <QKeyEvent>
+
 Searchbar::Searchbar(QWidget *p, int w, int h) {
     this->setParent(p);
     QHBoxLayout *mainLayout = new QHBoxLayout;
@@ -17,10 +19,9 @@ Searchbar::Searchbar(QWidget *p, int w, int h) {
     mainLayout->addWidget(searchBtn);
     mainLayout->addStretch();
     mainLayout->addWidget(cancelBtn);
-    mainLayout->setContentsMargins(w / 3, 0, w / 3
-                                   , 0);
+    mainLayout->setContentsMargins(w / 3, 0, w / 3, 0);
     setTextMargins(80, 0, 0, 0);
-    QFont font ;
+    QFont font;
     font.setPixelSize(25);
     setFont(font);
     setLayout(mainLayout);
@@ -32,16 +33,27 @@ Searchbar::Searchbar(QWidget *p, int w, int h) {
     cancelBtn->hide();
 }
 
-
 void Searchbar::buttonclicked() {
     searching = true;
     cancelBtn->show();
     QString name = this->text();
     emit Search(name);
 }
+
 void Searchbar::cancelclicked() {
     searching = false;
     cancelBtn->hide();
     this->setText("");
     emit Search("");
+}
+
+void Searchbar::keyPressEvent(QKeyEvent *ev) {
+    if (ev->key() == Qt::Key_Return) {
+        searching = true;
+        cancelBtn->show();
+        QString name = this->text();
+        emit Search(name);
+        return;
+    }
+    QLineEdit::keyPressEvent(ev);
 }

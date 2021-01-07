@@ -17,16 +17,23 @@ PvpWidget::PvpWidget(QWidget *parent) : QWidget(parent) {
     font.setBold(true);
     font.setPixelSize(20);
     this->setFont(font);
-    init(-1);
+    init(-1, INIT);
 }
 
-void PvpWidget::init(int r) {
+void PvpWidget::init(int r, int t) {
     room = r;
-    canvas = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
-    canvas->setGeometry(0, 0, width / 2, (height * 3) / 4);
-    enermy = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
-    enermy->setGeometry(width / 2, 0, width / 2, (height * 3) / 4);
-    setBG("ffffff");
+    type = t;
+    if (type == BATTLE) {
+        canvas = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
+        canvas->setGeometry(0, 0, width / 2, (height * 3) / 4);
+        enermy = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
+        enermy->setGeometry(width / 2, 0, width / 2, (height * 3) / 4);
+    } else if (type == COOPER) {
+        canvas = new Canvas(this, 0, 0, width, (height * 3) / 4);
+        canvas->setGeometry(0, 0, width, (height * 3) / 4);
+    } else {
+        return;
+    }
     console = new Console(this);
     console->setGeometry(0, (height * 3) / 4, width, height / 4);
     console->setStyleSheet(QString::fromUtf8("border: 2px solid gray;"));
@@ -48,7 +55,10 @@ void PvpWidget::init(int r) {
                         "border-image:url(:/images/image/tuichu.png)"
                         "}");
     timer = new QTimer;
-    if (room > 0) timer->start(5000);
+    if (room > 0) {
+        timer->start(5000);
+        cycle = 0;
+    }
     connect(console, SIGNAL(drawLine(qreal, bool)), this, SLOT(drawLine(qreal, bool)));
     connect(console, SIGNAL(turnDirection(qreal, bool)), this, SLOT(turnDirection(qreal, bool)));
     connect(console, SIGNAL(setXT(qreal, qreal)), this, SLOT(setXT(qreal, qreal)));
@@ -61,14 +71,28 @@ void PvpWidget::init(int r) {
 
 // SLOT
 void PvpWidget::listen() {
+    if (cycle >= 6) { // 30s
+        timer->stop();
+        error = new ErrorDialog(width / 2, height * 2 / 3, this);
+        error->setGeometry(width / 4, height / 6, width / 2, height * 2 / 3);
+        error->show();
+        connect(error, SIGNAL(cnfmed()), this, SLOT(errorhandler1()));
+        connect(error, SIGNAL(quited()), this, SLOT(errorhandler2()));
+        return;
+    }
     QString url = ADDR + "/match" + "/getCommand?uid=" + QString::number(ID)
                   + "&rid=" + QString::number(room);
     QJsonArray res = http.get_array(url);
+    cycle++;
     if (res.size()) {
         qDebug() << res;
         for (int i = 0; i < res.size(); i++) {
             QString cmd = res.at(i).toString();
-            enermy->parse_line(cmd);
+            if (type == BATTLE)
+                enermy->parse_line(cmd);
+            else if (type == COOPER)
+                canvas->parse_line(cmd);
+            cycle = 0;
         }
     }
 }
@@ -165,4 +189,18 @@ void
 PvpWidget::exitClicked() {
     emit ClosePvP(3);
     timer->stop();
+}
+
+
+void
+PvpWidget::errorhandler1() {
+    error->hide();
+    cycle = 0;
+    timer->start(5000);
+}
+
+void
+PvpWidget::errorhandler2() {
+    error->hide();
+    emit ClosePvP(3);
 }

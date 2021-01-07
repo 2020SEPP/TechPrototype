@@ -20,6 +20,10 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     QFont font;
     font.setWeight(30);
     font.setPixelSize(30);
+    battle      = new QPushButton(this);
+    cooper      = new QPushButton(this);
+    coming      = new QPushButton(this);
+    back_1      = new QPushButton(this);
     createRoom  = new QPushButton(this);
     certainRoom = new QPushButton(this);
     randomRoom  = new QPushButton(this);
@@ -29,8 +33,23 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     vs          = new QPushButton(this);
     stat = MODE;
     currroom = -1;
-    one.load(":/images/image/friend.png");
-    two.load(":/images/image/another.jpg");
+    type = -1;
+    battle->setGeometry(width * 2 / 15, height * 2 / 15, height / 3, height / 3);
+    cooper->setGeometry(width * 13 / 15 - height / 3, height * 2 / 15, height / 3, height / 3);
+    coming->setGeometry(width * 2 / 15, height * 8 / 15, height / 3, height / 3);
+    back_1->setGeometry(width * 13 / 15 - height / 3, height * 8 / 15, height / 3, height / 3);
+    battle->setStyleSheet("QPushButton{border-image: url(:/images/image/battle.png);border-radius:10px;}");
+    battle->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    cooper->setStyleSheet("QPushButton{border-image: url(:/images/image/cooper.png);border-radius:10px;}");
+    cooper->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    coming->setStyleSheet("QPushButton{border-image: url(:/images/image/coming.png);border-radius:10px;}");
+    coming->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    back_1->setStyleSheet("QPushButton{border-image: url(:/images/image/exit.png);border-radius:10px;}");
+    back_1->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+    battle->show();
+    cooper->show();
+    coming->show();
+    back_1->show();
     createRoom->setGeometry(width * 2 / 15, height * 2 / 15, height / 3, height / 3);
     certainRoom->setGeometry(width * 13 / 15 - height / 3, height * 2 / 15, height / 3, height / 3);
     randomRoom->setGeometry(width * 2 / 15, height * 8 / 15, height / 3, height / 3);
@@ -43,7 +62,10 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     randomRoom->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     quitRoom->setStyleSheet("QPushButton{border-image: url(:/images/image/exit.png);border-radius:10px;}");
     quitRoom->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-    quitRoom->show();
+    createRoom->hide();
+    certainRoom->hide();
+    randomRoom->hide();
+    quitRoom->hide();
     title = new QLabel(this);
     title->setGeometry(width / 3, height / 8, width / 3, 60);
     room  = new QLabel(this);
@@ -80,6 +102,9 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     vs->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
     vs->setFont(font);
     vs->hide();
+    connect(battle, SIGNAL(clicked()), this, SLOT(battleClicked()));
+    connect(cooper, SIGNAL(clicked()), this, SLOT(cooperClicked()));
+    connect(back_1, SIGNAL(clicked()), this, SLOT(back_1Clicked()));
     connect(createRoom, SIGNAL(clicked()), this, SLOT(createClicked()));
     connect(certainRoom, SIGNAL(clicked()), this, SLOT(certainClicked()));
     connect(randomRoom, SIGNAL(clicked()), this, SLOT(randomClicked()));
@@ -90,29 +115,77 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     connect(timer, SIGNAL(timeout()), this, SLOT(listen()));
 }
 
-void MatchDialog::btnDisplay(bool flag) {
-    if (flag) {
+void MatchDialog::loadAvatar() {
+    one.load(":/images/image/avatar/" + getAvatarByName(NAME));
+    two.load(":/images/image/another.jpg");
+}
+
+void MatchDialog::btnDisplay(int flag) {
+    switch (flag) {
+    case 0: // 选好游戏模式进入匹配模式选择
+        battle->hide();
+        cooper->hide();
+        coming->hide();
+        back_1->hide();
+        createRoom->show();
+        certainRoom->show();
+        randomRoom->show();
+        quitRoom->show();
+        break;
+    case 1: // 进入匹配
+        createRoom->hide();
+        certainRoom->hide();
+        randomRoom->hide();
+        quitRoom->hide();
+        break;
+    case 2: // 退出匹配
         createRoom->show();
         certainRoom->show();
         randomRoom->show();
         quitRoom->show();
         title->hide();
-    } else {
+        break;
+    case 3: // 退出匹配模式选择
         createRoom->hide();
         certainRoom->hide();
         randomRoom->hide();
         quitRoom->hide();
+        battle->show();
+        cooper->show();
+        coming->show();
+        back_1->show();
+        break;
+    default:
+        break;
     }
+}
+
+void MatchDialog::battleClicked() {
+    type = 0;
+    btnDisplay(0);
+}
+
+void MatchDialog::cooperClicked() {
+    type = 1;
+    btnDisplay(0);
+}
+
+void MatchDialog::back_1Clicked() {
+    stat = MODE;
+    this->hide();
 }
 
 void MatchDialog::createClicked() {
     stat = CREATE;
+    waiting = true;
     title->setText("创建房间");
     title->show();
-    btnDisplay(false);
+    btnDisplay(1);
     cnfm->show();
     back->show();
-    QString url = ADDR + "/match" + "/createRoom?uid=" + QString::number(ID);
+    QString url = ADDR + "/match/createRoom"
+                  + "?uid=" + QString::number(ID)
+                  + "&isSingle=" + QString::number(type);
     QString res = QString("%1").arg(http.get(url).toUInt(), 4, 10, QLatin1Char('0'));
     currroom = res.toInt();
     room->show();
@@ -130,29 +203,41 @@ void MatchDialog::certainClicked() {
     roominput->show();
     cnfm->show();
     back->show();
-    btnDisplay(false);
+    btnDisplay(1);
 }
 
 void MatchDialog::randomClicked() {
     stat = RANDOM;
     title->setText("随机房间");
     title->show();
-    btnDisplay(false);
+    btnDisplay(1);
     cnfm->show();
     back->show();
-    QString url = ADDR + "/match" + "/joinSrand?uid=" + QString::number(ID);
+    QString url = ADDR + "/match/joinSrand"
+                  + "?uid=" + QString::number(ID)
+                  + "&isSingle=" + QString::number(type);
     QString res = QString("%1").arg(http.get(url).toUInt(), 4, 10, QLatin1Char('0'));
     currroom = res.toInt();
     room->show();
     vs->show();
     two.load(":/images/image/another.jpg");
-    update();
     room->setText("房间号：" + res);
+    url = ADDR + "/match" + "/getOtherPlayer?uid=" + QString::number(ID)
+          + "&rid=" + QString::number(currroom);
+    QJsonObject json = http.get_json(url);
+    if (json.contains("name")) {
+        qDebug() << json;
+        if (json.value("name").toString() != "") {
+            waiting = false;
+            timer->stop();
+            two.load(":/images/image/avatar/" + getAvatarByName(json.value("name").toString()));
+        }
+    }
+    update();
 }
 
 void MatchDialog::quitClicked() {
-    stat = MODE;
-    this->hide();
+    btnDisplay(3);
 }
 
 void MatchDialog::cnfmClicked() {
@@ -160,28 +245,41 @@ void MatchDialog::cnfmClicked() {
         QString input = roominput->text();
         currroom = input.toInt();
         QString url = ADDR + "/match" + "/joinById?uid=" + QString::number(ID)
-                      + "&rid=" + QString::number(currroom);
+                      + "&rid=" + QString::number(currroom)
+                      + "&isSingle=" + QString::number(type);
         QString res = http.get(url);
         if (res == "false")
             return;
     }
-    emit EnterRoom(currroom);
+    if (stat == CREATE) {
+        if (waiting)
+            return;
+    }
+    emit EnterRoom(currroom, type);
     this->hide();
     roominput->hide();
     room->hide();
     cnfm->hide();
     back->hide();
-    btnDisplay(true);
+    title->hide();
+    btnDisplay(3);
     stat = MODE;
 }
 
 void MatchDialog::backClicked() {
+    if (stat == CREATE && waiting) {
+        {
+            QString url = ADDR + "/match" + "/removeRoom?uid=" + QString::number(ID)
+                          + "&rid=" + QString::number(currroom);
+            QString res = http.get(url);
+        }
+    }
     roominput->hide();
     room->hide();
     cnfm->hide();
     back->hide();
     vs->hide();
-    btnDisplay(true);
+    btnDisplay(2);
     timer->stop();
     stat = MODE;
 }
@@ -193,14 +291,29 @@ void MatchDialog::listen() {
     if (res.contains("name")) {
         qDebug() << res;
         if (res.value("name").toString() != "") {
+            waiting = false;
             timer->stop();
-            two.load(":/images/image/vs.png");
+            two.load(":/images/image/avatar/" + getAvatarByName(res.value("name").toString()));
             update();
         }
     }
 }
 
 MatchDialog::~MatchDialog() {
+    delete certainRoom;
+    delete randomRoom;
+    delete quitRoom;
+    delete cnfm;
+    delete back;
+    delete vs;
+    delete battle;
+    delete cooper;
+    delete coming;
+    delete back_1;
+    delete room;
+    delete title;
+    delete roominput;
+    delete timer;
 }
 
 void MatchDialog::paintEvent(QPaintEvent *) {

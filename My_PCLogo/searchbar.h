@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QHBoxLayout>
 #include <QPushButton>
+
 class Searchbar : public QLineEdit {
     Q_OBJECT
   private:
@@ -21,6 +22,8 @@ class Searchbar : public QLineEdit {
   signals:
     void Search(QString s);
 
+  protected:
+    virtual void keyPressEvent(QKeyEvent *) override;
 };
 
 #endif // SEARCHBAR_H

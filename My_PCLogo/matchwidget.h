@@ -33,26 +33,34 @@ class MatchDialog : public QDialog {
     Window window;
 
     QPushButton *createRoom;
+    bool waiting; // create waiting
     QPushButton *certainRoom;
     QPushButton *randomRoom;
     QPushButton *quitRoom;
     QPushButton *cnfm;
     QPushButton *back;
     QPushButton *vs;
+    QPushButton *battle;
+    QPushButton *cooper;
+    QPushButton *coming;
+    QPushButton *back_1;
     QLabel *room;
     QLabel *title;
     LineEdit *roominput;
     btnStat stat;
     int currroom;
     HttpRequest http;
-
+    int type; // 0: BATTLE 1: COOPER
     QPixmap one, two;
 
   private:
-    void btnDisplay(bool);
+    void btnDisplay(int);
     QTimer *timer;
   private slots:
     void listen();
+    void battleClicked();
+    void cooperClicked();
+    void back_1Clicked();
     void createClicked();
     void certainClicked();
     void randomClicked();
@@ -64,9 +72,10 @@ class MatchDialog : public QDialog {
     MatchDialog();
     MatchDialog(int widght, int height, QWidget *p = nullptr);
     ~MatchDialog() override;
+    void loadAvatar();
 
   signals:
-    void EnterRoom(int);
+    void EnterRoom(int, int);
     void DialogResponse(User *);
 
   protected:
