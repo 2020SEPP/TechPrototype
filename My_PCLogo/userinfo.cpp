@@ -69,8 +69,10 @@ UserInfo::UserInfo(QWidget *parent, int w, int h, User *) : WIN_W(w / 10 * 3), W
     this->w->raise();
     this->w->setStyleSheet("QWidget{border-image: url(:/images/image/sidenav.png);}");
     this->fl->setStyleSheet("QWidget{border-image: url(:/images/image/sidenav.png);}");
+    timer = new QTimer;
     connect(friendList, SIGNAL(clicked()), this, SLOT(friendListClicked()));
     connect(inviteList, SIGNAL(clicked()), this, SLOT(inviteListClicked()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(listen()));
 }
 
 void UserInfo::annimation() {
@@ -103,6 +105,8 @@ void UserInfo::friendListClicked() {
         v = false;
         return;
     }
+    if (!v)
+        timer->stop();
     this->fl->annimation();
     friendList->raise();
     inviteList->raise();
@@ -115,7 +119,17 @@ void UserInfo::inviteListClicked() {
         f = false;
         return;
     }
+    if (v)
+        timer->start(1000);
+    else
+        timer->stop();
     this->fl->annimation();
     friendList->raise();
     inviteList->raise();
+}
+
+
+void UserInfo::listen() {
+    fl->reset(v);
+    qDebug() << "listen";
 }

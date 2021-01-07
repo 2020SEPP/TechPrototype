@@ -20,7 +20,6 @@ class HomePage : public QWidget {
     friend class uniT;
     Window window;
     bool logined = false;
-
     UserInfo *usrinfo;
     LoginDialog *logindialog;
     MatchDialog *matchdialog;

@@ -7,6 +7,7 @@
 #include <QPropertyAnimation>
 #include <QDialog>
 #include <QLabel>
+#include <QTimer>
 #include <QPushButton>
 #include "window.h"
 #include "user.h"
@@ -34,6 +35,7 @@ class UserInfo : public QWidget {
     QPushButton *inviteList;
     FriendList *fl;
     bool f, v;
+    QTimer *timer;
 
   public:
     void setUser(User *U);
@@ -43,6 +45,7 @@ class UserInfo : public QWidget {
     }
     ~UserInfo() {}
   public slots:
+    void listen();
     void annimation();
     void friendListClicked();
     void inviteListClicked();

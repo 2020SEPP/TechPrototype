@@ -17,10 +17,16 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     logindialog->setGeometry(WIN_W / 4, WIN_H / 6, WIN_W / 2, WIN_H * 2 / 3);
     matchdialog = new MatchDialog(WIN_W / 2, WIN_H * 2 / 3, this);
     matchdialog->setGeometry(WIN_W / 4, WIN_H / 6, WIN_W / 2, WIN_H * 2 / 3);
+    QFont font;
+    font.setWeight(50);
+    font.setPixelSize(50);
     line   = new QPushButton(this);
     text   = new QPushButton(this);
     pvp    = new QPushButton(this);
     avatar = new QPushButton(this);
+    line->setFont(font);
+    text->setFont(font);
+    pvp->setFont(font);
     helpText = new HelpText(WIN_W / 2, WIN_H * 2 / 3, this);
     help   = new QPushButton(this);
     exit   = new QPushButton(this);
@@ -35,7 +41,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent) {
     ava_border->hide();
     line->setText("命令行绘图");
     text->setText("命令文件绘图");
-    pvp->setText("PVP对战");
+    pvp->setText("PvP对战");
     help->setStyleSheet("QPushButton{"
                         "border-image:url(:/images/image/bangzhu.png)"
                         "}");

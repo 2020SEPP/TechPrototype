@@ -25,7 +25,6 @@ class FriendList: public QWidget {
     void annimation();
     void setFriends(QList<User> list, int flag = 0);
     void reset(int mode = 0);
-
   public slots:
     void search(QString);
 };

@@ -150,7 +150,7 @@ void ListWidgetItem::addClicked() {
 void ListWidgetItem::acceptClicked() {
     HttpRequest *http = new HttpRequest(token);
     QString url = ADDR + "/user/acceptInvite?uid=" + QString::number(ID)
-                  + "&touid=" + QString::number(user.getId())
+                  + "&auid=" + QString::number(user.getId())
                   + "&accept=" + QString::number(1);
     http->get(url);
     delete http;
@@ -159,7 +159,7 @@ void ListWidgetItem::acceptClicked() {
 void ListWidgetItem::rejectClicked() {
     HttpRequest *http = new HttpRequest(token);
     QString url = ADDR + "/user/acceptInvite?uid=" + QString::number(ID)
-                  + "&touid=" + QString::number(user.getId())
+                  + "&auid=" + QString::number(user.getId())
                   + "&accept=" + QString::number(0);
     http->get(url);
     delete http;
