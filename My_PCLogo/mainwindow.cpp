@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     pvp->hide();
     connect(home, SIGNAL(CommandFile(void)), this, SLOT(CommandFile()));
     connect(home, SIGNAL(CommandLine(void)), this, SLOT(CommandLine()));
-    connect(home, SIGNAL(PVPMode(int, int)), this, SLOT(PVP(int, int)));
+    connect(home, SIGNAL(PVPMode(int, int, bool)), this, SLOT(PVP(int, int, bool)));
     connect(cmdfile, SIGNAL(CloseCmdFile(int)), this, SLOT(SwitchWidget(int)));
     connect(single, SIGNAL(CloseSingle(int)), this, SLOT(SwitchWidget(int)));
     connect(pvp, SIGNAL(ClosePvP(int)), this, SLOT(SwitchWidget(int)));
@@ -50,8 +50,8 @@ void MainWindow::CommandLine() {
     single->InAnnimation();
 }
 
-void MainWindow::PVP(int room, int type) {
-    pvp->init(room, type);
+void MainWindow::PVP(int room, int type, bool owner) {
+    pvp->init(room, type, owner);
     pvp->show();
     pvp->InAnnimation();
 }
@@ -66,6 +66,7 @@ void MainWindow::SwitchWidget(int xXCode) {
         cmdfile->hide();
         break;
     case 3:
+        pvp->InAnnimation();
         pvp->hide();
         break;
     default:

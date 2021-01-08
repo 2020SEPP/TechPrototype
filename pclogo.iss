@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "My PC Logo"
-#define MyAppVersion "2.2"
+#define MyAppVersion "2.4"
 #define MyAppPublisher "SJTU SE 2020SEPP, Inc."
 #define MyAppURL "https://github.com/2020SEPP"
 #define MyAppExeName "My_PCLogo.exe"

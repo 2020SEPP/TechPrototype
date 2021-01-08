@@ -35,7 +35,7 @@ ErrorDialog::ErrorDialog(int width, int height, QWidget *p) : QDialog(p) {
     title->setAlignment(Qt::AlignCenter | Qt::AlignCenter);
     cntnt->setAttribute(Qt::WA_TranslucentBackground, true);
     cntnt->setAlignment(Qt::AlignCenter | Qt::AlignCenter);
-    title->setGeometry(width / 4, height / 8, width / 2, height / 6);
+    title->setGeometry(width / 6, height / 8, width * 2 / 3, height / 6);
     cntnt->setGeometry(width / 15, height / 3, width * 14 / 15, height / 6);
     title->setText("网络出现问题");
     cntnt->setText("您或您的伙伴可能遇到网络问题了呢");

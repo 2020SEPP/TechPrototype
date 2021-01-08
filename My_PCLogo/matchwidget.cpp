@@ -31,9 +31,7 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     cnfm        = new QPushButton(this);
     back        = new QPushButton(this);
     vs          = new QPushButton(this);
-    stat = MODE;
-    currroom = -1;
-    type = -1;
+    init();
     battle->setGeometry(width * 2 / 15, height * 2 / 15, height / 3, height / 3);
     cooper->setGeometry(width * 13 / 15 - height / 3, height * 2 / 15, height / 3, height / 3);
     coming->setGeometry(width * 2 / 15, height * 8 / 15, height / 3, height / 3);
@@ -115,9 +113,13 @@ MatchDialog::MatchDialog(int width, int height, QWidget *p) : QDialog(p) {
     connect(timer, SIGNAL(timeout()), this, SLOT(listen()));
 }
 
-void MatchDialog::loadAvatar() {
+void MatchDialog::init() {
+    stat = MODE;
+    currroom = -1;
+    type = -1;
     one.load(":/images/image/avatar/" + getAvatarByName(NAME));
     two.load(":/images/image/another.jpg");
+    btnDisplay(3);
 }
 
 void MatchDialog::btnDisplay(int flag) {
@@ -226,7 +228,7 @@ void MatchDialog::randomClicked() {
           + "&rid=" + QString::number(currroom);
     QJsonObject json = http.get_json(url);
     if (json.contains("name")) {
-        qDebug() << json;
+//        qDebug() << json;
         if (json.value("name").toString() != "") {
             waiting = false;
             timer->stop();
@@ -255,7 +257,7 @@ void MatchDialog::cnfmClicked() {
         if (waiting)
             return;
     }
-    emit EnterRoom(currroom, type);
+    emit EnterRoom(currroom, type, stat == CREATE);
     this->hide();
     roominput->hide();
     room->hide();
@@ -289,7 +291,7 @@ void MatchDialog::listen() {
                   + "&rid=" + QString::number(currroom);
     QJsonObject res = http.get_json(url);
     if (res.contains("name")) {
-        qDebug() << res;
+//        qDebug() << res;
         if (res.value("name").toString() != "") {
             waiting = false;
             timer->stop();

@@ -39,10 +39,11 @@ class HomePage : public QWidget {
     int WIN_W;
     int WIN_H;
     User *USER;
+
   private slots:
     void avatarClicked();
     void pvpPressed();
-    void EnterRoom(int, int);
+    void EnterRoom(int, int, bool);
     void dialogResponse(User * u);
     void lineClicked();
     void textClicked();
@@ -53,7 +54,7 @@ class HomePage : public QWidget {
     void CommandFile();
     void CommandLine();
     void SingleMode();
-    void PVPMode(int, int);
+    void PVPMode(int, int, bool);
 };
 
 #endif // HOMEPAGE_H

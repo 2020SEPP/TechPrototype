@@ -25,7 +25,7 @@ class PvpWidget : public QWidget {
     friend class uniT;
     explicit PvpWidget(QWidget *parent);
     ~PvpWidget() override {}
-    void init(int, int);
+    void init(int, int, bool);
   private:
     Canvas *canvas;
     Canvas *enermy;
@@ -39,6 +39,7 @@ class PvpWidget : public QWidget {
     int type;
     int cycle;
     bool visible;
+    bool owner;
     QTimer *timer;
     HttpRequest http;
     ErrorDialog *error;
@@ -60,6 +61,7 @@ class PvpWidget : public QWidget {
     void exitClicked();
     void errorhandler1();
     void errorhandler2();
+    void sendCommand(QString);
 };
 
 #endif // PVPWINDOW_H

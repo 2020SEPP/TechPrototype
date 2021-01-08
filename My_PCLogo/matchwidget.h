@@ -72,10 +72,10 @@ class MatchDialog : public QDialog {
     MatchDialog();
     MatchDialog(int widght, int height, QWidget *p = nullptr);
     ~MatchDialog() override;
-    void loadAvatar();
+    void init();
 
   signals:
-    void EnterRoom(int, int);
+    void EnterRoom(int, int, bool);
     void DialogResponse(User *);
 
   protected:

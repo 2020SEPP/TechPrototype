@@ -17,12 +17,13 @@ PvpWidget::PvpWidget(QWidget *parent) : QWidget(parent) {
     font.setBold(true);
     font.setPixelSize(20);
     this->setFont(font);
-    init(-1, INIT);
+    init(-1, INIT, false);
 }
 
-void PvpWidget::init(int r, int t) {
+void PvpWidget::init(int r, int t, bool own) {
     room = r;
     type = t;
+    owner = own;
     if (type == BATTLE) {
         canvas = new Canvas(this, 0, 0, width / 2, (height * 3) / 4);
         canvas->setGeometry(0, 0, width / 2, (height * 3) / 4);
@@ -37,7 +38,14 @@ void PvpWidget::init(int r, int t) {
     console = new Console(this);
     console->setGeometry(0, (height * 3) / 4, width, height / 4);
     console->setStyleSheet(QString::fromUtf8("border: 2px solid gray;"));
-    console->write("Welcome to room " + QString::number(room) + "!\nPlease type your code.\n>> ");
+    console->write("欢迎来到 ");
+    if (type == BATTLE)
+        console->write("对战模式 ");
+    else
+        console->write("合作模式 ");
+    console->write(QString::number(room) + " 号房间!\n");
+    if (owner)
+        console->write("请输入你的指令.\n>> ");
     console->setStyleSheet("QTextEdit {"
                            "border-image:url(:/images/image/paint2222.png);"
                            "}");
@@ -90,74 +98,88 @@ void PvpWidget::listen() {
             QString cmd = res.at(i).toString();
             if (type == BATTLE)
                 enermy->parse_line(cmd);
-            else if (type == COOPER)
+            else if (type == COOPER) {
                 canvas->parse_line(cmd);
+                owner = true;
+            }
             cycle = 0;
         }
     }
 }
 
-void PvpWidget::drawLine(qreal len, bool flag) {
-    canvas->drawLine(len, flag);
-    QString command = (flag ? "fd " : "bk ") + QString::number(len);
+void PvpWidget::sendCommand(QString cmd) {
     QString url = ADDR + "/match"
                   + "/sendCommand?uid=" + QString::number(ID)
                   + "&rid=" + QString::number(room)
-                  + "&command=" + command;
+                  + "&command=" + cmd;
     http.get(url);
+    if (type == COOPER) {
+        console->write("\n现在轮到对方回合，请等待...");
+        owner = false;
+    }
+}
+
+void PvpWidget::drawLine(qreal len, bool flag) {
+    if (COOPER && !owner) {
+        console->write("\n当前还不是你的回合，请等待...");
+        return;
+    }
+    canvas->drawLine(len, flag);
+    QString command = (flag ? "fd " : "bk ") + QString::number(len);
+    sendCommand(command);
 }
 
 void PvpWidget::turnDirection(qreal angle, bool flag) {
+    if (COOPER && !owner) {
+        console->write("\n当前还不是你的回合，请等待...");
+        return;
+    }
     canvas->turnDirection(angle, flag);
     QString command = (flag ? "rt " : "lt ") + QString::number(angle);
-    QString url = ADDR + "/match"
-                  + "/sendCommand?uid=" + QString::number(ID)
-                  + "&rid=" + QString::number(room)
-                  + "&command=" + command;
-    http.get(url);
+    sendCommand(command);
 }
 
 void PvpWidget::setXT(qreal x, qreal y) {
+    if (COOPER && !owner) {
+        console->write("\n当前还不是你的回合，请等待...");
+        return;
+    }
     canvas->setXT(x, y);
     QString command = "setxy " + QString::number(x) + " " + QString::number(y);
-    QString url = ADDR + "/match"
-                  + "/sendCommand?uid=" + QString::number(ID)
-                  + "&rid=" + QString::number(room)
-                  + "&command=" + command;
-    http.get(url);
+    sendCommand(command);
 }
 
 void PvpWidget::setPC(uint color) {
+    if (COOPER && !owner) {
+        console->write("\n当前还不是你的回合，请等待...");
+        return;
+    }
     canvas->setPC(color);
     QString command = "setpc " + QString::number(color);
-    QString url = ADDR + "/match"
-                  + "/sendCommand?uid=" + QString::number(ID)
-                  + "&rid=" + QString::number(room)
-                  + "&command=" + command;
-    http.get(url);
+    sendCommand(command);
 }
 
 void PvpWidget::setBG(QString color) {
+    if (COOPER && !owner) {
+        console->write("\n当前还不是你的回合，请等待...");
+        return;
+    }
     QString qss = "border: 2px solid darkgray; background-color: #";
     qss.append(color);
     canvas->setStyleSheet(qss);
     enermy->setStyleSheet(qss);
     QString command = "setbg " + color;
-    QString url = ADDR + "/match"
-                  + "/sendCommand?uid=" + QString::number(ID)
-                  + "&rid=" + QString::number(room)
-                  + "&command=" + command;
-    http.get(url);
+    sendCommand(command);
 }
 
 void PvpWidget::stampoval(qreal x, qreal y) {
+    if (COOPER && !owner) {
+        console->write("\n当前还不是你的回合，请等待...");
+        return;
+    }
     canvas->stampoval(x, y);
     QString command = "stampoval " + QString::number(x) + " " + QString::number(y);
-    QString url = ADDR + "/match"
-                  + "/sendCommand?uid=" + QString::number(ID)
-                  + "&rid=" + QString::number(room)
-                  + "&command=" + command;
-    http.get(url);
+    sendCommand(command);
 }
 
 void
@@ -202,5 +224,8 @@ PvpWidget::errorhandler1() {
 void
 PvpWidget::errorhandler2() {
     error->hide();
+    QString url = ADDR + "/match" + "/removeRoom?uid=" + QString::number(ID)
+                  + "&rid=" + QString::number(room);
+    QString res = http.get(url);
     emit ClosePvP(3);
 }
